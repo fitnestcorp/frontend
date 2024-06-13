@@ -48,7 +48,7 @@ export const Navbar = () => {
 				<Search className="hidden md:block mx-2 px-2" />
 
 				<Link href="/carrito">
-					<div className="relative mx-2 ms-4 hidden md:block">
+					<div className="relative rounded-md m-2 p-2 hover:bg-white hover:text-black hidden md:block">
 						<span className="absolute text-sm rounded-full px-1 font-bold -top-2 -right-2 bg-red-600 text-white">
 							3
 						</span>
