@@ -125,7 +125,8 @@ export const LoginForm = () => {
 					</Grid>
 					<Grid item xs={12} sx={{ textAlign: 'left' }}>
 						<Link
-							href="/forgot-password"
+							href="/recuperar-contrasena"
+							component={NextLink}
 							style={{
 								color: '#377AB8',
 								fontWeight: 'bold',

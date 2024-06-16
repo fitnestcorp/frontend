@@ -1,6 +1,6 @@
 'use client';
 import { useState } from 'react';
-import Link from 'next/link';
+import NextLink from 'next/link';
 import { useRouter } from 'next/navigation';
 import { Controller, useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -15,6 +15,7 @@ import {
 	CircularProgress,
 	IconButton,
 	InputAdornment,
+	Link,
 } from '@mui/material';
 
 import { RegisterSchema } from '@/schemas';
@@ -261,6 +262,7 @@ export const RegisterForm = () => {
 				¿Ya tienes una cuenta?{' '}
 				<Link
 					href="/iniciar-sesion"
+					component={NextLink}
 					style={{
 						color: '#377AB8',
 						textDecoration: 'none',
