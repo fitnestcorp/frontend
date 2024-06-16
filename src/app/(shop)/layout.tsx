@@ -1,14 +1,24 @@
+import { Box, Container } from '@mui/material';
+
 import { Footer, Navbar } from '@/components';
 
 export const ShopLayout = ({
 	children,
 }: Readonly<{ children: React.ReactNode }>) => {
 	return (
-		<main className="min-h-screen">
+		<Box
+			sx={{
+				minHeight: '100vh',
+				display: 'flex',
+				flexDirection: 'column',
+			}}
+		>
 			<Navbar />
-			<div className="px-0 sm:px-5">{children}</div>
+			<Container sx={{ flex: 1, px: { xs: 2, sm: 3, md: 4, lg: 5 } }}>
+				{children}
+			</Container>
 			<Footer />
-		</main>
+		</Box>
 	);
 };
 

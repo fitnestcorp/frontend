@@ -1,73 +1,171 @@
 'use client';
-import Link from 'next/link';
-import { LuUser } from 'react-icons/lu';
-import { IoCartOutline } from 'react-icons/io5';
+import NextLink from 'next/link';
+import {
+	AppBar,
+	Toolbar,
+	Typography,
+	Box,
+	Button,
+	Link,
+	Container,
+	IconButton,
+} from '@mui/material';
 
-import { Sidemenu } from '@/components/sidemenu/Sidemenu';
-import { titleFonts } from '@/libs/fonts';
-import { Search } from '../search/Search';
-import { Cart } from '@/components/cart/Cart';
+import { Cart, Search, Sidemenu } from '@/components';
+import { PersonOutlineOutlined } from '@mui/icons-material';
 
 export const Navbar = () => {
 	return (
-		<nav className="bg-black text-white flex px-5 p-1 justify-between items-center w-full">
-			<div>
-				{/* Logo */}
-				<Link href="/">
-					<span
-						className={`${titleFonts.className} antialiased text-4xl font-semibold p-2`}
+		<AppBar position="static" sx={{ backgroundColor: 'black' }}>
+			<Container maxWidth="xl">
+				<Toolbar
+					disableGutters
+					sx={{ justifyContent: 'space-between' }}
+				>
+					{/* Logo */}
+					<Link
+						href="/"
+						component={NextLink}
+						sx={{
+							display: 'flex',
+							alignItems: 'center',
+							textDecoration: 'none',
+							mr: 2,
+						}}
 					>
-						FITNEST
-					</span>
-				</Link>
-			</div>
+						<Typography
+							variant="h4"
+							sx={{ fontWeight: 'bold', color: 'white' }}
+						>
+							FITNEST
+						</Typography>
+					</Link>
 
-			{/* Center Menu */}
-			<div className="hidden sm:block my-4">
-				<Link
-					href="/categoria/entrenamiento"
-					className="m-2 p-2 rounded-md transition-all hover:bg-white hover:text-black"
-				>
-					Entrenamiento
-				</Link>
-				<Link
-					href="/categoria/equipamiento"
-					className="m-2 p-2 rounded-md transition-all hover:bg-white hover:text-black"
-				>
-					Equipamiento
-				</Link>
-				<Link
-					href="/categoria/servicios" //! Esto es una categoria??
-					className="m-2 p-2 rounded-md transition-all hover:bg-white hover:text-black"
-				>
-					Servicios
-				</Link>
-			</div>
+					{/* Center Menu */}
+					<Box
+						sx={{
+							display: { xs: 'none', sm: 'flex' },
+							flexGrow: 1,
+							justifyContent: 'center',
+						}}
+					>
+						{/* <Box
+						sx={{
+							flexGrow: 1,
+							display: 'flex',
+							justifyContent: 'center',
+						}}
+					>
+						<Box sx={{ display: { xs: 'none', sm: 'flex' } }}> */}
+						<Button
+							component={NextLink}
+							href="/categoria/entrenamiento"
+							sx={{
+								color: 'white',
+								mx: 1,
+								borderRadius: '0.5rem',
 
-			{/* Search, Cart, Login */}
-			<div className="flex items-center">
-				<Search className="hidden md:block mx-2 px-2" />
+								'&:hover': {
+									backgroundColor: 'white',
+									color: 'black',
+								},
+							}}
+						>
+							Entrenamiento
+						</Button>
+						<Button
+							component={NextLink}
+							href="/categoria/equipamiento"
+							sx={{
+								color: 'white',
+								mx: 1,
+								borderRadius: '0.5rem',
 
-				{/* <Link href="/carrito">
-					<div className="relative rounded-md m-2 p-2 hover:bg-white hover:text-black hidden md:block">
-						<span className="absolute text-sm rounded-full px-1 font-bold -top-2 -right-2 bg-red-600 text-white">
-							3
-						</span>
-						<IoCartOutline className="w-5 h-5" />
-					</div>
-				</Link> */}
-				<Cart />
+								'&:hover': {
+									backgroundColor: 'white',
+									color: 'black',
+								},
+							}}
+						>
+							Equipamiento
+						</Button>
+						<Button
+							component={NextLink}
+							href="/categoria/servicios"
+							sx={{
+								color: 'white',
+								mx: 1,
+								borderRadius: '0.5rem',
 
-				<Link
-					href="/iniciar-sesión"
-					className="m-2 p-2 rounded-md transition-all hover:bg-white hover:text-black hidden md:block"
-				>
-					<LuUser className="w-5 h-5" />
-				</Link>
-			</div>
+								'&:hover': {
+									backgroundColor: 'white',
+									color: 'black',
+								},
+							}}
+						>
+							Servicios
+						</Button>
+					</Box>
+					{/* </Box> */}
 
-			{/* Show when screen is small */}
-			<Sidemenu />
-		</nav>
+					{/* Search, Cart, Login */}
+					<Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
+						<Box sx={{ display: { xs: 'none', md: 'block' } }}>
+							<Search />
+						</Box>
+
+						<Cart />
+
+						<Box sx={{ display: { xs: 'none', md: 'block' } }}>
+							<IconButton
+								component={NextLink}
+								href="/iniciar-sesion"
+								color="inherit"
+								sx={{
+									position: 'relative',
+									display: 'flex',
+									alignItems: 'center',
+									justifyContent: 'center',
+									width: '40px',
+									height: '40px',
+									borderRadius: '0.5rem',
+									color: 'white',
+									backgroundColor: 'black',
+									'&:hover': {
+										backgroundColor: 'white',
+										color: 'black',
+										border: '1px solid black',
+									},
+								}}
+							>
+								<PersonOutlineOutlined />
+							</IconButton>
+						</Box>
+						{/* <Button
+							component={NextLink}
+							href="/iniciar-sesion"
+							sx={{
+								display: { xs: 'none', md: 'block' },
+								color: 'white',
+								mx: 1,
+								borderRadius: '0.5rem',
+
+								'&:hover': {
+									backgroundColor: 'white',
+									color: 'black',
+								},
+							}}
+						>
+							Iniciar sesión
+						</Button> */}
+						<Box sx={{ display: { xs: 'block', md: 'none' } }}>
+							<Sidemenu />
+						</Box>
+					</Box>
+
+					{/* Show when screen is small */}
+				</Toolbar>
+			</Container>
+		</AppBar>
 	);
 };

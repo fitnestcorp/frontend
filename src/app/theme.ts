@@ -40,17 +40,17 @@ const theme = createTheme({
 		// },
 	},
 	components: {
-		MuiButton: {
-			styleOverrides: {
-				root: {
-					backgroundColor: '#000000',
-					color: '#ffffff',
-					'&:hover': {
-						backgroundColor: '#333333',
-					},
-				},
-			},
-		},
+		// MuiButton: {
+		// 	styleOverrides: {
+		// 		root: {
+		// 			backgroundColor: '#000000',
+		// 			color: '#ffffff',
+		// 			'&:hover': {
+		// 				backgroundColor: '#333333',
+		// 			},
+		// 		},
+		// 	},
+		// },
 		MuiTextField: {
 			styleOverrides: {
 				root: {
@@ -81,22 +81,22 @@ const theme = createTheme({
 				},
 			},
 		},
-		MuiAppBar: {
-			styleOverrides: {
-				root: {
-					backgroundColor: '#000000',
-					color: '#ffffff',
-				},
-			},
-		},
-		MuiPaper: {
-			styleOverrides: {
-				root: {
-					backgroundColor: '#ffffff',
-					color: '#000000',
-				},
-			},
-		},
+		// MuiAppBar: {
+		// 	styleOverrides: {
+		// 		root: {
+		// 			backgroundColor: '#000000',
+		// 			color: '#ffffff',
+		// 		},
+		// 	},
+		// },
+		// MuiPaper: {
+		// 	styleOverrides: {
+		// 		root: {
+		// 			backgroundColor: '#ffffff',
+		// 			color: '#000000',
+		// 		},
+		// 	},
+		// },
 	},
 });
 

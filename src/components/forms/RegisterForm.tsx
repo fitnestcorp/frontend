@@ -237,13 +237,8 @@ export const RegisterForm = () => {
 							type="submit"
 							fullWidth
 							variant="contained"
-							color="primary"
 							disabled={!isDirty || isSubmitting}
-							sx={{
-								height: 48,
-								fontSize: '1rem',
-								fontWeight: 'bold',
-							}}
+							
 							endIcon={
 								isSubmitting && <CircularProgress size={20} />
 							}

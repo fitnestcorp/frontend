@@ -1,4 +1,3 @@
-import { titleFonts } from '@/libs/fonts';
 import Link from 'next/link';
 
 export const Footer = () => {
@@ -8,7 +7,7 @@ export const Footer = () => {
 				<div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5">
 					<div className="lg:col-span-2">
 						<h3
-							className={`${titleFonts.className} text-3xl antialiased font-semibold`}
+							className={` text-3xl antialiased font-semibold`}
 						>
 							FITNEST
 						</h3>

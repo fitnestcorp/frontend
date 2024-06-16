@@ -1,8 +1,22 @@
 'use client';
-import Link from 'next/link';
 import { useEffect, useRef, useState } from 'react';
-import { IoCartOutline, IoCloseOutline } from 'react-icons/io5';
+import {
+	Drawer,
+	IconButton,
+	Badge,
+	Box,
+	Typography,
+	Button,
+	List,
+	ListItem,
+	Divider,
+} from '@mui/material';
+import {
+	ShoppingCartOutlined as ShoppingCartIcon,
+	Close as CloseIcon,
+} from '@mui/icons-material';
 import { CartItem } from './CartItem';
+import NextLink from 'next/link';
 
 export const Cart = () => {
 	const [isDrawerOpen, setIsDrawerOpen] = useState<boolean>(false);
@@ -38,174 +52,125 @@ export const Cart = () => {
 
 	return (
 		<>
-			<button
-				className="relative m-2 p-2 rounded-md transition-all hover:bg-white hover:text-black"
-				type="button"
+			<IconButton
 				onClick={toggleDrawer}
-				aria-controls="drawer-navigation"
+				color="inherit"
+				sx={{
+					position: 'relative',
+					display: 'flex',
+					alignItems: 'center',
+					justifyContent: 'center',
+					width: '40px',
+					height: '40px',
+					borderRadius: '0.5rem',
+					color: 'white',
+					backgroundColor: 'black',
+					'&:hover': {
+						backgroundColor: 'white',
+						color: 'black',
+						border: '1px solid black',
+					},
+				}}
 			>
-				<span className="absolute text-sm rounded-full px-1 font-bold -top-2 -right-2 bg-red-600 text-white">
-					3
-				</span>
-				<IoCartOutline className="w-5 h-5" />
-			</button>
+				<Badge badgeContent={3} color="error">
+					<ShoppingCartIcon />
+				</Badge>
+			</IconButton>
 
-			{isDrawerOpen && (
-				<div
-					className="fixed inset-0 z-30 bg-black opacity-50"
-					onClick={toggleDrawer}
-				></div>
-			)}
-			<div
-				ref={drawerRef}
-				id="drawer-navigation"
-				className={`fixed top-0 right-0 z-40 w-96 h-screen py-4 ps-4 transition-transform ${
-					isDrawerOpen ? 'translate-x-0' : 'translate-x-full'
-				} bg-white`}
-				tabIndex={-1}
-				aria-labelledby="drawer-navigation-label"
+			<Drawer
+				anchor="right"
+				open={isDrawerOpen}
+				onClose={toggleDrawer}
+				sx={{
+					'& .MuiDrawer-paper': {
+						width: { xs: '100%', sm: '50%', md: '30%' },
+						boxSizing: 'border-box',
+					},
+				}}
 			>
-				<h5
-					id="drawer-navigation-label"
-					className="text-base font-semibold mb-2 text-gray-500 uppercase"
+				<Box
+					sx={{
+						p: 2,
+						display: 'flex',
+						flexDirection: 'column',
+						height: '100%',
+						position: 'relative',
+					}}
 				>
-					Carrito
-				</h5>
-				<button
-					type="button"
-					onClick={toggleDrawer}
-					aria-controls="drawer-navigation"
-					className="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 absolute top-2.5 right-2.5 inline-flex items-center"
-				>
-					<IoCloseOutline className="w-5 h-5" />
-					<span className="sr-only">Cerrar carrito</span>
-				</button>
-				<div className="flex flex-col h-full">
-					<div className="flex-grow overflow-y-auto">
-						<ul className="space-y-4 font-medium mt-2">
-							<li>
-								<CartItem />
-							</li>
-							<li>
-								<CartItem />
-							</li>
-							<li>
-								<CartItem />
-							</li>
-							<li>
-								<CartItem />
-							</li>
-							<li>
-								<CartItem />
-							</li>
-							<li>
-								<CartItem />
-							</li>
-							<li>
-								<CartItem />
-							</li>
-							<li>
-								<CartItem />
-							</li>
-							<li>
-								<CartItem />
-							</li>
-							<li>
-								<CartItem />
-							</li>
-						</ul>
-					</div>
-					<div className="sticky bottom-0 p-4 bg-white border-t shadow-md">
-						<div className="flex justify-between items-center mb-4">
-							<span className="text-black text-lg font-bold">
+					<Box
+						sx={{
+							display: 'flex',
+							justifyContent: 'space-between',
+							alignItems: 'center',
+							mb: 2,
+						}}
+					>
+						<Typography
+							variant="h6"
+							fontWeight="bold"
+							color="primary"
+						>
+							CARRITO
+						</Typography>
+						<IconButton onClick={toggleDrawer}>
+							<CloseIcon />
+						</IconButton>
+					</Box>
+					<Divider sx={{ mb: 1 }} />
+
+					<Box sx={{ flexGrow: 1, overflowY: 'auto' }}>
+						<List>
+							{[...Array(20)].map((_, index) => (
+								<ListItem key={index}>
+									<CartItem />
+								</ListItem>
+							))}
+						</List>
+					</Box>
+
+					<Divider sx={{ mt: 1 }} />
+
+					<Box sx={{ p: 2 }}>
+						<Box
+							sx={{
+								display: 'flex',
+								justifyContent: 'space-between',
+								mb: 2,
+							}}
+						>
+							<Typography
+								variant="h5"
+								fontWeight="bold"
+								color="primary"
+							>
 								Subtotal:
-							</span>
-							<span className="text-black text-lg font-bold">
+							</Typography>
+							<Typography
+								variant="h5"
+								fontWeight="bold"
+								color="primary"
+							>
 								$200.000
-							</span>
-						</div>
-						<Link
-							href={'#'}
-							className="flex justify-center  bg-black text-white py-2 rounded-lg hover:bg-gray-800 transition-colors"
+							</Typography>
+						</Box>
+						<Button
+							variant="contained"
+							fullWidth
+							sx={{
+								backgroundColor: 'black',
+								color: 'white',
+								borderRadius: '0.5rem',
+								paddingY: '0.5rem',
+								'&:hover': { backgroundColor: '#333' },
+							}}
+							component={NextLink}
+							href="#"
 						>
 							Comprar
-						</Link>
-					</div>
-				</div>
-			</div>
+						</Button>
+					</Box>
+				</Box>
+			</Drawer>
 		</>
-		// <>
-		// 	<button
-		// 		className="relative m-2 p-2 rounded-md transition-all hover:bg-white hover:text-black"
-		// 		type="button"
-		// 		onClick={toggleDrawer}
-		// 		aria-controls="drawer-navigation"
-		// 	>
-		// 		<span className="absolute text-sm rounded-full px-1 font-bold -top-2 -right-2 bg-red-600 text-white">
-		// 			3
-		// 		</span>
-		// 		<IoCartOutline className="w-5 h-5" />
-		// 	</button>
-
-		// 	{isDrawerOpen && (
-		// 		<div
-		// 			className="fixed inset-0 z-30 bg-black opacity-50"
-		// 			onClick={toggleDrawer}
-		// 		></div>
-		// 	)}
-		// 	<div
-		// 		ref={drawerRef}
-		// 		id="drawer-navigation"
-		// 		className={`fixed top-0 right-0 z-40 w-96 h-screen p-4 overflow-y-auto transition-transform ${
-		// 			isDrawerOpen ? 'translate-x-0' : 'translate-x-full'
-		// 		} bg-white`}
-		// 		tabIndex={-1}
-		// 		aria-labelledby="drawer-navigation-label"
-		// 	>
-		// 		<h5
-		// 			id="drawer-navigation-label"
-		// 			className="text-base font-semibold text-gray-500 uppercase"
-		// 		>
-		// 			Carrito
-		// 		</h5>
-		// 		<button
-		// 			type="button"
-		// 			onClick={toggleDrawer}
-		// 			aria-controls="drawer-navigation"
-		// 			className="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 absolute top-2.5 right-2.5 inline-flex items-center"
-		// 		>
-		// 			<IoCloseOutline className="w-5 h-5" />
-		// 			<span className="sr-only">Cerrar carrito</span>
-		// 		</button>
-		// 		<div className="py-4 overflow-y-auto">
-		// 			<ul className="space-y-2 font-medium mt-2">
-		// 				<li>
-		// 					<CartItem />
-		// 				</li>
-		// 			</ul>
-		// 			<ul className="space-y-2 font-medium pt-4 mt-4 border-t border-gray-300 sm:pt-0 sm:mt-0 sm:border-none">
-		// 				<li></li>
-		// 			</ul>
-		// 		</div>
-		// 		<div className="sticky bottom-0 mt-8 p-3 border rounded-md shadow-md bg-white">
-		// 			<div className="flex justify-between items-center mb-4">
-		// 				<span className="text-black text-lg font-bold">
-		// 					Subtotal:
-		// 				</span>
-		// 				{/* <span className="text-lg font-bold">${subtotal.toLocaleString()}</span> */}
-		// 				<span className="text-black text-lg font-bold">$200.000</span>
-		// 			</div>
-		// 			<button className="w-full bg-black text-white py-2 rounded-lg hover:bg-gray-800 transition-colors">
-		// 				Comprar
-		// 			</button>
-		// 		</div>
-		// 		{/* <Link
-		// 			className="absolute bottom-0.5 w-52 py-2 text-center text-white bg-black rounded-md hover:bg-gray-800"
-		// 			href="#"
-		// 		>
-		// 			Comprar
-		// 		</Link> */}
-		// 	</div>
-		// </>
 	);
 };
