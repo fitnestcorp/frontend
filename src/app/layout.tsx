@@ -2,7 +2,6 @@ import type { Metadata } from 'next';
 
 import ThemeProviderWrapper from './ThemeProviderWrapper';
 import ReduxProvider from './provider';
-import { inter } from '@/libs/fonts';
 
 import './globals.css';
 
@@ -18,7 +17,7 @@ export default function RootLayout({
 }>) {
 	return (
 		<html lang="en">
-			<body className={inter.className}>
+			<body>
 				<ThemeProviderWrapper>
 					<ReduxProvider>{children}</ReduxProvider>
 				</ThemeProviderWrapper>
