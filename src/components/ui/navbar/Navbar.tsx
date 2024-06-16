@@ -6,6 +6,7 @@ import { IoCartOutline } from 'react-icons/io5';
 import { Sidemenu } from '@/components/sidemenu/Sidemenu';
 import { titleFonts } from '@/libs/fonts';
 import { Search } from '../search/Search';
+import { Cart } from '@/components/cart/Cart';
 
 export const Navbar = () => {
 	return (
@@ -47,14 +48,15 @@ export const Navbar = () => {
 			<div className="flex items-center">
 				<Search className="hidden md:block mx-2 px-2" />
 
-				<Link href="/carrito">
+				{/* <Link href="/carrito">
 					<div className="relative rounded-md m-2 p-2 hover:bg-white hover:text-black hidden md:block">
 						<span className="absolute text-sm rounded-full px-1 font-bold -top-2 -right-2 bg-red-600 text-white">
 							3
 						</span>
 						<IoCartOutline className="w-5 h-5" />
 					</div>
-				</Link>
+				</Link> */}
+				<Cart />
 
 				<Link
 					href="/iniciar-sesión"
