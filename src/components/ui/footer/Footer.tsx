@@ -1,85 +1,169 @@
-import Link from 'next/link';
+import { Box, Container, Grid, Link, Typography } from '@mui/material';
+import EmailIcon from '@mui/icons-material/Email';
+import PhoneIcon from '@mui/icons-material/Phone';
+import LocationOnIcon from '@mui/icons-material/LocationOn';
 
 export const Footer = () => {
 	return (
-		<footer className="bg-black text-white py-8">
-			<div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-				<div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5">
-					<div className="lg:col-span-2">
-						<h3
-							className={` text-3xl antialiased font-semibold`}
+		<Box
+			component="footer"
+			sx={{ backgroundColor: 'black', color: 'white', py: 8 }}
+		>
+			<Container maxWidth="lg">
+				<Grid container spacing={3}>
+					<Grid item xs={12} sm={6} md={6}>
+						<Typography
+							variant="h4"
+							component="h3"
+							sx={{
+								fontWeight: 'bold',
+								color: 'primary',
+								textAlign: { xs: 'center', sm: 'left' },
+							}}
+							gutterBottom
 						>
 							FITNEST
-						</h3>
-						<p className="mt-2 text-gray-300">
-							P. Sherman, 42 Wallaby Way, Sydney
-						</p>
-						<p className="mt-2 text-gray-300">
-							Teléfono:{' '}
-							<span className="font-bold text-white">
-								(+01) 234-567-89
-							</span>
-						</p>
-						<p className="mt-2 text-gray-300">
-							Email:{' '}
-							<span className="font-bold text-white">
-								support@fitnest.com
-							</span>
-						</p>
-					</div>
-					<div>
-						<h4 className="text-lg font-semibold mb-2">
+						</Typography>
+						<Box
+							sx={{
+								display: 'flex',
+								alignItems: 'center',
+								justifyContent: {
+									xs: 'center',
+									sm: 'flex-start',
+								},
+								mt: 2,
+							}}
+						>
+							<LocationOnIcon sx={{ mr: 1, color: 'gray.300' }} />
+							<Typography variant="body1" color="gray.300">
+								P. Sherman, 42 Wallaby Way, Sydney
+							</Typography>
+						</Box>
+						<Box
+							sx={{
+								display: 'flex',
+								alignItems: 'center',
+								justifyContent: {
+									xs: 'center',
+									sm: 'flex-start',
+								},
+								mt: 2,
+							}}
+						>
+							<PhoneIcon sx={{ mr: 1, color: 'gray.300' }} />
+							<Typography variant="body1">
+								Teléfono:
+								<Box
+									component="span"
+									sx={{
+										fontWeight: 'bold',
+										color: 'secondary',
+									}}
+								>
+									(+01) 234-567-89
+								</Box>
+							</Typography>
+						</Box>
+						<Box
+							sx={{
+								display: 'flex',
+								alignItems: 'center',
+								justifyContent: {
+									xs: 'center',
+									sm: 'flex-start',
+								},
+								mt: 2,
+							}}
+						>
+							<EmailIcon sx={{ mr: 1, color: 'gray.300' }} />
+							<Typography variant="body1">
+								Email:
+								<Box
+									component="span"
+									sx={{
+										fontWeight: 'bold',
+										color: 'secondary',
+									}}
+								>
+									support@fitnest.com
+								</Box>
+							</Typography>
+						</Box>
+					</Grid>
+					<Grid
+						item
+						xs={12}
+						sm={3}
+						md={3}
+						sx={{ textAlign: { xs: 'center', sm: 'left' } }}
+					>
+						<Typography variant="h6" component="h4" gutterBottom>
 							Información
-						</h4>
-						<ul>
-							<li className="mt-2 text-gray-300">
-								<Link
-									href="/sobre-nosotros"
-									className="hover:underline"
-								>
-									Sobre nosotros
-								</Link>
-							</li>
-							<li className="mt-2 text-gray-300">
-								<Link
-									href="/contactanos"
-									className="hover:underline"
-								>
-									Contáctanos
-								</Link>
-							</li>
-						</ul>
-					</div>
-					<div className="md:col-start-2 md:col-span-1 lg:col-span-1">
-						<h4 className="text-lg font-semibold mb-2">
+						</Typography>
+						<Box>
+							<Link
+								href="/sobre-nosotros"
+								color="gray.300"
+								underline="hover"
+								display="block"
+								mt={2}
+							>
+								Sobre nosotros
+							</Link>
+							<Link
+								href="/contactanos"
+								color="gray.300"
+								underline="hover"
+								display="block"
+								mt={2}
+							>
+								Contáctanos
+							</Link>
+						</Box>
+					</Grid>
+					<Grid
+						item
+						xs={12}
+						sm={3}
+						md={3}
+						sx={{ textAlign: { xs: 'center', sm: 'left' } }}
+					>
+						<Typography variant="h6" component="h4" gutterBottom>
 							Atención al cliente
-						</h4>
-						<ul>
-							<li className="mt-2 text-gray-300">
-								<Link
-									href="/terminos-y-condiciones"
-									className="hover:underline"
-								>
-									Términos y condiciones
-								</Link>
-							</li>
-							<li className="mt-2 text-gray-300">
-								<Link
-									href="/reembolsos-y-devoluciones"
-									className="hover:underline"
-								>
-									Reembolsos y devoluciones
-								</Link>
-							</li>
-							<li className="mt-2 text-gray-300">
-								<Link href="/pqrs" className="hover:underline">
-									PQRs
-								</Link>
-							</li>
-						</ul>
-					</div>
-				</div>
-			</div>
-		</footer>
+						</Typography>
+						<Box>
+							<Link
+								href="/terminos-y-condiciones"
+								color="gray.300"
+								underline="hover"
+								display="block"
+								mt={2}
+							>
+								Términos y condiciones
+							</Link>
+							<Link
+								href="/reembolsos-y-devoluciones"
+								color="gray.300"
+								underline="hover"
+								display="block"
+								mt={2}
+							>
+								Reembolsos y devoluciones
+							</Link>
+							<Link
+								href="/pqrs"
+								color="gray.300"
+								underline="hover"
+								display="block"
+								mt={2}
+							>
+								PQRs
+							</Link>
+						</Box>
+					</Grid>
+				</Grid>
+			</Container>
+		</Box>
 	);
 };
