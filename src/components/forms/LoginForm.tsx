@@ -1,97 +1,127 @@
-// // imports for the Form
-// // import { zodResolver } from '@hookform/resolvers/zod'
-// // import { useForm } from 'react-hook-form'
-// // import { z } from 'zod'
-// // import { loginFormSchema } from '@/schemas/loginformschema'
+'use client';
+import { useState } from 'react';
+import Link from 'next/link';
+import { useRouter } from 'next/navigation';
+import { useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { z } from 'zod';
 
-// // imports for the Redux and token
-// // import { useLoginUserMutation, useFindByEmailQuery } from '@/store/services/userApi'
-// // import Cookies from 'js-cookie'
-// import { useRouter } from 'next/navigation';
-// import { useEffect, useState } from 'react';
-// // import { useDispatch } from 'react-redux'
-// // import { setUser, setToken } from '@/store/slices/userSlice'
+import { LoginSchema } from '@/schemas';
+import { useLoginUserMutation } from '@/store';
+import { PasswordInput } from '../ui/password-input/PasswordInput';
 
-// export default function LoginForm() {
-// 	// Form Hook
-// 	// const form = useForm<z.infer<typeof loginFormSchema>>({
-// 	//     resolver: zodResolver(loginFormSchema),
-// 	//     defaultValues: {
-// 	//         email:"",
-// 	//         password:"",
-// 	//     },
-// 	// })
+export const LoginForm = () => {
+	const {
+		handleSubmit,
+		register,
+		formState: { errors, isSubmitting, isDirty },
+	} = useForm<z.infer<typeof LoginSchema>>({
+		resolver: zodResolver(LoginSchema),
+		defaultValues: {
+			email: '',
+			password: '',
+		},
+	});
 
-// 	// Redux LoginUser Mutation
-// 	// const [loginUser, { data, error }] = useLoginUserMutation()
-// 	// const dispatch = useDispatch()
+	const router = useRouter();
 
-// 	// Redux FetchUserByEmail Query
-// 	const [userEmail, setUserEmail] = useState('');
-// 	// const { data: userData, error: userError } = useFindByEmailQuery(userEmail, { skip: userEmail === '' })
+	const [succesfully, setSuccesfully] = useState('');
+	const [errorMap, setErrorMap] = useState('');
+	const [password, setPassword] = useState('');
 
-// 	// Variables
-// 	const [errorState, setErrorState] = useState('');
-// 	const router = useRouter();
+	const [loginUser, { data, error }] = useLoginUserMutation();
 
-// 	// useEffect - Redirect
-// 	// useEffect(()=>{
-// 	//     if(userData){
-// 	//         dispatch(setUser({ user: {
-// 	//             id: userData.id, email: userData.email, image: userData.image
-// 	//         }, role: userData.role }))
-// 	//         dispatch(setToken(Cookies.get('token') || null))
-// 	//         router.push('/')
-// 	//     } else if(userError){
-// 	//         console.log(userError)
-// 	//     }
-// 	// }, [userData, userError, dispatch, router])
+	async function onSubmit(data: z.infer<typeof LoginSchema>) {
+		let errorocurred = false;
+		await loginUser(data)
+			.unwrap()
+			.catch((error) => {
+				setErrorMap('Ocurrió un error al iniciar sesión');
+				errorocurred = true;
+			});
 
-// 	// OnSubmit Function - Login User
-// 	// async function onSubmit(formdata: z.infer<typeof loginFormSchema>) {
-// 	//     try {
-// 	//         const loginResponse = await loginUser(formdata).unwrap();
-// 	//         setErrorState('');
-// 	//         Cookies.set('token', loginResponse.access_token);
-// 	//         setUserEmail(formdata.email);
-// 	//     } catch (error: any) {
-// 	//         if (typeof error.status === 'number') {
-// 	//             if (error.status === 401) {
-// 	//                 setErrorState('Invalid Credentials');
-// 	//             } else {
-// 	//                 setErrorState('The user does not exist');
-// 	//             }
-// 	//         } else {
-// 	//             setErrorState('An unknown error occurred');
-// 	//         }
-// 	//     }
-// 	// }
+		if (!errorocurred && data) {
+			setErrorMap('');
+			setSuccesfully('Sesión iniciada correctamente');
+			router.push('/');
+		}
+	}
+	return (
+		<div className="fade-in">
+			<h2 className="mb-6 text-xl font-semibold text-center uppercase">
+				Iniciar Sesión
+			</h2>
+			<form onSubmit={handleSubmit(onSubmit)}>
+				<div className="space-y-5">
+					<div className="relative space-y-1">
+						<label
+							htmlFor="email"
+							className="font-semibold text-gray-600"
+						>
+							Email
+						</label>
+						<input
+							{...register('email', { required: true })}
+							type="email"
+							name="email"
+							className={`w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 ${
+								errors?.email
+									? 'focus:ring-red-600'
+									: 'focus:ring-blue-600'
+							}`}
+						/>
+						{errors?.email && (
+							<span className="text-red-600 text-sm">
+								{errors?.email?.message}
+							</span>
+						)}
+					</div>
+					<div className="relative space-y-1">
+						<PasswordInput
+							password={password}
+							setPassword={setPassword}
+							label="Contraseña"
+							className={`w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 ${
+								errors?.password
+									? 'focus:ring-red-600'
+									: 'focus:ring-blue-600'
+							}`}
+							register={register('password', { required: true })}
+						/>
+						{errors?.password && (
+							<span className="text-red-600 text-sm">
+								{errors?.password?.message}
+							</span>
+						)}
+					</div>
 
-// 	return (
-// 		<div>
-// 			<form
-// 				onSubmit={(e) => {}}
-// 				className="w-full space-y-4 py-4 px-2 flex flex-col items-center"
-// 			>
-// 				<div className="flex flex-col w-1/2">
-// 					<input name="email" type="text" />
-// 				</div>
-// 				<div className="flex justify-center w-1/6">
-// 					<button
-// 						type="submit"
-// 						className={
-// 							'w-full bg-one text-four font-semibold hover:bg-five hover:text-one hover:border-one hover:border-2'
-// 						}
-// 					>
-// 						Iniciar Sesión
-// 					</button>
-// 				</div>
-// 			</form>
-// 			{errorState != '' && (
-// 				<div className="text-red-500 text-center font-bold mb-2">
-// 					{errorState}
-// 				</div>
-// 			)}
-// 		</div>
-// 	);
-// }
+					{succesfully != '' && (
+						<div className="text-green-600 text-center font-bold mb-2 text-sm">
+							{succesfully}
+						</div>
+					)}
+					{errorMap != '' && (
+						<div className="text-red-600 text-center font-bold mb-2 text-sm">
+							{errorMap}
+						</div>
+					)}
+					<button
+						className="w-full py-2 pt-2 font-bold text-white bg-black rounded-md hover:bg-gray-800"
+						disabled={!isDirty || isSubmitting}
+					>
+						Iniciar Sesión
+					</button>
+				</div>
+			</form>
+			<p className="mt-4 text-center">
+				¿Aún no tienes cuenta?{' '}
+				<Link
+					href="/registrarse"
+					className="text-blue-600 hover:underline"
+				>
+					Crear cuenta
+				</Link>
+			</p>
+		</div>
+	);
+};

@@ -53,9 +53,9 @@ export const RegisterForm = () => {
 	}
 
 	return (
-		<>
-			<h2 className="mb-6 text-xl font-semibold text-center">
-				REGISTRARSE
+		<div className="fade-in">
+			<h2 className="mb-6 text-xl font-semibold text-center uppercase">
+				Registrarse
 			</h2>
 			<form onSubmit={handleSubmit(onSubmit)}>
 				<div className="space-y-5">
@@ -210,12 +210,12 @@ export const RegisterForm = () => {
 			<p className="mt-4 text-center">
 				¿Ya tienes una cuenta?{' '}
 				<Link
-					href="/iniciar-sesión"
+					href="/iniciar-sesion"
 					className="text-blue-600 hover:underline"
 				>
 					Iniciar sesión
 				</Link>
 			</p>
-		</>
+		</div>
 	);
 };

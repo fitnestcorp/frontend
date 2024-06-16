@@ -2,7 +2,7 @@ export * from './cart/Cart';
 
 export * from './categories/CategoryGrid';
 
-// export * from './forms/LoginForm';
+export * from './forms/LoginForm';
 export * from './forms/RegisterForm';
 
 export * from './slider/Slider';
