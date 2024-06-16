@@ -1,24 +1,75 @@
-import { IoSearchOutline } from 'react-icons/io5';
+'use client';
+import { useState } from 'react';
+import { useRouter } from 'next/navigation';
+import { Controller, useForm } from 'react-hook-form';
+import { z } from 'zod';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { TextField, InputAdornment } from '@mui/material';
+import SearchIcon from '@mui/icons-material/Search';
 
-interface Props {
-	className?: string;
-}
+import { SearchSchema } from '@/schemas';
 
-export const Search = ({ className }: Props) => {
+export const Search = () => {
+	const { handleSubmit, control } = useForm<z.infer<typeof SearchSchema>>({
+		resolver: zodResolver(SearchSchema),
+		defaultValues: {
+			search: '',
+		},
+	});
+
+	// const [findProduct, { data, error }] = useFindProductMutation(); //TODO: Implement this
+
+	const router = useRouter();
+	const [errorMap, setErrorMap] = useState('');
+
+	// async function onSubmit(data: z.infer<typeof SearchSchema>) {
+	// 	let errorocurred = false;
+	// 	await findProduct(data)
+	// 		.unwrap()
+	// 		.catch((error) => {
+	// 			setErrorMap('Ocurrió un error al buscar el producto');
+	// 			errorocurred = true;
+	// 		});
+
+	// 	if (!errorocurred && data) {
+	// 		setErrorMap('');
+	// 		router.push('/'); //TODO: Redirect to search page
+	// 	}
+	// }
+
 	return (
-		<div
-			className={`${className} relative w-full`}
-		>
-			<div className="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
-				<IoSearchOutline className="w-5 h-5 text-gray-400" />
-				<span className="sr-only">Search icon</span>
-			</div>
-			<input
-				type="text"
-				id="search-navbar"
-				className="block w-full p-2 ps-10 text-sm text-gray-900 rounded-lg focus:outline-none"
-				placeholder="Buscar"
+		// <form onSubmit={handleSubmit(onSubmit)}>
+		<form>
+			<Controller
+				name="search"
+				control={control}
+				render={({ field }) => (
+					<TextField
+						{...field}
+						fullWidth
+						placeholder="Buscar"
+						variant="outlined"
+						size="small"
+						InputProps={{
+							startAdornment: (
+								<InputAdornment position="start">
+									<SearchIcon />
+								</InputAdornment>
+							),
+						}}
+						sx={{
+							'& .MuiOutlinedInput-root': {
+								border: 'none',
+								backgroundColor: 'background.paper',
+								borderRadius: '0.5rem',
+							},
+							'& .MuiOutlinedInput-notchedOutline': {
+								border: 'none',
+							},
+						}}
+					/>
+				)}
 			/>
-		</div>
+		</form>
 	);
 };
