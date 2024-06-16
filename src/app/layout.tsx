@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import { inter } from '@/libs/fonts';
 import './globals.css';
+import ReduxProvider from './provider';
 
 export const metadata: Metadata = {
 	title: 'FITNEST',
@@ -14,7 +15,9 @@ export default function RootLayout({
 }>) {
 	return (
 		<html lang="en">
-			<body className={inter.className}>{children}</body>
+			<body className={inter.className}>
+				<ReduxProvider>{children}</ReduxProvider>
+			</body>
 		</html>
 	);
 }
