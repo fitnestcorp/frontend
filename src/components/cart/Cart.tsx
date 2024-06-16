@@ -83,7 +83,7 @@ export const Cart = () => {
 				onClose={toggleDrawer}
 				sx={{
 					'& .MuiDrawer-paper': {
-						width: { xs: '100%', sm: '50%', md: '30%' },
+						width: { xs: '100%', sm: '50%', md: '40%' },
 						boxSizing: 'border-box',
 					},
 				}}

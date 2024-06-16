@@ -49,14 +49,6 @@ export const Navbar = () => {
 							justifyContent: 'center',
 						}}
 					>
-						{/* <Box
-						sx={{
-							flexGrow: 1,
-							display: 'flex',
-							justifyContent: 'center',
-						}}
-					>
-						<Box sx={{ display: { xs: 'none', sm: 'flex' } }}> */}
 						<Button
 							component={NextLink}
 							href="/categoria/entrenamiento"
@@ -106,7 +98,6 @@ export const Navbar = () => {
 							Servicios
 						</Button>
 					</Box>
-					{/* </Box> */}
 
 					{/* Search, Cart, Login */}
 					<Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
@@ -141,29 +132,12 @@ export const Navbar = () => {
 								<PersonOutlineOutlined />
 							</IconButton>
 						</Box>
-						{/* <Button
-							component={NextLink}
-							href="/iniciar-sesion"
-							sx={{
-								display: { xs: 'none', md: 'block' },
-								color: 'white',
-								mx: 1,
-								borderRadius: '0.5rem',
 
-								'&:hover': {
-									backgroundColor: 'white',
-									color: 'black',
-								},
-							}}
-						>
-							Iniciar sesión
-						</Button> */}
+						{/* Show when screen is small */}
 						<Box sx={{ display: { xs: 'block', md: 'none' } }}>
 							<Sidemenu />
 						</Box>
 					</Box>
-
-					{/* Show when screen is small */}
 				</Toolbar>
 			</Container>
 		</AppBar>
