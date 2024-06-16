@@ -1,7 +1,10 @@
 import type { Metadata } from 'next';
-import { inter } from '@/libs/fonts';
-import './globals.css';
+
+import ThemeProviderWrapper from './ThemeProviderWrapper';
 import ReduxProvider from './provider';
+import { inter } from '@/libs/fonts';
+
+import './globals.css';
 
 export const metadata: Metadata = {
 	title: 'FITNEST',
@@ -16,7 +19,9 @@ export default function RootLayout({
 	return (
 		<html lang="en">
 			<body className={inter.className}>
-				<ReduxProvider>{children}</ReduxProvider>
+				<ThemeProviderWrapper>
+					<ReduxProvider>{children}</ReduxProvider>
+				</ThemeProviderWrapper>
 			</body>
 		</html>
 	);

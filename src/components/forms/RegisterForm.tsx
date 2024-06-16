@@ -2,18 +2,29 @@
 import { useState } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-import { useForm } from 'react-hook-form';
+import { Controller, useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
+import {
+	Box,
+	Grid,
+	TextField,
+	Button,
+	Typography,
+	Alert,
+	CircularProgress,
+	IconButton,
+	InputAdornment,
+} from '@mui/material';
 
 import { RegisterSchema } from '@/schemas';
 import { useRegisterUserMutation } from '@/store';
-import { PasswordInput } from '../ui/password-input/PasswordInput';
+import { Visibility, VisibilityOff } from '@mui/icons-material';
 
 export const RegisterForm = () => {
 	const {
 		handleSubmit,
-		register,
+		control,
 		formState: { errors, isSubmitting, isDirty },
 	} = useForm<z.infer<typeof RegisterSchema>>({
 		resolver: zodResolver(RegisterSchema),
@@ -29,10 +40,10 @@ export const RegisterForm = () => {
 
 	const router = useRouter();
 
-	const [succesfully, setSuccesfully] = useState('');
+	const [successfully, setSuccessfully] = useState('');
 	const [errorMap, setErrorMap] = useState('');
-	const [password, setPassword] = useState('');
-	const [confirmPassword, setConfirmPassword] = useState('');
+	const [passwordVisible, setPasswordVisible] = useState(false);
+	const [confirmPasswordVisible, setConfirmPasswordVisible] = useState(false);
 
 	const [registerUser, { data, error }] = useRegisterUserMutation();
 
@@ -47,175 +58,218 @@ export const RegisterForm = () => {
 
 		if (!errorocurred && data) {
 			setErrorMap('');
-			setSuccesfully('Usuario registrado correctamente');
+			setSuccessfully('Usuario registrado correctamente');
 			router.push('/');
 		}
 	}
 
 	return (
-		<div className="fade-in">
-			<h2 className="mb-6 text-xl font-semibold text-center uppercase">
+		<Box>
+			<Typography
+				component="h1"
+				variant="h5"
+				textAlign="center"
+				gutterBottom
+				sx={{ color: 'text.secondary', fontWeight: 'bold', mb: 2 }}
+			>
 				Registrarse
-			</h2>
+			</Typography>
 			<form onSubmit={handleSubmit(onSubmit)}>
-				<div className="space-y-5">
-					<div className="relative space-y-1">
-						<label
-							htmlFor="firstName"
-							className="font-semibold text-gray-600"
-						>
-							Nombre
-						</label>
-						<input
-							{...register('firstName', { required: true })}
-							type="text"
+				<Grid container spacing={2}>
+					<Grid item xs={12}>
+						<Controller
 							name="firstName"
-							className={`w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 ${
-								errors?.firstName
-									? 'focus:ring-red-600'
-									: 'focus:ring-blue-600'
-							}`}
+							control={control}
+							render={({ field }) => (
+								<TextField
+									{...field}
+									label="Nombre"
+									variant="outlined"
+									fullWidth
+									error={!!errors.firstName}
+									helperText={errors.firstName?.message}
+								/>
+							)}
 						/>
-						{errors?.firstName && (
-							<span className="text-red-600 text-sm">
-								{errors?.firstName?.message}
-							</span>
-						)}
-					</div>
-					<div className="relative space-y-1">
-						<label
-							htmlFor="lastName"
-							className="font-semibold text-gray-600"
-						>
-							Apellido
-						</label>
-						<input
-							{...register('lastName', { required: true })}
-							type="text"
+					</Grid>
+					<Grid item xs={12}>
+						<Controller
 							name="lastName"
-							className={`w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 ${
-								errors?.lastName
-									? 'focus:ring-red-600'
-									: 'focus:ring-blue-600'
-							}`}
+							control={control}
+							render={({ field }) => (
+								<TextField
+									{...field}
+									label="Apellido"
+									variant="outlined"
+									fullWidth
+									error={!!errors.lastName}
+									helperText={errors.lastName?.message}
+								/>
+							)}
 						/>
-						{errors?.lastName && (
-							<span className="text-red-600 text-sm">
-								{errors?.lastName?.message}
-							</span>
-						)}
-					</div>
-					<div className="relative space-y-1">
-						<label
-							htmlFor="birthDate"
-							className="font-semibold text-gray-600"
-						>
-							Fecha de nacimiento
-						</label>
-						<input
-							{...register('birthDate', { required: true })}
-							type="date"
+					</Grid>
+					<Grid item xs={12}>
+						<Controller
 							name="birthDate"
-							className={`w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 ${
-								errors?.birthDate
-									? 'focus:ring-red-600'
-									: 'focus:ring-blue-600'
-							}`}
+							control={control}
+							render={({ field }) => (
+								<TextField
+									{...field}
+									label="Fecha de nacimiento"
+									type="date"
+									variant="outlined"
+									fullWidth
+									InputLabelProps={{ shrink: true }}
+									error={!!errors.birthDate}
+									helperText={errors.birthDate?.message}
+								/>
+							)}
 						/>
-						{errors?.birthDate && (
-							<span className="text-red-600 text-sm">
-								{errors?.birthDate?.message}
-							</span>
-						)}
-					</div>
-					<div className="relative space-y-1">
-						<label
-							htmlFor="email"
-							className="font-semibold text-gray-600"
-						>
-							Email
-						</label>
-						<input
-							{...register('email', { required: true })}
-							type="email"
+					</Grid>
+					<Grid item xs={12}>
+						<Controller
 							name="email"
-							className={`w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 ${
-								errors?.email
-									? 'focus:ring-red-600'
-									: 'focus:ring-blue-600'
-							}`}
+							control={control}
+							render={({ field }) => (
+								<TextField
+									{...field}
+									label="Email"
+									type="email"
+									variant="outlined"
+									fullWidth
+									error={!!errors.email}
+									helperText={errors.email?.message}
+								/>
+							)}
 						/>
-						{errors?.email && (
-							<span className="text-red-600 text-sm">
-								{errors?.email?.message}
-							</span>
-						)}
-					</div>
-					<div className="relative space-y-1">
-						<PasswordInput
-							password={password}
-							setPassword={setPassword}
-							label="Contraseña"
-							className={`w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 ${
-								errors?.password
-									? 'focus:ring-red-600'
-									: 'focus:ring-blue-600'
-							}`}
-							register={register('password', { required: true })}
+					</Grid>
+					<Grid item xs={12}>
+						<Controller
+							name="password"
+							control={control}
+							render={({ field }) => (
+								<TextField
+									{...field}
+									label="Contraseña"
+									type={passwordVisible ? 'text' : 'password'}
+									variant="outlined"
+									fullWidth
+									error={!!errors.password}
+									helperText={errors.password?.message}
+									InputProps={{
+										endAdornment: (
+											<InputAdornment position="end">
+												<IconButton
+													onClick={() =>
+														setPasswordVisible(
+															!passwordVisible
+														)
+													}
+												>
+													{passwordVisible ? (
+														<VisibilityOff />
+													) : (
+														<Visibility />
+													)}
+												</IconButton>
+											</InputAdornment>
+										),
+									}}
+								/>
+							)}
 						/>
-						{errors?.password && (
-							<span className="text-red-600 text-sm">
-								{errors?.password?.message}
-							</span>
-						)}
-					</div>
-					<div className="relative space-y-1">
-						<PasswordInput
-							password={confirmPassword}
-							setPassword={setConfirmPassword}
-							label="Confirmar contraseña"
-							className={`w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 ${
-								errors?.confirmPassword
-									? 'focus:ring-red-600'
-									: 'focus:ring-blue-600'
-							}`}
-							register={register('confirmPassword', {
-								required: true,
-							})}
+					</Grid>
+					<Grid item xs={12}>
+						<Controller
+							name="confirmPassword"
+							control={control}
+							render={({ field }) => (
+								<TextField
+									{...field}
+									label="Confirmar contraseña"
+									type={
+										confirmPasswordVisible
+											? 'text'
+											: 'password'
+									}
+									variant="outlined"
+									fullWidth
+									error={!!errors.confirmPassword}
+									helperText={errors.confirmPassword?.message}
+									InputProps={{
+										endAdornment: (
+											<InputAdornment position="end">
+												<IconButton
+													onClick={() =>
+														setConfirmPasswordVisible(
+															!confirmPasswordVisible
+														)
+													}
+												>
+													{confirmPasswordVisible ? (
+														<VisibilityOff />
+													) : (
+														<Visibility />
+													)}
+												</IconButton>
+											</InputAdornment>
+										),
+									}}
+								/>
+							)}
 						/>
-						{errors?.confirmPassword && (
-							<span className="text-red-600 text-sm">
-								{errors?.confirmPassword?.message}
-							</span>
+					</Grid>
+					<Grid item xs={12}>
+						{successfully && (
+							<Alert severity="success" sx={{ mb: 2 }}>
+								{successfully}
+							</Alert>
 						)}
-					</div>
-					{succesfully != '' && (
-						<div className="text-green-600 text-center font-bold mb-2 text-sm">
-							{succesfully}
-						</div>
-					)}
-					{errorMap != '' && (
-						<div className="text-red-600 text-center font-bold mb-2 text-sm">
-							{errorMap}
-						</div>
-					)}
-					<button
-						className="w-full py-2 pt-2 font-bold text-white bg-black rounded-md hover:bg-gray-800"
-						disabled={!isDirty || isSubmitting}
-					>
-						Registrarse
-					</button>
-				</div>
+						{errorMap && (
+							<Alert severity="error" sx={{ mb: 2 }}>
+								{errorMap}
+							</Alert>
+						)}
+					</Grid>
+					<Grid item xs={12}>
+						<Button
+							type="submit"
+							fullWidth
+							variant="contained"
+							color="primary"
+							disabled={!isDirty || isSubmitting}
+							sx={{
+								height: 48,
+								fontSize: '1rem',
+								fontWeight: 'bold',
+							}}
+							endIcon={
+								isSubmitting && <CircularProgress size={20} />
+							}
+						>
+							Registrarse
+						</Button>
+					</Grid>
+				</Grid>
 			</form>
-			<p className="mt-4 text-center">
+			<Typography
+				variant="body2"
+				textAlign="center"
+				mt={2}
+				sx={{ color: 'text.secondary' }}
+			>
 				¿Ya tienes una cuenta?{' '}
 				<Link
 					href="/iniciar-sesion"
-					className="text-blue-600 hover:underline"
+					style={{
+						color: '#377AB8',
+						textDecoration: 'none',
+						fontWeight: 'bold',
+					}}
 				>
 					Iniciar sesión
 				</Link>
-			</p>
-		</div>
+			</Typography>
+		</Box>
 	);
 };

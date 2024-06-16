@@ -1,19 +1,31 @@
 'use client';
 import { useState } from 'react';
-import Link from 'next/link';
+import NextLink from 'next/link';
 import { useRouter } from 'next/navigation';
-import { useForm } from 'react-hook-form';
+import { Controller, useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
+import {
+	Grid,
+	TextField,
+	Button,
+	Typography,
+	Box,
+	Alert,
+	CircularProgress,
+	InputAdornment,
+	IconButton,
+	Link,
+} from '@mui/material';
 
 import { LoginSchema } from '@/schemas';
 import { useLoginUserMutation } from '@/store';
-import { PasswordInput } from '../ui/password-input/PasswordInput';
+import { Visibility, VisibilityOff } from '@mui/icons-material';
 
 export const LoginForm = () => {
 	const {
 		handleSubmit,
-		register,
+		control,
 		formState: { errors, isSubmitting, isDirty },
 	} = useForm<z.infer<typeof LoginSchema>>({
 		resolver: zodResolver(LoginSchema),
@@ -25,9 +37,9 @@ export const LoginForm = () => {
 
 	const router = useRouter();
 
-	const [succesfully, setSuccesfully] = useState('');
+	const [successfully, setSuccessfully] = useState('');
 	const [errorMap, setErrorMap] = useState('');
-	const [password, setPassword] = useState('');
+	const [passwordVisible, setPasswordVisible] = useState(false);
 
 	const [loginUser, { data, error }] = useLoginUserMutation();
 
@@ -42,86 +54,128 @@ export const LoginForm = () => {
 
 		if (!errorocurred && data) {
 			setErrorMap('');
-			setSuccesfully('Sesión iniciada correctamente');
+			setSuccessfully('Sesión iniciada correctamente');
 			router.push('/');
 		}
 	}
 	return (
-		<div className="fade-in">
-			<h2 className="mb-6 text-xl font-semibold text-center uppercase">
+		<Box>
+			<Typography
+				component="h1"
+				variant="h5"
+				textAlign="center"
+				gutterBottom
+				sx={{ color: 'text.secondary', fontWeight: 'bold', mb: 2 }}
+			>
 				Iniciar Sesión
-			</h2>
+			</Typography>
 			<form onSubmit={handleSubmit(onSubmit)}>
-				<div className="space-y-5">
-					<div className="relative space-y-1">
-						<label
-							htmlFor="email"
-							className="font-semibold text-gray-600"
-						>
-							Email
-						</label>
-						<input
-							{...register('email', { required: true })}
-							type="email"
+				<Grid container spacing={2}>
+					<Grid item xs={12}>
+						<Controller
 							name="email"
-							className={`w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 ${
-								errors?.email
-									? 'focus:ring-red-600'
-									: 'focus:ring-blue-600'
-							}`}
+							control={control}
+							render={({ field }) => (
+								<TextField
+									{...field}
+									label="Email"
+									variant="outlined"
+									fullWidth
+									error={!!errors.email}
+									helperText={errors.email?.message}
+								/>
+							)}
 						/>
-						{errors?.email && (
-							<span className="text-red-600 text-sm">
-								{errors?.email?.message}
-							</span>
-						)}
-					</div>
-					<div className="relative space-y-1">
-						<PasswordInput
-							password={password}
-							setPassword={setPassword}
-							label="Contraseña"
-							className={`w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 ${
-								errors?.password
-									? 'focus:ring-red-600'
-									: 'focus:ring-blue-600'
-							}`}
-							register={register('password', { required: true })}
+					</Grid>
+					<Grid item xs={12}>
+						<Controller
+							name="password"
+							control={control}
+							render={({ field }) => (
+								<TextField
+									{...field}
+									label="Contraseña"
+									type={passwordVisible ? 'text' : 'password'}
+									variant="outlined"
+									fullWidth
+									error={!!errors.password}
+									helperText={errors.password?.message}
+									InputProps={{
+										endAdornment: (
+											<InputAdornment position="end">
+												<IconButton
+													onClick={() =>
+														setPasswordVisible(
+															!passwordVisible
+														)
+													}
+												>
+													{passwordVisible ? (
+														<VisibilityOff />
+													) : (
+														<Visibility />
+													)}
+												</IconButton>
+											</InputAdornment>
+										),
+									}}
+								/>
+							)}
 						/>
-						{errors?.password && (
-							<span className="text-red-600 text-sm">
-								{errors?.password?.message}
-							</span>
+					</Grid>
+					<Grid item xs={12} sx={{ textAlign: 'left' }}>
+						<Link
+							href="/forgot-password"
+							style={{
+								color: '#377AB8',
+								fontWeight: 'bold',
+								textDecoration: 'none',
+								fontSize: '0.875rem',
+							}}
+						>
+							¿Olvidaste la contraseña?
+						</Link>
+					</Grid>
+					<Grid item xs={12}>
+						{successfully && (
+							<Alert severity="success">{successfully}</Alert>
 						)}
-					</div>
-
-					{succesfully != '' && (
-						<div className="text-green-600 text-center font-bold mb-2 text-sm">
-							{succesfully}
-						</div>
-					)}
-					{errorMap != '' && (
-						<div className="text-red-600 text-center font-bold mb-2 text-sm">
-							{errorMap}
-						</div>
-					)}
-					<button
-						className="w-full py-2 pt-2 font-bold text-white bg-black rounded-md hover:bg-gray-800"
-						disabled={!isDirty || isSubmitting}
-					>
-						Iniciar Sesión
-					</button>
-				</div>
+						{errorMap && <Alert severity="error">{errorMap}</Alert>}
+					</Grid>
+					<Grid item xs={12}>
+						<Button
+							type="submit"
+							fullWidth
+							variant="contained"
+							disabled={!isDirty || isSubmitting}
+							endIcon={
+								isSubmitting && <CircularProgress size={20} />
+							}
+						>
+							Iniciar Sesión
+						</Button>
+					</Grid>
+				</Grid>
 			</form>
-			<p className="mt-4 text-center">
+			<Typography
+				variant="body2"
+				textAlign="center"
+				mt={2}
+				sx={{ color: 'text.secondary' }}
+			>
 				¿Aún no tienes cuenta?{' '}
 				<Link
 					href="/registrarse"
-					className="text-blue-600 hover:underline"
+					component={NextLink}
+					style={{
+						color: '#377AB8',
+						textDecoration: 'none',
+						fontWeight: 'bold',
+					}}
 				>
 					Crear cuenta
 				</Link>
-			</p>
-		</div>
+			</Typography>
+		</Box>
 	);
 };
