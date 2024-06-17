@@ -1,4 +1,6 @@
-import { CategoryGrid, Slider } from '@/components';
+import { Box } from '@mui/material';
+
+import { Banner, CategorySwiper } from '@/components';
 import { SeedCategory, initialData } from '@/seed/seed';
 
 const categories = initialData.categories;
@@ -13,17 +15,13 @@ export const Home = () => {
 	);
 
 	return (
-		<div>
-			{/* <Slider
-				images={entrenamiento!.subcategories!.map(
-					(subcategory) => subcategory.image
-				)}
-				title={entrenamiento!.name}
-				type="categories"
-				className="m-3 h-96"
-			/> */}
-			<CategoryGrid categories={entrenamiento!.subcategories!} />
-		</div>
+		<Box>
+			<Banner
+				image={'/banners/banner.jpg'}
+				title={'POTENCIA TU CUERPO, TRANSFORMA TU VIDA'}
+			/>
+			<CategorySwiper categories={entrenamiento?.subcategories!} />
+		</Box>
 	);
 };
 

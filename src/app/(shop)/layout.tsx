@@ -11,12 +11,13 @@ export const ShopLayout = ({
 				minHeight: '100vh',
 				display: 'flex',
 				flexDirection: 'column',
+				bgcolor: 'background.paper',
 			}}
 		>
 			<Navbar />
-			<Container sx={{ flex: 1, px: { xs: 2, sm: 3, md: 4, lg: 5 } }}>
+			{/* <Container sx={{ flex: 1, px: { xs: 2, sm: 3, md: 4, lg: 5 } }}> */}
 				{children}
-			</Container>
+			{/* </Container> */}
 			<Footer />
 		</Box>
 	);

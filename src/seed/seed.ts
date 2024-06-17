@@ -110,5 +110,30 @@ export const initialData: SeedData = {
 			slug: 'servicios',
 			image: 'servicios.jpg',
 		},
+		{
+			name: 'cardio',
+			slug: 'cardio',
+			image: 'cardio.jpg',
+		},
+		{
+			name: 'fuerza',
+			slug: 'fuerza',
+			image: 'fuerza.jpg',
+		},
+		{
+			name: 'funcional',
+			slug: 'funcional',
+			image: 'funcional.jpg',
+		},
+		{
+			name: 'boxeo',
+			slug: 'boxeo',
+			image: 'boxeo.jpg',
+		},
+		{
+			name: 'yoga',
+			slug: 'yoga',
+			image: 'yoga.jpg',
+		},
 	],
 };
