@@ -39,7 +39,7 @@ export const Banner = ({ image, title }: Prop) => {
 					mx: 2,
 				}}
 			>
-				{title}
+				{title.toUpperCase()}
 			</Typography>
 		</Box>
 	);
