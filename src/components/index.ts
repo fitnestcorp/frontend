@@ -1,3 +1,5 @@
+export * from './banner/Banner';
+
 export * from './cart/Cart';
 
 export * from './categories/CategorySwiper';

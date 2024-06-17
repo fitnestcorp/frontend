@@ -1,6 +1,6 @@
 import { Box } from '@mui/material';
 
-import { CategorySwiper } from '@/components';
+import { Banner, CategorySwiper } from '@/components';
 import { SeedCategory, initialData } from '@/seed/seed';
 
 const categories = initialData.categories;
@@ -15,9 +15,13 @@ export const Home = () => {
 	);
 
 	return (
-		<div>
+		<Box>
+			<Banner
+				image={'/banner/banner-1.jpg'}
+				title={'POTENCIA TU CUERPO, TRANSFORMA TU VIDA'}
+			/>
 			<CategorySwiper categories={entrenamiento?.subcategories!} />
-		</div>
+		</Box>
 	);
 };
 
