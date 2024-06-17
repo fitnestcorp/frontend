@@ -13,11 +13,6 @@ interface Props {
 const categories = initialData.categories;
 
 export const CategoryPage = ({ params }: Props) => {
-	const breadcrumbLinks = [
-		{ href: '/', label: 'Inicio' },
-		{ href: '/categoria', label: 'Categorías' },
-	];
-
 	const { name } = params;
 	const category = categories.find((category) => category.name === name);
 
@@ -27,7 +22,7 @@ export const CategoryPage = ({ params }: Props) => {
 				image={`/banners/${category?.image}`}
 				title={category!.name}
 			/>
-			<Breadcrumb links={breadcrumbLinks} current={category!.name} />
+			<Breadcrumb />
 		</Box>
 	);
 };

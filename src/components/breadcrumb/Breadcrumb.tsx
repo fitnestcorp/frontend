@@ -4,12 +4,7 @@ import Link from 'next/link';
 import { Breadcrumbs, Typography } from '@mui/material';
 import NavigateNextIcon from '@mui/icons-material/NavigateNext';
 
-interface Props {
-	links: Array<{ href: string; label: string }>;
-	current: string;
-}
-
-export const Breadcrumb = ({ links, current }: Props) => {
+export const Breadcrumb = () => {
 	const pathname = usePathname();
 	const pathSegments = pathname.split('/').filter((segment) => segment);
 
