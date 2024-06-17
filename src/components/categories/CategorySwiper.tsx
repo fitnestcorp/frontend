@@ -24,6 +24,7 @@ export const CategorySwiper = ({ categories }: Props) => {
 				sx={{
 					fontWeight: 'bold',
 					my: 2,
+					color: 'text.secondary',
 				}}
 			>
 				ENTRENAMIENTO

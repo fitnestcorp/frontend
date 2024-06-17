@@ -11,6 +11,7 @@ export const ShopLayout = ({
 				minHeight: '100vh',
 				display: 'flex',
 				flexDirection: 'column',
+				bgcolor: 'background.paper',
 			}}
 		>
 			<Navbar />
