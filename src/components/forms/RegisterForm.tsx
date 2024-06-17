@@ -30,9 +30,9 @@ export const RegisterForm = () => {
 	} = useForm<z.infer<typeof RegisterSchema>>({
 		resolver: zodResolver(RegisterSchema),
 		defaultValues: {
-			firstName: '',
-			lastName: '',
-			birthDate: '',
+			first_name: '',
+			last_name: '',
+			birth_date: '',
 			email: '',
 			password: '',
 			confirmPassword: '',
@@ -50,13 +50,12 @@ export const RegisterForm = () => {
 
 	async function onSubmit(data: z.infer<typeof RegisterSchema>) {
 		let errorocurred = false;
-		await registerUser(data)
+		const response = await registerUser(data)
 			.unwrap()
 			.catch((error) => {
 				setErrorMap('Ocurrió un error al registrar el usuario');
 				errorocurred = true;
 			});
-
 		if (!errorocurred && data) {
 			setErrorMap('');
 			setSuccessfully('Usuario registrado correctamente');
@@ -79,7 +78,7 @@ export const RegisterForm = () => {
 				<Grid container spacing={2}>
 					<Grid item xs={12}>
 						<Controller
-							name="firstName"
+							name="first_name"
 							control={control}
 							render={({ field }) => (
 								<TextField
@@ -87,15 +86,15 @@ export const RegisterForm = () => {
 									label="Nombre"
 									variant="outlined"
 									fullWidth
-									error={!!errors.firstName}
-									helperText={errors.firstName?.message}
+									error={!!errors.first_name}
+									helperText={errors.first_name?.message}
 								/>
 							)}
 						/>
 					</Grid>
 					<Grid item xs={12}>
 						<Controller
-							name="lastName"
+							name="last_name"
 							control={control}
 							render={({ field }) => (
 								<TextField
@@ -103,15 +102,15 @@ export const RegisterForm = () => {
 									label="Apellido"
 									variant="outlined"
 									fullWidth
-									error={!!errors.lastName}
-									helperText={errors.lastName?.message}
+									error={!!errors.last_name}
+									helperText={errors.last_name?.message}
 								/>
 							)}
 						/>
 					</Grid>
 					<Grid item xs={12}>
 						<Controller
-							name="birthDate"
+							name="birth_date"
 							control={control}
 							render={({ field }) => (
 								<TextField
@@ -121,8 +120,8 @@ export const RegisterForm = () => {
 									variant="outlined"
 									fullWidth
 									InputLabelProps={{ shrink: true }}
-									error={!!errors.birthDate}
-									helperText={errors.birthDate?.message}
+									error={!!errors.birth_date}
+									helperText={errors.birth_date?.message}
 								/>
 							)}
 						/>

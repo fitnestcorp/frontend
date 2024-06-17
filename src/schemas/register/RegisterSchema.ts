@@ -2,13 +2,13 @@ import { z } from 'zod';
 
 export const RegisterSchema = z
 	.object({
-		firstName: z
+		first_name: z
 			.string()
 			.min(3, {
 				message: 'El nombre debe tener al menos 3 caracteres',
 			})
 			.max(30, { message: 'El nombre debe tener máximo 30 caracteres' }),
-		lastName: z
+		last_name: z
 			.string()
 			.min(3, {
 				message: 'El apellido debe tener al menos 3 caracteres',
@@ -21,7 +21,7 @@ export const RegisterSchema = z
 		//     const age = now.getFullYear() - date.getFullYear();
 		//     return age >= 18;
 		// }, { message: 'Debes ser mayor de edad para registrarte' }),
-		birthDate: z.string().min(8, {
+		birth_date: z.string().min(8, {
 			message:
 				'Debes ingresar una fecha de nacimiento válida (dd/mm/aaaa)',
 		}),
