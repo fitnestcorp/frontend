@@ -23,9 +23,10 @@ export const Banner = ({ image, title }: Prop) => {
 			<Image
 				src={image}
 				alt={title}
-				layout="fill"
-				objectFit="cover"
 				quality={100}
+				style={{ objectFit: 'cover' }}
+				fill
+				priority
 			/>
 			<Typography
 				variant="h3"

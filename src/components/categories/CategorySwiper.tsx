@@ -35,7 +35,6 @@ export const CategorySwiper = ({ categories }: Props) => {
 			<Swiper
 				spaceBetween={10}
 				slidesPerView={1}
-				loop
 				navigation
 				autoplay={{ delay: 3000 }}
 				modules={[Navigation, Pagination, Autoplay]}

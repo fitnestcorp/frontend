@@ -23,7 +23,6 @@ export const Breadcrumb = () => {
 				<Typography
 					color="text.secondary"
 					variant="body1"
-					component="a"
 					sx={{
 						textDecoration: 'none',
 						cursor: 'pointer',
@@ -50,7 +49,6 @@ export const Breadcrumb = () => {
 						<Typography
 							color="text.secondary"
 							variant="body1"
-							component="a"
 							sx={{
 								textDecoration: 'none',
 								cursor: 'pointer',
