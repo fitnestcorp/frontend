@@ -1,11 +1,9 @@
 export * from './cart/Cart';
 
-export * from './categories/CategoryGrid';
+export * from './categories/CategorySwiper';
 
 export * from './forms/LoginForm';
 export * from './forms/RegisterForm';
-
-export * from './slider/Slider';
 
 export * from './sidemenu/Sidemenu';
 
