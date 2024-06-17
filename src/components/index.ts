@@ -4,10 +4,12 @@ export * from './breadcrumb/Breadcrumb';
 
 export * from './cart/Cart';
 
-export * from './categories/CategorySwiper';
+export * from './category/CategorySwiper';
 
 export * from './forms/LoginForm';
 export * from './forms/RegisterForm';
+
+export * from './product/ProductDetails';
 
 export * from './sidemenu/Sidemenu';
 

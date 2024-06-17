@@ -9,7 +9,7 @@ import { userApi } from './services/userApi';
 const persistConfig = {
 	key: 'root',
 	storage,
-	whitelist: ['user', 'token', 'role'],
+	whitelist: ['user'],
 };
 
 const persistedReducer = persistReducer(persistConfig, userReducer);

@@ -1,4 +1,7 @@
 export interface User {
-    id: string;
-    email: string;
-}//TODO: Add more fields
+	id: string;
+	email: string;
+	firstName: string;
+	lastName: string;
+	role: string;
+}
