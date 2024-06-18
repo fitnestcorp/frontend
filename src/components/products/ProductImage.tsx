@@ -23,13 +23,13 @@ const ProductImage: React.FC<ProductImageProps> = ({ url, title, height = 14 }) 
     }, [url]);
 
     return (
-        <div className='max-h-[80vh] h-full bg-neutral-100 p-2 flex items-center justify-center'>
+        <div className='w-full h-64 flex items-center justify-center bg-white p-4'>
             {filePath ? (
                 <Image 
                     alt={title} 
-                    className='max-h-[90%] object-contain h-full' 
-                    width={400} 
-                    height={600} 
+                    className='object-contain max-w-full max-h-full' 
+                    width={256} 
+                    height={256} 
                     src={filePath} 
                 />
             ) : (

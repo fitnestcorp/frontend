@@ -1,10 +1,9 @@
 import { Box } from '@mui/material';
-
 import { Banner, Breadcrumb } from '@/components';
-
 import { initialData } from '@/seed/seed';
-import ProductCard from '@/components/products/ProductCard';
+import ProductGrid from '@/components/products/ProductGrid';
 import ImageUploader from '@/components/products/Test';
+import { Product, Review, User } from '@/interfaces';
 
 interface Props {
 	params: {
@@ -12,15 +11,62 @@ interface Props {
 	};
 }
 
-const producto = {
+const usuario: User = {
 	id: "123",
-    name: "nombre",
-    description: "descripcion",
-    price: 123,
-    category: "ktegorias",
-    stock: 123,
-    product_image: "71HEqww6NtL._AC_SX679_.jpg"
+	email: "123@123.com",
+	firstName: "hola",
+	lastName: "chao",
+	role: "Cient"
 }
+
+const review : Review = {
+	id: "123",
+	comment: "Si",
+	rate: 4.5,
+	user: usuario
+}
+
+const producto1 : Product = {
+	id: "123",
+	name: "mancuernas",
+	description: "muy pesadas",
+	price: 20,
+	rate: 4.5,
+    stock: 10,
+	images: ["71HEqww6NtL._AC_SX679_.jpg"],
+	reviews: [review]
+}
+const producto2 : Product = {
+	id: "123",
+	name: "mancuernas",
+	description: "muy pesadas",
+	price: 20,
+	rate: 4.5,
+    stock: 10,
+	images: ["812w7U9WzwL._AC_SX679_.jpg"],
+	reviews: [review]
+}
+const producto3 : Product = {
+	id: "123",
+	name: "mancuernas",
+	description: "muy pesadas",
+	price: 20,
+	rate: 4.5,
+    stock: 10,
+	images: ["71HEqww6NtL._AC_SX679_.jpg"],
+	reviews: [review]
+}
+const producto4 : Product = {
+	id: "123",
+	name: "mancuernas",
+	description: "muy pesadas",
+	price: 20,
+	rate: 4.5,
+    stock: 10,
+	images: ["812w7U9WzwL._AC_SX679_.jpg"],
+	reviews: [review]
+}
+const productos : Product[] = [producto1,producto2,producto3,producto4]
 
 const categories = initialData.categories;
 
@@ -35,7 +81,7 @@ export const CategoryPage = ({ params }: Props) => {
 				title={category!.name}
 			/>
 			<Breadcrumb />
-			<ProductCard product={producto}/>
+			<ProductGrid products={productos} />
 		</Box>
 	);
 };

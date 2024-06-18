@@ -1,54 +1,35 @@
 import Link from 'next/link';
 import ProductImage from './ProductImage';
-
-class Product {
-    id: string;
-    name: string;
-    description: string;
-    price: number;
-    category: string;
-    stock: number;
-    product_image: string;
-
-    constructor(id: string, name: string, description: string, price: number, category: string, stock: number, product_image: string) {
-        this.id = id;
-        this.name = name;
-        this.description = description;
-        this.price = price;
-        this.category = category;
-        this.stock = stock;
-        this.product_image = product_image;
-    }
-}
+import { Product } from '@/interfaces';
 
 interface ProductCardProps {
     product: Product;
 }
 
 const ProductCard = ({ product }: ProductCardProps) => {
-    return (
-        <div className='group w-[80vh]'>
-            <Link href={`/ebook/${product.id}`} passHref>
-                <div className="block">
-                    
-                    <ProductImage title={product.name} url={product.product_image} />
+    const averageRating = product.reviews.reduce((sum, review) => sum + review.rate, 0) / product.reviews.length;
 
-                    <div className="mt-2">
-                        <h3 className="font-semibold text-lg line-clamp-1 overflow-ellipsis">
+    return (
+        <div className='group bg-white rounded-lg shadow-md hover:shadow-lg transition-shadow p-6'>
+            <Link href={`/product/${product.id}`} passHref>
+                <div className="block cursor-pointer">
+                    <ProductImage title={product.name} url={product.images[0]} />
+
+                    <div className="mt-4 text-center">
+                        <h3 className="font-semibold text-lg line-clamp-1 overflow-ellipsis text-gray-800">
                             {product.name}
                         </h3>
+                        
+                        <div className="flex items-center justify-center mt-1 text-yellow-500">
+                            <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                                <path d="M9.049 2.927a1 1 0 011.902 0l1.287 4.01a1 1 0 00.95.69h4.205a1 1 0 01.554 1.832l-3.4 2.47a1 1 0 00-.36 1.118l1.287 4.01a1 1 0 01-1.541 1.118l-3.4-2.47a1 1 0 00-1.175 0l-3.4 2.47a1 1 0 01-1.541-1.118l1.287-4.01a1 1 0 00-.36-1.118l-3.4-2.47a1 1 0 01.554-1.832h4.205a1 1 0 00.95-.69l1.287-4.01z" />
+                            </svg>
+                            <span className="ml-1">{averageRating.toFixed(1)}</span>
+                            <span className="text-gray-600 ml-2">({product.reviews.length} opiniones)</span>
+                        </div>
 
-                        <h4 className='text-neutral-600'>
-                            {product.description}
-                        </h4>
-
-                        <div className='flex justify-between items-center w-full pr-4'>
-                            <span className="text-xl font-bold">
-                                ${product.price.toFixed(2)}
-                            </span>
-                            <span className="text-sm">
-                                Stock: {product.stock}
-                            </span>
+                        <div className='mt-2 text-lg font-semibold text-gray-800'>
+                            ${product.price.toFixed(2)}
                         </div>
                     </div>
                 </div>
