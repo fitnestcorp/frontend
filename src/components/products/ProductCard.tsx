@@ -16,7 +16,7 @@ const ProductCard = ({ product }: ProductCardProps) => {
                     <ProductImage title={product.name} url={product.images[0]} />
 
                     <div className="mt-4 text-center">
-                        <h3 className="font-semibold text-lg line-clamp-1 overflow-ellipsis text-gray-800">
+                        <h3 className="font-semibold text-xl line-clamp-1 overflow-ellipsis text-gray-800">
                             {product.name}
                         </h3>
                         
