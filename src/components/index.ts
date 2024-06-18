@@ -1,3 +1,5 @@
+export * from './admin-button/AdminButton';
+
 export * from './banner/Banner';
 
 export * from './breadcrumb/Breadcrumb';

@@ -63,11 +63,11 @@ export const Cart = () => {
 					width: '40px',
 					height: '40px',
 					borderRadius: '0.5rem',
-					color: 'white',
+					color: 'text.primary',
 					backgroundColor: 'black',
 					'&:hover': {
-						backgroundColor: 'white',
-						color: 'black',
+						backgroundColor: 'secondary.main',
+						color: 'text.secondary',
 						border: '1px solid black',
 					},
 				}}
@@ -83,7 +83,7 @@ export const Cart = () => {
 				onClose={toggleDrawer}
 				sx={{
 					'& .MuiDrawer-paper': {
-						width: { xs: '100%', sm: '50%', md: '40%' },
+						width: { xs: '100%', sm: '50%', md: '40%', lg: '30%' },
 						boxSizing: 'border-box',
 					},
 				}}
@@ -108,7 +108,7 @@ export const Cart = () => {
 						<Typography
 							variant="h6"
 							fontWeight="bold"
-							color="primary"
+							color="text.secondary"
 						>
 							CARRITO
 						</Typography>
@@ -141,14 +141,14 @@ export const Cart = () => {
 							<Typography
 								variant="h5"
 								fontWeight="bold"
-								color="primary"
+								color="text.secondary"
 							>
 								Subtotal:
 							</Typography>
 							<Typography
 								variant="h5"
 								fontWeight="bold"
-								color="primary"
+								color="text.secondary"
 							>
 								$200.000
 							</Typography>
@@ -158,7 +158,7 @@ export const Cart = () => {
 							fullWidth
 							sx={{
 								backgroundColor: 'black',
-								color: 'white',
+								color: 'text.primary',
 								borderRadius: '0.5rem',
 								paddingY: '0.5rem',
 								'&:hover': { backgroundColor: '#333' },

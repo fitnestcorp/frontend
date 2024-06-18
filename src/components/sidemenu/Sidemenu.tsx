@@ -64,11 +64,11 @@ export const Sidemenu = () => {
 					width: '40px',
 					height: '40px',
 					borderRadius: '0.5rem',
-					color: 'white',
+					color: 'text.primary',
 					backgroundColor: 'black',
 					'&:hover': {
-						backgroundColor: 'white',
-						color: 'black',
+						backgroundColor: 'secondary.main',
+						color: 'text.secondary',
 						border: '1px solid black',
 					},
 				}}

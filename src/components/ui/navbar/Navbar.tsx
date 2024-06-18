@@ -10,9 +10,13 @@ import {
 	Container,
 	IconButton,
 } from '@mui/material';
+import {
+	LogoutOutlined,
+	PersonOutlineOutlined,
+	TuneOutlined,
+} from '@mui/icons-material';
 
-import { Cart, Search, Sidemenu } from '@/components';
-import { PersonOutlineOutlined } from '@mui/icons-material';
+import { AdminButton, Cart, Search, Sidemenu } from '@/components';
 
 export const Navbar = () => {
 	return (
@@ -35,7 +39,7 @@ export const Navbar = () => {
 					>
 						<Typography
 							variant="h4"
-							sx={{ fontWeight: 'bold', color: 'white' }}
+							sx={{ fontWeight: 'bold', color: 'text.primary' }}
 						>
 							FITNEST
 						</Typography>
@@ -53,13 +57,12 @@ export const Navbar = () => {
 							component={NextLink}
 							href="/categoria/entrenamiento"
 							sx={{
-								color: 'white',
+								color: 'text.primary',
 								mx: 1,
 								borderRadius: '0.5rem',
-
 								'&:hover': {
-									backgroundColor: 'white',
-									color: 'black',
+									backgroundColor: 'secondary.main',
+									color: 'text.secondary',
 								},
 							}}
 						>
@@ -69,13 +72,12 @@ export const Navbar = () => {
 							component={NextLink}
 							href="/categoria/equipamiento"
 							sx={{
-								color: 'white',
+								color: 'text.primary',
 								mx: 1,
 								borderRadius: '0.5rem',
-
 								'&:hover': {
-									backgroundColor: 'white',
-									color: 'black',
+									backgroundColor: 'secondary.main',
+									color: 'text.secondary',
 								},
 							}}
 						>
@@ -85,13 +87,12 @@ export const Navbar = () => {
 							component={NextLink}
 							href="/categoria/servicios"
 							sx={{
-								color: 'white',
+								color: 'text.primary',
 								mx: 1,
 								borderRadius: '0.5rem',
-
 								'&:hover': {
-									backgroundColor: 'white',
-									color: 'black',
+									backgroundColor: 'secondary.main',
+									color: 'text.secondary',
 								},
 							}}
 						>
@@ -101,40 +102,84 @@ export const Navbar = () => {
 
 					{/* Search, Cart, Login */}
 					<Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
-						<Box sx={{ display: { xs: 'none', md: 'block' } }}>
+						<Box
+							sx={{
+								display: { xs: 'none', md: 'block' },
+							}}
+						>
 							<Search />
 						</Box>
-
 						<Cart />
-
 						<Box sx={{ display: { xs: 'none', md: 'block' } }}>
-							<IconButton
-								component={NextLink}
-								href="/iniciar-sesion"
-								color="inherit"
-								sx={{
-									position: 'relative',
-									display: 'flex',
-									alignItems: 'center',
-									justifyContent: 'center',
-									width: '40px',
-									height: '40px',
-									borderRadius: '0.5rem',
-									color: 'white',
-									backgroundColor: 'black',
-									'&:hover': {
-										backgroundColor: 'white',
-										color: 'black',
-										border: '1px solid black',
-									},
-								}}
-							>
-								<PersonOutlineOutlined />
-							</IconButton>
+							<Box sx={{ display: 'flex', gap: 2 }}>
+								{/* Show if user is not authenticated */}
+								<IconButton
+									component={NextLink}
+									href="/iniciar-sesion"
+									color="inherit"
+									sx={{
+										position: 'relative',
+										display: 'flex',
+										alignItems: 'center',
+										justifyContent: 'center',
+										width: '40px',
+										height: '40px',
+										borderRadius: '0.5rem',
+										color: 'text.primary',
+										backgroundColor: 'black',
+										'&:hover': {
+											backgroundColor: 'secondary.main',
+											color: 'text.secondary',
+											border: '1px solid black',
+										},
+									}}
+								>
+									<PersonOutlineOutlined />
+								</IconButton>
+
+								{/* Show if user is admin */}
+								<Box
+									sx={{
+										display: { xs: 'none', md: 'block' },
+									}}
+								>
+									<AdminButton />
+								</Box>
+
+								{/* Show if user is autehnticated */}
+								<IconButton
+									component={NextLink}
+									onClick={() => {}}
+									href="/"
+									color="inherit"
+									sx={{
+										position: 'relative',
+										display: 'flex',
+										alignItems: 'center',
+										justifyContent: 'center',
+										width: '40px',
+										height: '40px',
+										borderRadius: '0.5rem',
+										color: 'text.primary',
+										backgroundColor: 'black',
+										'&:hover': {
+											backgroundColor: 'secondary.main',
+											color: 'text.secondary',
+											border: '1px solid black',
+										},
+									}}
+								>
+									<LogoutOutlined />
+								</IconButton>
+							</Box>
 						</Box>
 
 						{/* Show when screen is small */}
-						<Box sx={{ display: { xs: 'block', md: 'none' } }}>
+						<Box
+							sx={{
+								display: { xs: 'block', md: 'none' },
+							}}
+						>
 							<Sidemenu />
 						</Box>
 					</Box>

@@ -220,11 +220,11 @@ export const RegisterForm = () => {
 						/>
 					</Grid>
 					<Grid item xs={12}>
-						{successfully && (
+						{/* {successfully && (
 							<Alert severity="success" sx={{ mb: 2 }}>
 								{successfully}
 							</Alert>
-						)}
+						)} */}
 						{errorMap && (
 							<Alert severity="error" sx={{ mb: 2 }}>
 								{errorMap}
@@ -237,7 +237,6 @@ export const RegisterForm = () => {
 							fullWidth
 							variant="contained"
 							disabled={!isDirty || isSubmitting}
-							
 							endIcon={
 								isSubmitting && <CircularProgress size={20} />
 							}
