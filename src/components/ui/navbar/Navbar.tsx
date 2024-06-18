@@ -13,7 +13,6 @@ import {
 import {
 	LogoutOutlined,
 	PersonOutlineOutlined,
-	TuneOutlined,
 } from '@mui/icons-material';
 
 import { AdminButton, Cart, Search, Sidemenu } from '@/components';
@@ -39,7 +38,7 @@ export const Navbar = () => {
 					>
 						<Typography
 							variant="h4"
-							sx={{ fontWeight: 'bold', color: 'text.primary' }}
+							sx={{ fontWeight: 'bold', color: 'text.secondary' }}
 						>
 							FITNEST
 						</Typography>
@@ -57,12 +56,12 @@ export const Navbar = () => {
 							component={NextLink}
 							href="/categoria/entrenamiento"
 							sx={{
-								color: 'text.primary',
+								color: 'text.secondary',
 								mx: 1,
 								borderRadius: '0.5rem',
 								'&:hover': {
 									backgroundColor: 'secondary.main',
-									color: 'text.secondary',
+									color: 'text.primary',
 								},
 							}}
 						>
@@ -72,12 +71,12 @@ export const Navbar = () => {
 							component={NextLink}
 							href="/categoria/equipamiento"
 							sx={{
-								color: 'text.primary',
+								color: 'text.secondary',
 								mx: 1,
 								borderRadius: '0.5rem',
 								'&:hover': {
 									backgroundColor: 'secondary.main',
-									color: 'text.secondary',
+									color: 'text.primary',
 								},
 							}}
 						>
@@ -87,12 +86,12 @@ export const Navbar = () => {
 							component={NextLink}
 							href="/categoria/servicios"
 							sx={{
-								color: 'text.primary',
+								color: 'text.secondary',
 								mx: 1,
 								borderRadius: '0.5rem',
 								'&:hover': {
 									backgroundColor: 'secondary.main',
-									color: 'text.secondary',
+									color: 'text.primary',
 								},
 							}}
 						>
@@ -125,11 +124,11 @@ export const Navbar = () => {
 										width: '40px',
 										height: '40px',
 										borderRadius: '0.5rem',
-										color: 'text.primary',
-										backgroundColor: 'black',
+										color: 'text.secondary',
+										backgroundColor: 'primary.main',
 										'&:hover': {
 											backgroundColor: 'secondary.main',
-											color: 'text.secondary',
+											color: 'text.primary',
 											border: '1px solid black',
 										},
 									}}
@@ -160,11 +159,11 @@ export const Navbar = () => {
 										width: '40px',
 										height: '40px',
 										borderRadius: '0.5rem',
-										color: 'text.primary',
-										backgroundColor: 'black',
+										color: 'text.secondary',
+										backgroundColor: 'primary.main',
 										'&:hover': {
 											backgroundColor: 'secondary.main',
-											color: 'text.secondary',
+											color: 'text.primary',
 											border: '1px solid black',
 										},
 									}}

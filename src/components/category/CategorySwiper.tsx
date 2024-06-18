@@ -27,7 +27,7 @@ export const CategorySwiper = ({ categories }: Props) => {
 					fontWeight: 800,
 					my: 2,
 					mx: 2,
-					color: 'text.secondary',
+					color: 'text.primary',
 					display: 'flex',
 				}}
 			>

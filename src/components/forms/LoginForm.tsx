@@ -65,7 +65,7 @@ export const LoginForm = () => {
 				variant="h5"
 				textAlign="center"
 				gutterBottom
-				sx={{ color: 'text.secondary', fontWeight: 'bold', mb: 2 }}
+				sx={{ color: 'text.primary', fontWeight: 'bold', mb: 2 }}
 			>
 				Iniciar Sesión
 			</Typography>
@@ -162,7 +162,7 @@ export const LoginForm = () => {
 				variant="body2"
 				textAlign="center"
 				mt={2}
-				sx={{ color: 'text.secondary' }}
+				sx={{ color: 'text.primary' }}
 			>
 				¿Aún no tienes cuenta?{' '}
 				<Link

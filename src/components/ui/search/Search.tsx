@@ -9,7 +9,11 @@ import SearchIcon from '@mui/icons-material/Search';
 
 import { SearchSchema } from '@/schemas';
 
-export const Search = () => {
+interface Props {
+	border?: boolean;
+}
+
+export const Search = ({ border = false }: Props) => {
 	const { handleSubmit, control } = useForm<z.infer<typeof SearchSchema>>({
 		resolver: zodResolver(SearchSchema),
 		defaultValues: {
@@ -59,12 +63,12 @@ export const Search = () => {
 						}}
 						sx={{
 							'& .MuiOutlinedInput-root': {
-								border: 'none',
+								border: border ? '1px solid lightgray' : 'none',
 								backgroundColor: 'background.paper',
 								borderRadius: '0.5rem',
 							},
 							'& .MuiOutlinedInput-notchedOutline': {
-								border: 'none',
+								border: border ? '1px solid lightgray' : 'none',
 							},
 						}}
 					/>

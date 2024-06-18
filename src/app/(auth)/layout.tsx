@@ -47,7 +47,7 @@ export const AuthLayout = ({
 							fontSize: { xs: '2.5rem', sm: '3rem' },
 							fontWeight: 'bold',
 							textAlign: 'center',
-							color: 'text.secondary',
+							color: 'text.primary',
 						}}
 					>
 						FITNEST

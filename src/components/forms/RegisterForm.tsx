@@ -70,7 +70,7 @@ export const RegisterForm = () => {
 				variant="h5"
 				textAlign="center"
 				gutterBottom
-				sx={{ color: 'text.secondary', fontWeight: 'bold', mb: 2 }}
+				sx={{ color: 'text.primary', fontWeight: 'bold', mb: 2 }}
 			>
 				Registrarse
 			</Typography>
@@ -250,7 +250,7 @@ export const RegisterForm = () => {
 				variant="body2"
 				textAlign="center"
 				mt={2}
-				sx={{ color: 'text.secondary' }}
+				sx={{ color: 'text.primary' }}
 			>
 				¿Ya tienes una cuenta?{' '}
 				<Link

@@ -10,8 +10,8 @@ const theme = createTheme({
 			main: '#ffffff', // White for secondary color
 		},
 		text: {
-			primary: '#ffffff', // White text color
-			secondary: '#000000', // Black text color
+			primary: '#000000', // Black text color
+			secondary: '#ffffff', // White text color
 		},
 		background: {
 			default: '#111111', // Dark background color
@@ -37,12 +37,12 @@ const theme = createTheme({
 							borderColor: '#000000',
 						},
 					},
-					'& .MuiInputLabel-root.Mui-focused': {
-						color: '#000000',
-					},
-					'& .MuiInputBase-input': {
-						color: '#000000',
-					},
+					// '& .MuiInputLabel-root.Mui-focused': {
+					// 	color: '#000000',
+					// },
+					// '& .MuiInputBase-input': {
+					// 	color: '#000000',
+					// },
 				},
 			},
 		},

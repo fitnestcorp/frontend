@@ -44,7 +44,7 @@ export const AdminButton = () => {
 					backgroundColor: 'primary.main',
 					'&:hover': {
 						backgroundColor: 'secondary.main',
-						color: 'text.secondary',
+						color: 'text.primary',
 						border: '1px solid black',
 					},
 				}}
@@ -67,10 +67,10 @@ export const AdminButton = () => {
 							onClick={handleClose}
 							sx={{
 								// mx: 1,
-								color: 'text.secondary',
+								color: 'text.primary',
 								'&:hover': {
 									backgroundColor: 'primary.main',
-									color: 'text.primary',
+									color: 'text.secondary',
 								},
 							}}
 						>

@@ -16,12 +16,12 @@ export const Breadcrumb = () => {
 
 	return (
 		<Breadcrumbs
-			separator={<NavigateNextIcon fontSize="small" />}
+			separator={<NavigateNextIcon fontSize="small" color='primary' />}
 			aria-label="breadcrumb"
 		>
 			<Link href="/" passHref>
 				<Typography
-					color="text.secondary"
+					color="text.primary"
 					variant="body1"
 					sx={{
 						textDecoration: 'none',
@@ -38,7 +38,7 @@ export const Breadcrumb = () => {
 				return isLast || isCategory ? (
 					<Typography
 						key={index}
-						color="text.secondary"
+						color="text.primary"
 						variant="body1"
 						sx={{ fontWeight: 'bold' }}
 					>
@@ -47,7 +47,7 @@ export const Breadcrumb = () => {
 				) : (
 					<Link key={index} href={link.href} passHref>
 						<Typography
-							color="text.secondary"
+							color="text.primary"
 							variant="body1"
 							sx={{
 								textDecoration: 'none',

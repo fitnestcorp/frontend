@@ -63,11 +63,11 @@ export const Cart = () => {
 					width: '40px',
 					height: '40px',
 					borderRadius: '0.5rem',
-					color: 'text.primary',
+					color: 'text.secondary',
 					backgroundColor: 'black',
 					'&:hover': {
 						backgroundColor: 'secondary.main',
-						color: 'text.secondary',
+						color: 'text.primary',
 						border: '1px solid black',
 					},
 				}}
@@ -108,7 +108,7 @@ export const Cart = () => {
 						<Typography
 							variant="h6"
 							fontWeight="bold"
-							color="text.secondary"
+							color="text.primary"
 						>
 							CARRITO
 						</Typography>
@@ -141,14 +141,14 @@ export const Cart = () => {
 							<Typography
 								variant="h5"
 								fontWeight="bold"
-								color="text.secondary"
+								color="text.primary"
 							>
 								Subtotal:
 							</Typography>
 							<Typography
 								variant="h5"
 								fontWeight="bold"
-								color="text.secondary"
+								color="text.primary"
 							>
 								$200.000
 							</Typography>
@@ -158,7 +158,7 @@ export const Cart = () => {
 							fullWidth
 							sx={{
 								backgroundColor: 'black',
-								color: 'text.primary',
+								color: 'text.secondary',
 								borderRadius: '0.5rem',
 								paddingY: '0.5rem',
 								'&:hover': { backgroundColor: '#333' },

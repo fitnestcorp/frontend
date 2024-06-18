@@ -64,11 +64,11 @@ export const Sidemenu = () => {
 					width: '40px',
 					height: '40px',
 					borderRadius: '0.5rem',
-					color: 'text.primary',
+					color: 'text.secondary',
 					backgroundColor: 'black',
 					'&:hover': {
 						backgroundColor: 'secondary.main',
-						color: 'text.secondary',
+						color: 'text.primary',
 						border: '1px solid black',
 					},
 				}}
@@ -139,7 +139,7 @@ export const Sidemenu = () => {
 							component={Link}
 							href="/categoria/entrenamiento"
 							sx={{
-								color: 'text.secondary',
+								color: 'text.primary',
 								'&:hover': {
 									color: 'grey',
 								},
@@ -152,7 +152,7 @@ export const Sidemenu = () => {
 							component={Link}
 							href="/categoria/equipamiento"
 							sx={{
-								color: 'text.secondary',
+								color: 'text.primary',
 								'&:hover': {
 									color: 'grey',
 								},
@@ -165,7 +165,7 @@ export const Sidemenu = () => {
 							component={Link}
 							href="/categoria/servicios"
 							sx={{
-								color: 'text.secondary',
+								color: 'text.primary',
 								'&:hover': {
 									color: 'grey',
 								},
@@ -183,7 +183,7 @@ export const Sidemenu = () => {
 							component={Link}
 							href="/iniciar-sesion"
 							sx={{
-								color: 'text.secondary',
+								color: 'text.primary',
 								'&:hover': {
 									color: 'grey',
 								},
@@ -199,7 +199,7 @@ export const Sidemenu = () => {
 							component={Link}
 							href="/registrarse"
 							sx={{
-								color: 'text.secondary',
+								color: 'text.primary',
 								'&:hover': {
 									color: 'grey',
 								},
@@ -217,7 +217,7 @@ export const Sidemenu = () => {
 							component={Link}
 							href="/cerrar-sesion"
 							sx={{
-								color: 'text.secondary',
+								color: 'text.primary',
 								'&:hover': {
 									color: 'grey',
 								},
