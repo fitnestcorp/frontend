@@ -7,7 +7,7 @@ export const AuthLayout = ({
 	return (
 		<Box sx={{ position: 'relative', minHeight: '100vh' }}>
 			<Image
-				src={'/background/auth-background.jpg'}
+				src={'/background/pexels-goumbik-669578.jpg'}
 				alt="background image"
 				fill
 				sizes="100vw"
@@ -33,11 +33,12 @@ export const AuthLayout = ({
 						maxWidth: '500px',
 						p: { xs: 3, sm: 6 },
 						mx: { xs: 2, sm: 'auto' },
-						backgroundColor: 'rgba(255, 255, 255, 0.6)',
-						borderRadius: 2,
+						backgroundColor: 'rgba(255, 255, 255, 0.9)',
+						borderRadius: 8,
 						backdropFilter: 'blur(5px)',
 					}}
 				>
+					<a href="/">
 					<Typography
 						variant="h1"
 						component="h1"
@@ -51,6 +52,7 @@ export const AuthLayout = ({
 					>
 						FITNEST
 					</Typography>
+					</a>
 					{children}
 				</Paper>
 			</Container>

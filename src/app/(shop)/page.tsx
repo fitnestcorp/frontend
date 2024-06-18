@@ -17,8 +17,8 @@ export const Home = () => {
 	return (
 		<Box>
 			<Banner
-				image={'/banners/banner.jpg'}
-				title={'POTENCIA TU CUERPO, TRANSFORMA TU VIDA'}
+				image={'/banners/Yoga.png'}
+				title={''}
 			/>
 			<CategorySwiper categories={entrenamiento?.subcategories!} />
 		</Box>
