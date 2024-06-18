@@ -104,16 +104,17 @@ export const ManageInventoryPage = () => {
 			container
 			spacing={4}
 			sx={{
-				px: 10,
+				px: { xs: 2, md: 10 },
 				my: 2,
 			}}
 		>
-			<Grid item xs={9}>
+			<Grid item xs={12}>
 				<Typography
 					variant="h4"
 					sx={{
 						fontWeight: 'bold',
 						color: 'text.primary',
+						textAlign: { xs: 'center', md: 'left' },
 					}}
 				>
 					Gestionar Inventario
@@ -122,8 +123,8 @@ export const ManageInventoryPage = () => {
 
 			{/* Products */}
 			<Grid item xs={12}>
-				<Grid container spacing={2}>
-					<Grid item xs={8}>
+				<Grid container spacing={2} alignItems="center">
+					<Grid item xs={12} md={8}>
 						<Box sx={{ display: 'flex', gap: 5 }}>
 							<Typography
 								sx={{
@@ -138,11 +139,13 @@ export const ManageInventoryPage = () => {
 					</Grid>
 					<Grid
 						item
-						xs={4}
+						xs={12}
+						md={4}
 						sx={{
 							display: 'flex',
-							justifyContent: 'flex-end',
+							justifyContent: { xs: 'center', md: 'flex-end' },
 							gap: 2,
+							flexWrap: 'wrap',
 						}}
 					>
 						<Search border />
@@ -154,9 +157,7 @@ export const ManageInventoryPage = () => {
 						>
 							Crear Producto
 						</Button>
-
 						<SortButton />
-
 						<FilterButton />
 					</Grid>
 				</Grid>
@@ -168,8 +169,8 @@ export const ManageInventoryPage = () => {
 
 			{/* Groups */}
 			<Grid item xs={12}>
-				<Grid container spacing={2}>
-					<Grid item xs={8}>
+				<Grid container spacing={2} alignItems="center">
+					<Grid item xs={12} md={8}>
 						<Box sx={{ display: 'flex', gap: 5 }}>
 							<Typography
 								sx={{
@@ -184,11 +185,13 @@ export const ManageInventoryPage = () => {
 					</Grid>
 					<Grid
 						item
-						xs={4}
+						xs={12}
+						md={4}
 						sx={{
 							display: 'flex',
-							justifyContent: 'flex-end',
+							justifyContent: { xs: 'center', md: 'flex-end' },
 							gap: 2,
+							flexWrap: 'wrap',
 						}}
 					>
 						<Search border />
@@ -200,9 +203,7 @@ export const ManageInventoryPage = () => {
 						>
 							Crear Grupo
 						</Button>
-
 						<SortButton />
-
 						<FilterButton />
 					</Grid>
 				</Grid>
@@ -214,8 +215,8 @@ export const ManageInventoryPage = () => {
 
 			{/* Categories */}
 			<Grid item xs={12}>
-				<Grid container spacing={2}>
-					<Grid item xs={8}>
+				<Grid container spacing={2} alignItems="center">
+					<Grid item xs={12} md={8}>
 						<Box sx={{ display: 'flex', gap: 5 }}>
 							<Typography
 								sx={{
@@ -230,11 +231,13 @@ export const ManageInventoryPage = () => {
 					</Grid>
 					<Grid
 						item
-						xs={4}
+						xs={12}
+						md={4}
 						sx={{
 							display: 'flex',
-							justifyContent: 'flex-end',
+							justifyContent: { xs: 'center', md: 'flex-end' },
 							gap: 2,
+							flexWrap: 'wrap',
 						}}
 					>
 						<Search border />
@@ -246,9 +249,7 @@ export const ManageInventoryPage = () => {
 						>
 							Crear Categoría
 						</Button>
-
 						<SortButton />
-
 						<FilterButton />
 					</Grid>
 				</Grid>
