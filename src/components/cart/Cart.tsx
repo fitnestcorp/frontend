@@ -1,5 +1,6 @@
 'use client';
 import { useEffect, useRef, useState } from 'react';
+import NextLink from 'next/link';
 import {
 	Drawer,
 	IconButton,
@@ -10,13 +11,14 @@ import {
 	List,
 	ListItem,
 	Divider,
+	Tooltip,
 } from '@mui/material';
 import {
 	ShoppingCartOutlined as ShoppingCartIcon,
 	Close as CloseIcon,
 } from '@mui/icons-material';
+
 import { CartItem } from './CartItem';
-import NextLink from 'next/link';
 
 export const Cart = () => {
 	const [isDrawerOpen, setIsDrawerOpen] = useState<boolean>(false);
@@ -52,30 +54,32 @@ export const Cart = () => {
 
 	return (
 		<>
-			<IconButton
-				onClick={toggleDrawer}
-				color="inherit"
-				sx={{
-					position: 'relative',
-					display: 'flex',
-					alignItems: 'center',
-					justifyContent: 'center',
-					width: '40px',
-					height: '40px',
-					borderRadius: '0.5rem',
-					color: 'text.secondary',
-					backgroundColor: 'black',
-					'&:hover': {
-						backgroundColor: 'secondary.main',
-						color: 'text.primary',
-						border: '1px solid black',
-					},
-				}}
-			>
-				<Badge badgeContent={3} color="error">
-					<ShoppingCartIcon />
-				</Badge>
-			</IconButton>
+			<Tooltip title="Carrito" arrow>
+				<IconButton
+					onClick={toggleDrawer}
+					color="inherit"
+					sx={{
+						position: 'relative',
+						display: 'flex',
+						alignItems: 'center',
+						justifyContent: 'center',
+						width: '40px',
+						height: '40px',
+						borderRadius: '0.5rem',
+						color: 'text.secondary',
+						backgroundColor: 'black',
+						'&:hover': {
+							backgroundColor: 'secondary.main',
+							color: 'text.primary',
+							border: '1px solid black',
+						},
+					}}
+				>
+					<Badge badgeContent={3} color="error">
+						<ShoppingCartIcon />
+					</Badge>
+				</IconButton>
+			</Tooltip>
 
 			<Drawer
 				anchor="right"

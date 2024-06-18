@@ -1,7 +1,7 @@
 'use client';
 import Link from 'next/link';
 import { useState } from 'react';
-import { Box, IconButton, Menu, MenuItem } from '@mui/material';
+import { Box, IconButton, Menu, MenuItem, Tooltip } from '@mui/material';
 import { TuneOutlined } from '@mui/icons-material';
 
 const options = [
@@ -29,28 +29,30 @@ export const AdminButton = () => {
 
 	return (
 		<Box>
-			<IconButton
-				onClick={handleClick}
-				color="inherit"
-				sx={{
-					position: 'relative',
-					display: 'flex',
-					alignItems: 'center',
-					justifyContent: 'center',
-					width: '40px',
-					height: '40px',
-					borderRadius: '0.5rem',
-					color: 'white',
-					backgroundColor: 'primary.main',
-					'&:hover': {
-						backgroundColor: 'secondary.main',
-						color: 'text.primary',
-						border: '1px solid black',
-					},
-				}}
-			>
-				<TuneOutlined />
-			</IconButton>
+			<Tooltip title="Administrar" arrow>
+				<IconButton
+					onClick={handleClick}
+					color="inherit"
+					sx={{
+						position: 'relative',
+						display: 'flex',
+						alignItems: 'center',
+						justifyContent: 'center',
+						width: '40px',
+						height: '40px',
+						borderRadius: '0.5rem',
+						color: 'white',
+						backgroundColor: 'primary.main',
+						'&:hover': {
+							backgroundColor: 'secondary.main',
+							color: 'text.primary',
+							border: '1px solid black',
+						},
+					}}
+				>
+					<TuneOutlined />
+				</IconButton>
+			</Tooltip>
 
 			<Menu
 				id="basic-menu"

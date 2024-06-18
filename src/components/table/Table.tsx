@@ -9,8 +9,8 @@ import {
 	TableRow,
 	Paper,
 	TablePagination,
-	Box,
 	IconButton,
+	Tooltip,
 } from '@mui/material';
 import { DeleteOutline, EditOutlined } from '@mui/icons-material';
 
@@ -87,20 +87,30 @@ export const Table = ({ columns, rows }: Props) => {
 														key={column.id}
 														align={column.align}
 													>
-														<IconButton
-															sx={{
-																color: '#1565c0',
-															}}
+														<Tooltip
+															title="Editar"
+															arrow
 														>
-															<EditOutlined />
-														</IconButton>
-														<IconButton
-															sx={{
-																color: '#b71c1c',
-															}}
+															<IconButton
+																sx={{
+																	color: '#1565c0',
+																}}
+															>
+																<EditOutlined />
+															</IconButton>
+														</Tooltip>
+														<Tooltip
+															title="Eliminar"
+															arrow
 														>
-															<DeleteOutline />
-														</IconButton>
+															<IconButton
+																sx={{
+																	color: '#b71c1c',
+																}}
+															>
+																<DeleteOutline />
+															</IconButton>
+														</Tooltip>
 													</TableCell>
 												);
 											}

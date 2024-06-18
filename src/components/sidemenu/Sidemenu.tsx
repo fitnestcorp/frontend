@@ -11,6 +11,7 @@ import {
 	ListItemText,
 	Divider,
 	Typography,
+	Tooltip,
 } from '@mui/material';
 import {
 	Menu as MenuIcon,
@@ -53,28 +54,30 @@ export const Sidemenu = () => {
 
 	return (
 		<>
-			<IconButton
-				onClick={toggleDrawer}
-				color="inherit"
-				sx={{
-					position: 'relative',
-					display: 'flex',
-					alignItems: 'center',
-					justifyContent: 'center',
-					width: '40px',
-					height: '40px',
-					borderRadius: '0.5rem',
-					color: 'text.secondary',
-					backgroundColor: 'black',
-					'&:hover': {
-						backgroundColor: 'secondary.main',
-						color: 'text.primary',
-						border: '1px solid black',
-					},
-				}}
-			>
-				<MenuIcon />
-			</IconButton>
+			<Tooltip title="Menú" arrow>
+				<IconButton
+					onClick={toggleDrawer}
+					color="inherit"
+					sx={{
+						position: 'relative',
+						display: 'flex',
+						alignItems: 'center',
+						justifyContent: 'center',
+						width: '40px',
+						height: '40px',
+						borderRadius: '0.5rem',
+						color: 'text.secondary',
+						backgroundColor: 'black',
+						'&:hover': {
+							backgroundColor: 'secondary.main',
+							color: 'text.primary',
+							border: '1px solid black',
+						},
+					}}
+				>
+					<MenuIcon />
+				</IconButton>
+			</Tooltip>
 
 			<Drawer
 				anchor="right"
