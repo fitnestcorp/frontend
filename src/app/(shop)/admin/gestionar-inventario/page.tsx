@@ -96,7 +96,6 @@ const rows = [
 		quantity: 158,
 		status: 'Activo',
 	},
-
 ];
 
 export const ManageInventoryPage = () => {
@@ -135,23 +134,6 @@ export const ManageInventoryPage = () => {
 							>
 								Productos
 							</Typography>
-
-							{/* <Button
-								variant="outlined"
-								sx={{
-									borderRadius: '0.5rem',
-								}}
-							>
-								Crear Grupo
-							</Button>
-							<Button
-								variant="outlined"
-								sx={{
-									borderRadius: '0.5rem',
-								}}
-							>
-								Crear Categoría
-							</Button> */}
 						</Box>
 					</Grid>
 					<Grid
@@ -163,9 +145,7 @@ export const ManageInventoryPage = () => {
 							gap: 2,
 						}}
 					>
-						{/* <Grid item xs={3}> */}
 						<Search border />
-						{/* </Grid> */}
 						<Button
 							variant="contained"
 							sx={{
@@ -211,9 +191,7 @@ export const ManageInventoryPage = () => {
 							gap: 2,
 						}}
 					>
-						{/* <Grid item xs={3}> */}
 						<Search border />
-						{/* </Grid> */}
 						<Button
 							variant="contained"
 							sx={{
@@ -259,9 +237,7 @@ export const ManageInventoryPage = () => {
 							gap: 2,
 						}}
 					>
-						{/* <Grid item xs={3}> */}
 						<Search border />
-						{/* </Grid> */}
 						<Button
 							variant="contained"
 							sx={{
