@@ -138,9 +138,9 @@ export const LoginForm = () => {
 						</Link>
 					</Grid>
 					<Grid item xs={12}>
-						{successfully && (
+						{/* {successfully && (
 							<Alert severity="success">{successfully}</Alert>
-						)}
+						)} */}
 						{errorMap && <Alert severity="error">{errorMap}</Alert>}
 					</Grid>
 					<Grid item xs={12}>

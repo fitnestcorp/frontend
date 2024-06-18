@@ -19,38 +19,10 @@ const theme = createTheme({
 		},
 	},
 	typography: {
-		// h1: {
-		// 	fontSize: '3rem',
-		// 	fontWeight: 700,
-		// 	color: '#ffffff', // White color for h1
-		// },
-		// h2: {
-		// 	fontSize: '2rem',
-		// 	fontWeight: 700,
-		// 	color: '#000000', // Black color for h2
-		// },
-		// body1: {
-		// 	fontSize: '1rem',
-		// 	color: '#000000', // Black color for body text
-		// },
-		// button: {
-		// 	textTransform: 'none',
-		// 	fontWeight: 700,
-		// 	color: '#ffffff', // White color for buttons
-		// },
+		// Kanit Font for everything
+		fontFamily: ['Kanit', 'sans-serif'].join(','),
 	},
 	components: {
-		// MuiButton: {
-		// 	styleOverrides: {
-		// 		root: {
-		// 			backgroundColor: '#000000',
-		// 			color: '#ffffff',
-		// 			'&:hover': {
-		// 				backgroundColor: '#333333',
-		// 			},
-		// 		},
-		// 	},
-		// },
 		MuiTextField: {
 			styleOverrides: {
 				root: {
@@ -71,32 +43,9 @@ const theme = createTheme({
 					'& .MuiInputBase-input': {
 						color: '#000000',
 					},
-					'& .MuiInputBase-root': {
-						// backgroundColor: '#ffffff',
-					},
-					// withour border
-					// '& .MuiOutlinedInput-notchedOutline': {
-					// 	border: 'none',
-					// },
 				},
 			},
 		},
-		// MuiAppBar: {
-		// 	styleOverrides: {
-		// 		root: {
-		// 			backgroundColor: '#000000',
-		// 			color: '#ffffff',
-		// 		},
-		// 	},
-		// },
-		// MuiPaper: {
-		// 	styleOverrides: {
-		// 		root: {
-		// 			backgroundColor: '#ffffff',
-		// 			color: '#000000',
-		// 		},
-		// 	},
-		// },
 	},
 });
 

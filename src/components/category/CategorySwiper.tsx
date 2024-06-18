@@ -1,4 +1,5 @@
 'use client';
+import Link from 'next/link';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Autoplay, Navigation, Pagination } from 'swiper/modules';
 import { Card, CardMedia, CardContent, Typography, Box } from '@mui/material';
@@ -9,7 +10,6 @@ import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
 import 'swiper/css/autoplay';
-import Link from 'next/link';
 
 interface Props {
 	categories: SeedCategory[];
@@ -17,24 +17,25 @@ interface Props {
 
 export const CategorySwiper = ({ categories }: Props) => {
 	return (
-		<Box
-			sx={{ maxWidth: '100%', py: 2, mx: { xs: 2, sm: 3, md: 4, lg: 5 } }}
-		>
+		<Box sx={{ maxWidth: '100%', py: 2, mx: 5 }}>
 			<Typography
 				variant="h4"
 				align="center"
+				justifyContent="center"
 				gutterBottom
 				sx={{
-					fontWeight: 'bold',
+					fontWeight: 800,
 					my: 2,
+					mx: 2,
 					color: 'text.secondary',
+					display: 'flex',
 				}}
 			>
 				ENTRENAMIENTO
 			</Typography>
 			<Swiper
-				spaceBetween={10}
-				slidesPerView={1}
+				spaceBetween={25}
+				slidesPerView={'auto'}
 				navigation
 				autoplay={{ delay: 3000 }}
 				modules={[Navigation, Pagination, Autoplay]}
