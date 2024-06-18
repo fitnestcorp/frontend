@@ -37,12 +37,6 @@ const theme = createTheme({
 							borderColor: '#000000',
 						},
 					},
-					// '& .MuiInputLabel-root.Mui-focused': {
-					// 	color: '#000000',
-					// },
-					// '& .MuiInputBase-input': {
-					// 	color: '#000000',
-					// },
 				},
 			},
 		},

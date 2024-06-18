@@ -13,8 +13,6 @@ import {
 	IconButton,
 } from '@mui/material';
 import { DeleteOutline, EditOutlined } from '@mui/icons-material';
-// import EditIcon from '@mui/icons-material/Edit';
-// import DeleteIcon from '@mui/icons-material/Delete';
 
 interface Column {
 	id: string;
@@ -89,23 +87,20 @@ export const Table = ({ columns, rows }: Props) => {
 														key={column.id}
 														align={column.align}
 													>
-														<IconButton>
-															<EditOutlined
-																sx={{
-																	color: '#1565c0',
-																}}
-															/>
+														<IconButton
+															sx={{
+																color: '#1565c0',
+															}}
+														>
+															<EditOutlined />
 														</IconButton>
-														<IconButton>
-															<DeleteOutline
-																sx={{
-																	color: '#b71c1c',
-																}}
-															/>
+														<IconButton
+															sx={{
+																color: '#b71c1c',
+															}}
+														>
+															<DeleteOutline />
 														</IconButton>
-														{/* <IconButton>
-															<VisibilityIcon />
-														</IconButton> */}
 													</TableCell>
 												);
 											}

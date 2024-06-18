@@ -15,7 +15,7 @@ export const SortButton = () => {
 				border: '1px solid black',
 				'&:hover': {
 					backgroundColor: 'primary.main',
-					color: 'text.primary',
+					color: 'text.secondary',
 				},
 			}}
 		>
