@@ -88,6 +88,11 @@ export const RegisterForm = () => {
 									fullWidth
 									error={!!errors.first_name}
 									helperText={errors.first_name?.message}
+									sx={{
+										'& label': {
+											color: 'text.primary',
+										},
+									}}
 								/>
 							)}
 						/>
@@ -104,6 +109,11 @@ export const RegisterForm = () => {
 									fullWidth
 									error={!!errors.last_name}
 									helperText={errors.last_name?.message}
+									sx={{
+										'& label': {
+											color: 'text.primary',
+										},
+									}}
 								/>
 							)}
 						/>
@@ -122,6 +132,11 @@ export const RegisterForm = () => {
 									InputLabelProps={{ shrink: true }}
 									error={!!errors.birth_date}
 									helperText={errors.birth_date?.message}
+									sx={{
+										'& label': {
+											color: 'text.primary',
+										},
+									}}
 								/>
 							)}
 						/>
@@ -139,6 +154,11 @@ export const RegisterForm = () => {
 									fullWidth
 									error={!!errors.email}
 									helperText={errors.email?.message}
+									sx={{
+										'& label': {
+											color: 'text.primary',
+										},
+									}}
 								/>
 							)}
 						/>
@@ -156,6 +176,11 @@ export const RegisterForm = () => {
 									fullWidth
 									error={!!errors.password}
 									helperText={errors.password?.message}
+									sx={{
+										'& label': {
+											color: 'text.primary',
+										},
+									}}
 									InputProps={{
 										endAdornment: (
 											<InputAdornment position="end">
@@ -196,6 +221,11 @@ export const RegisterForm = () => {
 									fullWidth
 									error={!!errors.confirmPassword}
 									helperText={errors.confirmPassword?.message}
+									sx={{
+										'& label': {
+											color: 'text.primary',
+										},
+									}}
 									InputProps={{
 										endAdornment: (
 											<InputAdornment position="end">

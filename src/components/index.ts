@@ -14,6 +14,7 @@ export * from './forms/RegisterForm';
 export * from './options/FilterButton';
 export * from './options/SortButton';
 
+export * from './product/AddProductModal';
 export * from './product/ProductDetails';
 
 export * from './sidemenu/Sidemenu';

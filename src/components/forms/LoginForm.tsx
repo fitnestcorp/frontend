@@ -83,6 +83,11 @@ export const LoginForm = () => {
 									fullWidth
 									error={!!errors.email}
 									helperText={errors.email?.message}
+									sx={{
+										'& label': {
+											color: 'text.primary',
+										},
+									}}
 								/>
 							)}
 						/>
@@ -100,6 +105,11 @@ export const LoginForm = () => {
 									fullWidth
 									error={!!errors.password}
 									helperText={errors.password?.message}
+									sx={{
+										'& label': {
+											color: 'text.primary',
+										},
+									}}
 									InputProps={{
 										endAdornment: (
 											<InputAdornment position="end">

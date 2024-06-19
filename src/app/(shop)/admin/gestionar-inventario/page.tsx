@@ -1,7 +1,13 @@
 'use client';
 import { Box, Button, Grid, Typography } from '@mui/material';
 
-import { FilterButton, Search, SortButton, Table } from '@/components';
+import {
+	AddProductModal,
+	FilterButton,
+	Search,
+	SortButton,
+	Table,
+} from '@/components';
 
 const columns = [
 	{ id: 'image', label: '', minWidth: 50, align: 'center' as const },
@@ -149,14 +155,7 @@ export const ManageInventoryPage = () => {
 						}}
 					>
 						<Search border />
-						<Button
-							variant="contained"
-							sx={{
-								borderRadius: '0.5rem',
-							}}
-						>
-							Crear Producto
-						</Button>
+						<AddProductModal />
 						<SortButton />
 						<FilterButton />
 					</Grid>
