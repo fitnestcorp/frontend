@@ -4,9 +4,9 @@ import { Box, Button, Grid, Typography } from '@mui/material';
 import { FilterButton, Search, SortButton, Table } from '@/components';
 
 const columns = [
-	{ id: 'productImage', label: '', minWidth: 50, align: 'center' as const },
+	{ id: 'image', label: '', minWidth: 50, align: 'center' as const },
 	{
-		id: 'productName',
+		id: 'name',
 		label: 'Nombre Producto',
 		minWidth: 100,
 		align: 'center' as const,
@@ -43,8 +43,8 @@ const columns = [
 
 const rows = [
 	{
-		productImage: '/path/to/product.jpg',
-		productName: 'Set de mancuernas',
+		image: '/products/mancuernas-10kg-1.jpg',
+		name: 'Set de mancuernas',
 		categories: 'Fuerza, mancuernas',
 		uuid: '107222fb-d46c-483d-887f-489c9ca0573a',
 		price: 200000,
@@ -52,8 +52,8 @@ const rows = [
 		status: 'Activo',
 	},
 	{
-		productImage: '/path/to/product.jpg',
-		productName: 'Set de mancuernas',
+		image: '/products/mancuernas-10kg-1.jpg',
+		name: 'Set de mancuernas',
 		categories: 'Fuerza, mancuernas',
 		uuid: '107222fb-d46c-483d-887f-489c9ca0573a',
 		price: 200000,
@@ -61,8 +61,8 @@ const rows = [
 		status: 'Activo',
 	},
 	{
-		productImage: '/path/to/product.jpg',
-		productName: 'Set de mancuernas',
+		image: '/products/mancuernas-10kg-1.jpg',
+		name: 'Set de mancuernas',
 		categories: 'Fuerza, mancuernas',
 		uuid: '107222fb-d46c-483d-887f-489c9ca0573a',
 		price: 200000,
@@ -70,8 +70,8 @@ const rows = [
 		status: 'Activo',
 	},
 	{
-		productImage: '/path/to/product.jpg',
-		productName: 'Set de mancuernas',
+		image: '/products/mancuernas-10kg-1.jpg',
+		name: 'Set de mancuernas',
 		categories: 'Fuerza, mancuernas',
 		uuid: '107222fb-d46c-483d-887f-489c9ca0573a',
 		price: 200000,
@@ -79,8 +79,8 @@ const rows = [
 		status: 'Activo',
 	},
 	{
-		productImage: '/path/to/product.jpg',
-		productName: 'Set de mancuernas',
+		image: '/products/mancuernas-10kg-1.jpg',
+		name: 'Set de mancuernas',
 		categories: 'Fuerza, mancuernas',
 		uuid: '107222fb-d46c-483d-887f-489c9ca0573a',
 		price: 200000,
@@ -88,8 +88,8 @@ const rows = [
 		status: 'Activo',
 	},
 	{
-		productImage: '/path/to/product.jpg',
-		productName: 'Set de mancuernas',
+		image: '/products/mancuernas-10kg-1.jpg',
+		name: 'Set de mancuernas',
 		categories: 'Fuerza, mancuernas',
 		uuid: '107222fb-d46c-483d-887f-489c9ca0573a',
 		price: 200000,

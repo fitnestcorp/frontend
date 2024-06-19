@@ -11,8 +11,10 @@ import {
 	TablePagination,
 	IconButton,
 	Tooltip,
+	Box,
 } from '@mui/material';
 import { DeleteOutline, EditOutlined } from '@mui/icons-material';
+import Image from 'next/image';
 
 interface Column {
 	id: string;
@@ -111,6 +113,42 @@ export const Table = ({ columns, rows }: Props) => {
 																<DeleteOutline />
 															</IconButton>
 														</Tooltip>
+													</TableCell>
+												);
+											} else if (column.id === 'image') {
+												return (
+													<TableCell
+														key={column.id}
+														align={
+															column.align
+																? column.align
+																: 'center'
+														}
+														sx={{
+															display: 'flex',
+															justifyContent:
+																'center',
+														}}
+													>
+														<Box
+															style={{
+																width: '50px',
+																height: '50px',
+																position:
+																	'relative',
+															}}
+														>
+															<Image
+																src={value}
+																alt="product"
+																sizes="50px"
+																style={{
+																	objectFit:
+																		'cover',
+																}}
+																fill
+															/>
+														</Box>
 													</TableCell>
 												);
 											}
