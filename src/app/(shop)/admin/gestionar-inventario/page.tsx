@@ -126,7 +126,8 @@ export const ManageInventoryPage = () => {
 			</Grid>
 
 			<Grid item xs={12} mb={10}>
-				<Table columns={columns} rows={products} />
+				{/* <Table columns={columns} rows={products} /> */}
+				<Table columns={columns} rows={rows} />
 			</Grid>
 
 			{/* Groups */}
