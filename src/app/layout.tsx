@@ -1,20 +1,28 @@
-import type { Metadata } from 'next';
+'use client';
 
+import { useEffect } from 'react';
 import ThemeProviderWrapper from './ThemeProviderWrapper';
 import ReduxProvider from './provider';
-
 import './globals.css';
-
-export const metadata: Metadata = {
-	title: 'FITNEST',
-	description: 'A fitness shop for all your needs',
-};
 
 export default function RootLayout({
 	children,
 }: Readonly<{
 	children: React.ReactNode;
 }>) {
+	useEffect(() => {
+		if ('serviceWorker' in navigator) {
+			window.addEventListener('load', () => {
+				navigator.serviceWorker.register('/service-worker.js')
+					.then((registration) => {
+						console.log('Service Worker registered with scope:', registration.scope);
+					}, (error) => {
+						console.log('Service Worker registration failed:', error);
+					});
+			});
+		}
+	}, []);
+
 	return (
 		<html lang="en">
 			<body>

@@ -4,18 +4,38 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import { Autoplay, Navigation, Pagination } from 'swiper/modules';
 import { Card, CardMedia, CardContent, Typography, Box } from '@mui/material';
 
-import { SeedCategory } from '@/seed/seed';
-
 import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
 import 'swiper/css/autoplay';
+import { Group } from '@/interfaces';
+import { downloadImage } from '../images/downloadImage';
+import { useEffect, useState } from 'react';
 
 interface Props {
-	categories: SeedCategory[];
+	groups: Group[];
 }
 
-export const CategorySwiper = ({ categories }: Props) => {
+export const GroupSwiper = ({ groups }: Props) => {
+	const [imagePaths, setImagePaths] = useState<string[]>([]);
+
+	useEffect(() => {
+		async function fetchImages() {
+			try {
+				const paths = await Promise.all(
+					groups.map(async (group) => {
+						const value = await downloadImage(group.image_url);
+						return value ? URL.createObjectURL(value) : '/public/not_found.jpg'; 
+					})
+				);
+				setImagePaths(paths);
+			} catch (error) {
+				console.error('Error fetching images:', error);
+			}
+		}
+		fetchImages();
+	}, [groups]);
+
 	return (
 		<Box sx={{ maxWidth: '100%', py: 2, mx: 5 }}>
 			<Typography
@@ -51,9 +71,9 @@ export const CategorySwiper = ({ categories }: Props) => {
 					} as React.CSSProperties
 				}
 			>
-				{categories.map((category, index) => (
+				{groups.map((group, index) => (
 					<SwiperSlide key={index}>
-						<Link href={`/categoria/${category.name}`}>
+						<Link href={`/grupo/${group.name}`}>
 							<Card
 								sx={{
 									position: 'relative',
@@ -68,12 +88,11 @@ export const CategorySwiper = ({ categories }: Props) => {
 								<CardMedia
 									component="img"
 									height="140"
-									image={`/categories/${category.image}`}
-									alt={category.name}
+									image={imagePaths[index]}
+									alt={group.name}
 									sx={{
 										height: '100%',
 										width: '100%',
-										// filter: 'blur(1px)',
 									}}
 								/>
 								<CardContent
@@ -96,8 +115,8 @@ export const CategorySwiper = ({ categories }: Props) => {
 											textAlign: 'center',
 										}}
 									>
-										{category.name[0].toUpperCase() +
-											category.name.slice(1)}
+										{group.name[0].toUpperCase() +
+											group.name.slice(1)}
 									</Typography>
 								</CardContent>
 							</Card>

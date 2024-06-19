@@ -1,18 +1,28 @@
+'use client'
 import { Box } from '@mui/material';
+import { useEffect, useState } from 'react';
+import { Banner, GroupSwiper } from '@/components';
+import { Group } from '@/interfaces';
+import { useGetAllGroupsQuery } from '@/store';
 
-import { Banner, CategorySwiper } from '@/components';
-import { SeedCategory, initialData } from '@/seed/seed';
-
-const categories = initialData.categories;
 
 export const Home = () => {
-	const entrenamiento = categories.find(
-		(category) => category.name === 'entrenamiento'
-	);
+	const [page, setPage] = useState(1);
+    const [limit, setLimit] = useState(10);
+    const [objects, setObjects] = useState<Group[]>([]);
+    const [count, setCount] = useState(0);
+	const { data, error, isLoading } = useGetAllGroupsQuery({ page, limit });
 
-	const equipamiento = categories.find(
-		(category) => category.name === 'equipamiento'
-	);
+    useEffect(() => {
+        if (data) {
+            const [objectsList, totalCount] = data;
+            setObjects(objectsList);
+            setCount(totalCount);
+        }
+        if (error) {
+            console.error('Error fetching objects:', error);
+        }
+    }, [data, error]);
 
 	return (
 		<Box>
@@ -20,7 +30,12 @@ export const Home = () => {
 				image={'/banners/Yoga.png'}
 				title={''}
 			/>
-			<CategorySwiper categories={entrenamiento?.subcategories!} />
+			{isLoading ? (
+						<div>Loading...</div>
+					) : (
+						<GroupSwiper groups={objects} />
+					)}
+			
 		</Box>
 	);
 };

@@ -6,7 +6,8 @@ export * from './breadcrumb/Breadcrumb';
 
 export * from './cart/Cart';
 
-export * from './category/CategorySwiper';
+export * from './swiper/CategorySwiper';
+export * from './swiper/GroupSwiper';
 
 export * from './forms/LoginForm';
 export * from './forms/RegisterForm';

@@ -54,6 +54,18 @@ export const userApi = createApi({
                 method: 'GET',
             }),
         }),
+        getAllGroups: builder.query({
+            query: ({page, limit}) => ({
+                url: `product/group/all?page=${page}&limit=${limit}`,
+                method: 'GET',
+            }),
+        }),
+        getAGroups: builder.query({
+            query: ({name}) => ({
+                url: `product/group/${name}`,
+                method: 'GET',
+            }),
+        }),
     }),
 });
 
@@ -61,5 +73,7 @@ export const {
     useLoginUserMutation,
     useRegisterUserMutation,
     useFindByEmailQuery,
-    useGetAllProductsQuery
+    useGetAllProductsQuery,
+    useGetAllGroupsQuery,
+    useGetAGroupsQuery
 } = userApi;
