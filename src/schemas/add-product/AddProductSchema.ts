@@ -23,11 +23,11 @@ export const AddProductSchema = z.object({
 	description: z.string().min(10, {
 		message: 'La descripción debe tener al menos 10 caracteres',
 	}),
-	category: z.string().min(3, {
-		message: 'La categoría debe tener al menos 3 caracteres',
-	}),
 	group: z.string().min(3, {
 		message: 'El grupo debe tener al menos 3 caracteres',
+	}),
+	category: z.array(z.string()).min(1, {
+		message: 'Debes seleccionar al menos una categoría',
 	}),
 	images: z
 		.array(z.string())

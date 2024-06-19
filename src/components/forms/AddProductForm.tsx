@@ -22,6 +22,8 @@ import {
 	Typography,
 	Snackbar,
 	Alert,
+	Checkbox,
+	ListItemText,
 } from '@mui/material';
 import { AddPhotoAlternateOutlined, DeleteOutline } from '@mui/icons-material';
 import { Controller, useForm } from 'react-hook-form';
@@ -71,8 +73,8 @@ export const AddProductForm = () => {
 			price: 0,
 			stock: 0,
 			description: '',
-			category: '',
 			group: '',
+			category: [],
 			images: [],
 		},
 	});
@@ -255,60 +257,6 @@ export const AddProductForm = () => {
 							/>
 
 							<Controller
-								name="category"
-								control={control}
-								render={({ field }) => (
-									<FormControl
-										fullWidth
-										sx={{
-											'& label': {
-												color: 'text.primary',
-											},
-											'& .MuiOutlinedInput-root': {
-												'& fieldset': {
-													borderColor: 'gray',
-												},
-											},
-										}}
-									>
-										<InputLabel id="category-label">
-											Categorías
-										</InputLabel>
-										<Select
-											{...field}
-											error={!!errors.category}
-											labelId="category-label"
-											id="category"
-											label="Categorías"
-										>
-											<MenuItem value="Categoria1">
-												Categoria1
-											</MenuItem>
-											<MenuItem value="Categoria2">
-												Categoria2
-											</MenuItem>
-											<MenuItem value="Categoria3">
-												Categoria3
-											</MenuItem>
-										</Select>
-										{errors.category && (
-											<Box
-												component="span"
-												sx={{
-													color: 'error.main',
-													fontSize: '0.75rem',
-													pt: 0.5,
-													pl: 2,
-												}}
-											>
-												{errors.category.message}
-											</Box>
-										)}
-									</FormControl>
-								)}
-							/>
-
-							<Controller
 								name="group"
 								control={control}
 								render={({ field }) => (
@@ -356,6 +304,90 @@ export const AddProductForm = () => {
 												}}
 											>
 												{errors.group.message}
+											</Box>
+										)}
+									</FormControl>
+								)}
+							/>
+
+							<Controller
+								name="category"
+								control={control}
+								render={({ field }) => (
+									<FormControl
+										fullWidth
+										sx={{
+											'& label': {
+												color: 'text.primary',
+											},
+											'& .MuiOutlinedInput-root': {
+												'& fieldset': {
+													borderColor: 'gray',
+												},
+											},
+										}}
+									>
+										<InputLabel id="category-label">
+											Categorías
+										</InputLabel>
+										<Select
+											{...field}
+											multiple
+											error={!!errors.category}
+											labelId="category-label"
+											id="category"
+											label="Categorías"
+											renderValue={(selected) =>
+												(selected as string[]).join(
+													', '
+												)
+											}
+										>
+											<MenuItem value="Categoria1">
+												<Checkbox
+													checked={field.value.includes(
+														'Categoria1'
+													)}
+													sx={{
+														color: 'gray',
+													}}
+												/>
+												<ListItemText primary="Categoria1" />
+											</MenuItem>
+											<MenuItem value="Categoria2">
+												<Checkbox
+													checked={field.value.includes(
+														'Categoria2'
+													)}
+													sx={{
+														color: 'gray',
+													}}
+												/>
+												<ListItemText primary="Categoria2" />
+											</MenuItem>
+											<MenuItem value="Categoria3">
+												<Checkbox
+													checked={field.value.includes(
+														'Categoria3'
+													)}
+													sx={{
+														color: 'gray',
+													}}
+												/>
+												<ListItemText primary="Categoria3" />
+											</MenuItem>
+										</Select>
+										{errors.category && (
+											<Box
+												component="span"
+												sx={{
+													color: 'error.main',
+													fontSize: '0.75rem',
+													pt: 0.5,
+													pl: 2,
+												}}
+											>
+												{errors.category.message}
 											</Box>
 										)}
 									</FormControl>
