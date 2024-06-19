@@ -1,9 +1,11 @@
+'use client'
 import { Box } from '@mui/material';
 import { Banner, Breadcrumb } from '@/components';
 import { initialData } from '@/seed/seed';
 import ProductGrid from '@/components/products/ProductGrid';
-import ImageUploader from '@/components/products/Test';
 import { Product, Review, User } from '@/interfaces';
+import { useGetAllProductsQuery } from '@/store';
+import { useEffect, useState } from 'react';
 
 interface Props {
 	params: {
@@ -11,80 +13,48 @@ interface Props {
 	};
 }
 
-const usuario: User = {
-	id: "123",
-	email: "123@123.com",
-	firstName: "hola",
-	lastName: "chao",
-	role: "Cient"
-}
-
-const review : Review = {
-	id: "123",
-	comment: "Si",
-	rate: 4.5,
-	user: usuario
-}
-
-const producto1 : Product = {
-	id: "123",
-	name: "mancuernas",
-	description: "muy pesadas",
-	price: 20,
-	rate: 4.5,
-    stock: 10,
-	images: ["71HEqww6NtL._AC_SX679_.jpg"],
-	reviews: [review]
-}
-const producto2 : Product = {
-	id: "123",
-	name: "mancuernas",
-	description: "muy pesadas",
-	price: 20,
-	rate: 4.5,
-    stock: 10,
-	images: ["812w7U9WzwL._AC_SX679_.jpg"],
-	reviews: [review]
-}
-const producto3 : Product = {
-	id: "123",
-	name: "mancuernas",
-	description: "muy pesadas",
-	price: 20,
-	rate: 4.5,
-    stock: 10,
-	images: ["71HEqww6NtL._AC_SX679_.jpg"],
-	reviews: [review]
-}
-const producto4 : Product = {
-	id: "123",
-	name: "mancuernas",
-	description: "muy pesadas",
-	price: 20,
-	rate: 4.5,
-    stock: 10,
-	images: ["812w7U9WzwL._AC_SX679_.jpg"],
-	reviews: [review]
-}
-const productos : Product[] = [producto1,producto2,producto3,producto4]
-
 const categories = initialData.categories;
 
 export const CategoryPage = ({ params }: Props) => {
 	const { name } = params;
-	const category = categories.find((category) => category.name === name);
+    const [page, setPage] = useState(1);
+    const [limit, setLimit] = useState(10);
+    const [products, setProducts] = useState<Product[]>([]);
+    const [count, setCount] = useState(0);
+    const category = categories.find((category) => category.name === name);
+
+    const { data, error, isLoading } = useGetAllProductsQuery({ page, limit });
+
+    useEffect(() => {
+        if (data) {
+            const [productsList, totalCount] = data;
+            console.log("Fetched products list: ", productsList);
+            setProducts(productsList);
+            setCount(totalCount);
+        }
+        if (error) {
+            console.error('Error fetching products:', error);
+        }
+    }, [data, error]);
 
 	return (
 		<Box>
-			<Banner
-				image={`/banners/${category?.image}`}
-				title={category!.name}
-			/>
-			<Breadcrumb />
-			<ProductGrid products={productos} />
+			{category && (
+				<>
+					<Banner
+						image={`/banners/${category.image}`}
+						title={category.name}
+					/>
+					<Breadcrumb />
+					{isLoading ? (
+						<div>Loading...</div>
+					) : (
+						<ProductGrid products={products} />
+					)}
+				</>
+			)}
 		</Box>
 	);
 };
 
 export default CategoryPage;
-

@@ -7,13 +7,13 @@ interface ProductCardProps {
 }
 
 const ProductCard = ({ product }: ProductCardProps) => {
-    const averageRating = product.reviews.reduce((sum, review) => sum + review.rate, 0) / product.reviews.length;
+    const averageRating = product.reviews.reduce((sum, review) => sum + review.score, 0) / product.reviews.length;
 
     return (
         <div className='group bg-white rounded-lg shadow-md hover:shadow-lg transition-shadow p-6'>
             <Link href={`/product/${product.id}`} passHref>
                 <div className="block cursor-pointer">
-                    <ProductImage title={product.name} url={product.images[0]} />
+                    <ProductImage title={product.name} url={product.image_url[0]} />
 
                     <div className="mt-4 text-center">
                         <h3 className="font-semibold text-xl line-clamp-1 overflow-ellipsis text-gray-800">
@@ -29,7 +29,7 @@ const ProductCard = ({ product }: ProductCardProps) => {
                         </div>
 
                         <div className='mt-2 text-lg font-semibold text-gray-800'>
-                            ${product.price.toFixed(2)}
+                            ${product.price}
                         </div>
                     </div>
                 </div>

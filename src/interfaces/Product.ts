@@ -7,6 +7,6 @@ export interface Product {
 	price: number;
 	rate: number;
     stock: number;
-	images: string[];
+	image_url: string[];
 	reviews: Review[];
 }

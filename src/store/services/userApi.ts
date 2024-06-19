@@ -48,6 +48,12 @@ export const userApi = createApi({
                 method: 'GET',
             }),
         }),
+        getAllProducts: builder.query({
+            query: ({page, limit}) => ({
+                url: `product?page=${page}&limit=${limit}`,
+                method: 'GET',
+            }),
+        }),
     }),
 });
 
@@ -55,4 +61,5 @@ export const {
     useLoginUserMutation,
     useRegisterUserMutation,
     useFindByEmailQuery,
+    useGetAllProductsQuery
 } = userApi;
