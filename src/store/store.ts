@@ -5,6 +5,9 @@ import { persistReducer, persistStore } from 'redux-persist';
 
 import userReducer from './slices/userSlice';
 import { userApi } from './services/userApi';
+import { productApi } from './services/productApi';
+import { categoryApi } from './services/categoryApi';
+import { groupApi } from './services/groupApi';
 
 const persistConfig = {
 	key: 'root',
@@ -16,13 +19,21 @@ const persistedReducer = persistReducer(persistConfig, userReducer);
 
 export const store = configureStore({
 	reducer: {
+		[categoryApi.reducerPath]: categoryApi.reducer,
+		[groupApi.reducerPath]: groupApi.reducer,
+		[productApi.reducerPath]: productApi.reducer,
 		[userApi.reducerPath]: userApi.reducer,
 		user: persistedReducer,
 	},
 	middleware: (getDefaultMiddleware) =>
 		getDefaultMiddleware({
 			serializableCheck: false,
-		}).concat(userApi.middleware),
+		}).concat(
+			userApi.middleware,
+			productApi.middleware,
+			categoryApi.middleware,
+			groupApi.middleware
+		),
 });
 
 setupListeners(store.dispatch);

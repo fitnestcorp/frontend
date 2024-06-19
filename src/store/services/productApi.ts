@@ -1,5 +1,7 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 
+import { Product } from '@/interfaces';
+
 const baseQuery = fetchBaseQuery({
 	baseUrl: process.env.BACKEND_URL || 'http://localhost:3000',
 	prepareHeaders: (headers, { getState }) => {
@@ -8,23 +10,9 @@ const baseQuery = fetchBaseQuery({
 });
 
 export const productApi = createApi({
-	reducerPath: 'ProductApi',
+	reducerPath: 'productApi',
 	baseQuery: baseQuery,
 	endpoints: (builder) => ({
-		getAllProducts: builder.query({
-			query: ({ page, limit }) => ({
-				url: ``, //TODO definir la url
-				method: 'GET',
-			}),
-		}),
-
-		getProduct: builder.query({
-			query: (id) => ({
-				url: ``, //TODO definir la url
-				method: 'GET',
-			}),
-		}),
-
 		createProduct: builder.mutation({
 			query: (product) => ({
 				url: ``, //TODO definir la url
@@ -47,13 +35,54 @@ export const productApi = createApi({
 				method: 'DELETE',
 			}),
 		}),
+
+		getAllProducts: builder.query<
+			Product[],
+			{ page: number; limit: number }
+		>({
+			query: ({ page, limit }) => ({
+				url: `product?page=${page}&limit=${limit}`, //TODO definir la url
+				method: 'GET',
+			}),
+		}),
+
+		getProductByName: builder.query<Product, string>({
+			query: (name) => ({
+				url: ``, //TODO definir la url
+				method: 'GET',
+			}),
+		}),
+
+		getProductById: builder.query<Product, string>({
+			query: (id) => ({
+				url: ``, //TODO definir la url
+				method: 'GET',
+			}),
+		}),
+
+		getProductsByCategory: builder.query<Product[], string>({
+			query: (category) => ({
+				url: ``, //TODO definir la url
+				method: 'GET',
+			}),
+		}),
+
+		getProductsByGroup: builder.query<Product[], string>({
+			query: (group) => ({
+				url: ``, //TODO definir la url
+				method: 'GET',
+			}),
+		}),
 	}),
 });
 
 export const {
-	useGetAllProductsQuery,
-	useGetProductQuery,
 	useCreateProductMutation,
 	useUpdateProductMutation,
 	useDeleteProductMutation,
+	useGetAllProductsQuery,
+	useGetProductByNameQuery,
+	useGetProductByIdQuery,
+	useGetProductsByCategoryQuery,
+	useGetProductsByGroupQuery,
 } = productApi;
