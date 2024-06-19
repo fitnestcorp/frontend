@@ -65,7 +65,7 @@ export const LoginForm = () => {
 				variant="h5"
 				textAlign="center"
 				gutterBottom
-				sx={{ color: 'text.secondary', fontWeight: 'bold', mb: 2 }}
+				sx={{ color: 'text.primary', fontWeight: 'bold', mb: 2 }}
 			>
 				Iniciar Sesión
 			</Typography>
@@ -83,6 +83,11 @@ export const LoginForm = () => {
 									fullWidth
 									error={!!errors.email}
 									helperText={errors.email?.message}
+									sx={{
+										'& label': {
+											color: 'text.primary',
+										},
+									}}
 								/>
 							)}
 						/>
@@ -100,6 +105,11 @@ export const LoginForm = () => {
 									fullWidth
 									error={!!errors.password}
 									helperText={errors.password?.message}
+									sx={{
+										'& label': {
+											color: 'text.primary',
+										},
+									}}
 									InputProps={{
 										endAdornment: (
 											<InputAdornment position="end">
@@ -162,7 +172,7 @@ export const LoginForm = () => {
 				variant="body2"
 				textAlign="center"
 				mt={2}
-				sx={{ color: 'text.secondary' }}
+				sx={{ color: 'text.primary' }}
 			>
 				¿Aún no tienes cuenta?{' '}
 				<Link

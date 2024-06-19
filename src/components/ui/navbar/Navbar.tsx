@@ -9,12 +9,9 @@ import {
 	Link,
 	Container,
 	IconButton,
+	Tooltip,
 } from '@mui/material';
-import {
-	LogoutOutlined,
-	PersonOutlineOutlined,
-	TuneOutlined,
-} from '@mui/icons-material';
+import { LogoutOutlined, PersonOutlineOutlined } from '@mui/icons-material';
 
 import { AdminButton, Cart, Search, Sidemenu } from '@/components';
 
@@ -39,7 +36,7 @@ export const Navbar = () => {
 					>
 						<Typography
 							variant="h4"
-							sx={{ fontWeight: 'bold', color: 'text.primary' }}
+							sx={{ fontWeight: 'bold', color: 'text.secondary' }}
 						>
 							FITNEST
 						</Typography>
@@ -57,12 +54,12 @@ export const Navbar = () => {
 							component={NextLink}
 							href="/categoria/entrenamiento"
 							sx={{
-								color: 'text.primary',
+								color: 'text.secondary',
 								mx: 1,
 								borderRadius: '0.5rem',
 								'&:hover': {
 									backgroundColor: 'secondary.main',
-									color: 'text.secondary',
+									color: 'text.primary',
 								},
 							}}
 						>
@@ -72,12 +69,12 @@ export const Navbar = () => {
 							component={NextLink}
 							href="/categoria/equipamiento"
 							sx={{
-								color: 'text.primary',
+								color: 'text.secondary',
 								mx: 1,
 								borderRadius: '0.5rem',
 								'&:hover': {
 									backgroundColor: 'secondary.main',
-									color: 'text.secondary',
+									color: 'text.primary',
 								},
 							}}
 						>
@@ -87,12 +84,12 @@ export const Navbar = () => {
 							component={NextLink}
 							href="/categoria/servicios"
 							sx={{
-								color: 'text.primary',
+								color: 'text.secondary',
 								mx: 1,
 								borderRadius: '0.5rem',
 								'&:hover': {
 									backgroundColor: 'secondary.main',
-									color: 'text.secondary',
+									color: 'text.primary',
 								},
 							}}
 						>
@@ -109,34 +106,39 @@ export const Navbar = () => {
 						>
 							<Search />
 						</Box>
+
+						{/* Shopping Cart */}
 						<Cart />
+					
 						<Box sx={{ display: { xs: 'none', md: 'block' } }}>
 							<Box sx={{ display: 'flex', gap: 2 }}>
 								{/* Show if user is not authenticated */}
-								<IconButton
-									component={NextLink}
-									href="/iniciar-sesion"
-									color="inherit"
-									sx={{
-										position: 'relative',
-										display: 'flex',
-										alignItems: 'center',
-										justifyContent: 'center',
-										width: '40px',
-										height: '40px',
-										borderRadius: '0.5rem',
-										color: 'text.primary',
-										backgroundColor: 'black',
-										'&:hover': {
-											backgroundColor: 'secondary.main',
+								<Tooltip title="Iniciar Sesión" arrow>
+									<IconButton
+										component={NextLink}
+										href="/iniciar-sesion"
+										color="inherit"
+										sx={{
+											position: 'relative',
+											display: 'flex',
+											alignItems: 'center',
+											justifyContent: 'center',
+											width: '40px',
+											height: '40px',
+											borderRadius: '0.5rem',
 											color: 'text.secondary',
-											border: '1px solid black',
-										},
-									}}
-								>
-									<PersonOutlineOutlined />
-								</IconButton>
-
+											backgroundColor: 'primary.main',
+											'&:hover': {
+												backgroundColor:
+													'secondary.main',
+												color: 'text.primary',
+												border: '1px solid black',
+											},
+										}}
+									>
+										<PersonOutlineOutlined />
+									</IconButton>
+								</Tooltip>
 								{/* Show if user is admin */}
 								<Box
 									sx={{
@@ -147,30 +149,33 @@ export const Navbar = () => {
 								</Box>
 
 								{/* Show if user is autehnticated */}
-								<IconButton
-									component={NextLink}
-									onClick={() => {}}
-									href="/"
-									color="inherit"
-									sx={{
-										position: 'relative',
-										display: 'flex',
-										alignItems: 'center',
-										justifyContent: 'center',
-										width: '40px',
-										height: '40px',
-										borderRadius: '0.5rem',
-										color: 'text.primary',
-										backgroundColor: 'black',
-										'&:hover': {
-											backgroundColor: 'secondary.main',
+								<Tooltip title="Cerrar Sesión" arrow>
+									<IconButton
+										component={NextLink}
+										onClick={() => {}}
+										href="/"
+										color="inherit"
+										sx={{
+											position: 'relative',
+											display: 'flex',
+											alignItems: 'center',
+											justifyContent: 'center',
+											width: '40px',
+											height: '40px',
+											borderRadius: '0.5rem',
 											color: 'text.secondary',
-											border: '1px solid black',
-										},
-									}}
-								>
-									<LogoutOutlined />
-								</IconButton>
+											backgroundColor: 'primary.main',
+											'&:hover': {
+												backgroundColor:
+													'secondary.main',
+												color: 'text.primary',
+												border: '1px solid black',
+											},
+										}}
+									>
+										<LogoutOutlined />
+									</IconButton>
+								</Tooltip>
 							</Box>
 						</Box>
 

@@ -11,9 +11,15 @@ export * from './category/CategorySwiper';
 export * from './forms/LoginForm';
 export * from './forms/RegisterForm';
 
+export * from './options/FilterButton';
+export * from './options/SortButton';
+
+export * from './product/AddProductModal';
 export * from './product/ProductDetails';
 
 export * from './sidemenu/Sidemenu';
+
+export * from './table/Table';
 
 export * from './ui/footer/Footer';
 export * from './ui/navbar/Navbar';

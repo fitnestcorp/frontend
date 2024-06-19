@@ -32,7 +32,7 @@ export const Banner = ({ image, title }: Prop) => {
 				variant="h3"
 				sx={{
 					position: 'absolute',
-					color: 'text.primary',
+					color: 'text.secondary',
 					fontWeight: 'bold',
 					textShadow: '2px 2px 4px rgba(0, 0, 0, 0.6)',
 					textAlign: 'center',

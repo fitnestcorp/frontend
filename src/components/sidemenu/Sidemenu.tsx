@@ -11,6 +11,7 @@ import {
 	ListItemText,
 	Divider,
 	Typography,
+	Tooltip,
 } from '@mui/material';
 import {
 	Menu as MenuIcon,
@@ -53,28 +54,30 @@ export const Sidemenu = () => {
 
 	return (
 		<>
-			<IconButton
-				onClick={toggleDrawer}
-				color="inherit"
-				sx={{
-					position: 'relative',
-					display: 'flex',
-					alignItems: 'center',
-					justifyContent: 'center',
-					width: '40px',
-					height: '40px',
-					borderRadius: '0.5rem',
-					color: 'text.primary',
-					backgroundColor: 'black',
-					'&:hover': {
-						backgroundColor: 'secondary.main',
+			<Tooltip title="Menú" arrow>
+				<IconButton
+					onClick={toggleDrawer}
+					color="inherit"
+					sx={{
+						position: 'relative',
+						display: 'flex',
+						alignItems: 'center',
+						justifyContent: 'center',
+						width: '40px',
+						height: '40px',
+						borderRadius: '0.5rem',
 						color: 'text.secondary',
-						border: '1px solid black',
-					},
-				}}
-			>
-				<MenuIcon />
-			</IconButton>
+						backgroundColor: 'black',
+						'&:hover': {
+							backgroundColor: 'secondary.main',
+							color: 'text.primary',
+							border: '1px solid black',
+						},
+					}}
+				>
+					<MenuIcon />
+				</IconButton>
+			</Tooltip>
 
 			<Drawer
 				anchor="right"
@@ -139,7 +142,7 @@ export const Sidemenu = () => {
 							component={Link}
 							href="/categoria/entrenamiento"
 							sx={{
-								color: 'text.secondary',
+								color: 'text.primary',
 								'&:hover': {
 									color: 'grey',
 								},
@@ -152,7 +155,7 @@ export const Sidemenu = () => {
 							component={Link}
 							href="/categoria/equipamiento"
 							sx={{
-								color: 'text.secondary',
+								color: 'text.primary',
 								'&:hover': {
 									color: 'grey',
 								},
@@ -165,7 +168,7 @@ export const Sidemenu = () => {
 							component={Link}
 							href="/categoria/servicios"
 							sx={{
-								color: 'text.secondary',
+								color: 'text.primary',
 								'&:hover': {
 									color: 'grey',
 								},
@@ -183,7 +186,7 @@ export const Sidemenu = () => {
 							component={Link}
 							href="/iniciar-sesion"
 							sx={{
-								color: 'text.secondary',
+								color: 'text.primary',
 								'&:hover': {
 									color: 'grey',
 								},
@@ -199,7 +202,7 @@ export const Sidemenu = () => {
 							component={Link}
 							href="/registrarse"
 							sx={{
-								color: 'text.secondary',
+								color: 'text.primary',
 								'&:hover': {
 									color: 'grey',
 								},
@@ -217,7 +220,7 @@ export const Sidemenu = () => {
 							component={Link}
 							href="/cerrar-sesion"
 							sx={{
-								color: 'text.secondary',
+								color: 'text.primary',
 								'&:hover': {
 									color: 'grey',
 								},

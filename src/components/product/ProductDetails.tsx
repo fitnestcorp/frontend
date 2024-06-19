@@ -48,7 +48,7 @@ export const ProductDetails = ({ product }: Props) => {
 							</Typography>
 							<Typography
 								variant="body1"
-								color="text.secondary"
+								color="text.primary"
 								paragraph
 							>
 								{product!.description}
@@ -68,7 +68,7 @@ export const ProductDetails = ({ product }: Props) => {
 								/>
 								<Typography
 									variant="body2"
-									color="text.secondary"
+									color="text.primary"
 									sx={{ ml: 1 }}
 								>
 									{product!.reviews.length} reseñas

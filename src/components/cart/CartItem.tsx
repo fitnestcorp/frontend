@@ -55,11 +55,11 @@ export const CartItem = ({
 				<Box sx={{ flexGrow: 1, ml: 2 }}>
 					<Typography
 						variant="h6"
-						sx={{ fontWeight: 'bold', color: 'text.secondary' }}
+						sx={{ fontWeight: 'bold', color: 'text.primary' }}
 					>
 						{name}
 					</Typography>
-					<Typography variant="body2" color="text.secondary">
+					<Typography variant="body2" color="text.primary">
 						{description}
 					</Typography>
 					<Box
@@ -85,7 +85,7 @@ export const CartItem = ({
 							</IconButton>
 							<Typography
 								variant="body2"
-								color="text.secondary"
+								color="text.primary"
 								sx={{ mx: 2 }}
 							>
 								{quantity}
