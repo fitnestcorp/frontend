@@ -5,4 +5,5 @@ export interface Group {
 	description: string;
 	image_url: string;
 	categories: Category[];
+
 }
