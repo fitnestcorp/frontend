@@ -8,6 +8,7 @@ import {
 	SortButton,
 	Table,
 } from '@/components';
+import { useGetAllProductsQuery } from '@/store';
 
 const columns = [
 	{ id: 'image', label: '', minWidth: 50, align: 'center' as const },
@@ -57,54 +58,16 @@ const rows = [
 		quantity: 158,
 		status: 'Activo',
 	},
-	{
-		image: '/products/mancuernas-10kg-1.jpg',
-		name: 'Set de mancuernas',
-		categories: 'Fuerza, mancuernas',
-		uuid: '107222fb-d46c-483d-887f-489c9ca0573a',
-		price: 200000,
-		quantity: 158,
-		status: 'Activo',
-	},
-	{
-		image: '/products/mancuernas-10kg-1.jpg',
-		name: 'Set de mancuernas',
-		categories: 'Fuerza, mancuernas',
-		uuid: '107222fb-d46c-483d-887f-489c9ca0573a',
-		price: 200000,
-		quantity: 158,
-		status: 'Activo',
-	},
-	{
-		image: '/products/mancuernas-10kg-1.jpg',
-		name: 'Set de mancuernas',
-		categories: 'Fuerza, mancuernas',
-		uuid: '107222fb-d46c-483d-887f-489c9ca0573a',
-		price: 200000,
-		quantity: 158,
-		status: 'Activo',
-	},
-	{
-		image: '/products/mancuernas-10kg-1.jpg',
-		name: 'Set de mancuernas',
-		categories: 'Fuerza, mancuernas',
-		uuid: '107222fb-d46c-483d-887f-489c9ca0573a',
-		price: 200000,
-		quantity: 158,
-		status: 'Activo',
-	},
-	{
-		image: '/products/mancuernas-10kg-1.jpg',
-		name: 'Set de mancuernas',
-		categories: 'Fuerza, mancuernas',
-		uuid: '107222fb-d46c-483d-887f-489c9ca0573a',
-		price: 200000,
-		quantity: 158,
-		status: 'Activo',
-	},
 ];
 
 export const ManageInventoryPage = () => {
+	const { data: products } = useGetAllProductsQuery({
+		page: 1,
+		limit: 10,
+	}) as any;
+
+	console.log(products);
+
 	return (
 		<Grid
 			container
@@ -163,7 +126,7 @@ export const ManageInventoryPage = () => {
 			</Grid>
 
 			<Grid item xs={12} mb={10}>
-				<Table columns={columns} rows={rows} />
+				<Table columns={columns} rows={products} />
 			</Grid>
 
 			{/* Groups */}
