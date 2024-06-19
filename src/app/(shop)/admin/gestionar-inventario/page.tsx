@@ -113,6 +113,7 @@ export const ManageInventoryPage = () => {
 						sx={{
 							display: 'flex',
 							justifyContent: { xs: 'center', md: 'flex-end' },
+							alignItems: 'center',
 							gap: 2,
 							flexWrap: 'wrap',
 						}}

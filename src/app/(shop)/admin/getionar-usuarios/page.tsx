@@ -1,7 +1,13 @@
 'use client';
 import { Box, Button, Grid, Typography } from '@mui/material';
 
-import { FilterButton, Search, SortButton, Table } from '@/components';
+import {
+	AddUserModal,
+	FilterButton,
+	Search,
+	SortButton,
+	Table,
+} from '@/components';
 
 const columns = [
 	{ id: 'image', label: '', minWidth: 50 },
@@ -124,19 +130,13 @@ export const ManageUsersPage = () => {
 						sx={{
 							display: 'flex',
 							justifyContent: { xs: 'center', md: 'flex-end' },
+							alignItems: 'center',
 							gap: 2,
 							flexWrap: 'wrap',
 						}}
 					>
 						<Search border />
-						<Button
-							variant="contained"
-							sx={{
-								borderRadius: '0.5rem',
-							}}
-						>
-							Añadir Usuario
-						</Button>
+						<AddUserModal />
 						<SortButton />
 						<FilterButton />
 					</Grid>
