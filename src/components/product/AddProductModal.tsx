@@ -17,10 +17,10 @@ import {
 	Grid,
 	styled,
 	Card,
-	Input,
 	InputAdornment,
 	OutlinedInput,
 	Tooltip,
+	useTheme,
 } from '@mui/material';
 import { Close, DeleteOutline, UploadFileOutlined } from '@mui/icons-material';
 
@@ -38,6 +38,7 @@ const VisuallyHiddenInput = styled('input')({
 
 export const AddProductModal = () => {
 	const [open, setOpen] = useState(false);
+	const theme = useTheme();
 
 	const handleClickOpen = () => {
 		setOpen(true);
@@ -85,7 +86,7 @@ export const AddProductModal = () => {
 				</DialogTitle>
 				<DialogContent>
 					<Grid container spacing={4} px={4} py={2}>
-						<Grid item xs={6}>
+						<Grid item xs={12} md={6}>
 							<Box
 								sx={{
 									display: 'flex',
@@ -227,19 +228,29 @@ export const AddProductModal = () => {
 							</Box>
 						</Grid>
 
-						<Grid item xs={6} gap={2}>
+						<Grid item xs={12} md={6}>
 							<Box
 								sx={{
 									display: 'flex',
 									flexDirection: 'column',
+									justifyContent: 'center',
 									gap: 2,
 									mt: 2,
+									[theme.breakpoints.down('sm')]: {
+										flexDirection: 'row',
+										flexWrap: 'wrap',
+									},
 								}}
 							>
 								<Box
 									sx={{
 										display: 'flex',
+										justifyContent: 'center',
 										gap: 2,
+										[theme.breakpoints.down('sm')]: {
+											flexDirection: 'row',
+											flexWrap: 'wrap',
+										},
 									}}
 								>
 									<Box
@@ -248,6 +259,10 @@ export const AddProductModal = () => {
 											flexDirection: 'column',
 											alignItems: 'center',
 											gap: 4,
+											[theme.breakpoints.down('sm')]: {
+												display: 'flex',
+												flexDirection: 'row',
+											},
 										}}
 									>
 										<Card>
@@ -263,6 +278,10 @@ export const AddProductModal = () => {
 										<Card
 											sx={{
 												my: 2,
+												[theme.breakpoints.down('sm')]:
+													{
+														my: 0,
+													},
 											}}
 										>
 											<Image
@@ -327,6 +346,9 @@ export const AddProductModal = () => {
 											color: 'primary.main',
 											'&:hover': {
 												color: 'secondary.main',
+											},
+											[theme.breakpoints.down('sm')]: {
+												textTransform: 'none',
 											},
 										}}
 									>
