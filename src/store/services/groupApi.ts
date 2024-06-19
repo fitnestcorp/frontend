@@ -1,5 +1,4 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
-
 import { Group } from '@/interfaces';
 
 const baseQuery = fetchBaseQuery({
@@ -36,16 +35,16 @@ export const groupApi = createApi({
 			}),
 		}),
 
-		getAllGroups: builder.query<Group[], { page: number; limit: number }>({
+		getAllGroups: builder.query({
 			query: ({ page, limit }) => ({
-				url: `group?page=${page}&limit=${limit}`,
+				url: `product/group/all?page=${page}&limit=${limit}`,
 				method: 'GET',
 			}),
 		}),
-
+		
 		getGroupByName: builder.query<Group, string>({
 			query: (name) => ({
-				url: `group/${name}`,
+				url: `product/group/${name}`,
 				method: 'GET',
 			}),
 		}),

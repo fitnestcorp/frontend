@@ -37,11 +37,11 @@ export const productApi = createApi({
 		}),
 
 		getAllProducts: builder.query<
-			Product[],
+			{ products: Product[], totalCount: number },
 			{ page: number; limit: number }
 		>({
 			query: ({ page, limit }) => ({
-				url: `product?page=${page}&limit=${limit}`, //TODO definir la url
+				url: `product?page=${page}&limit=${limit}`, 
 				method: 'GET',
 			}),
 		}),
