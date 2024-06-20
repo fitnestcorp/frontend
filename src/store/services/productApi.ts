@@ -2,6 +2,8 @@ import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 
 import { Product } from '@/interfaces';
 
+type ProductWithNumber = [Product[], number];
+
 const baseQuery = fetchBaseQuery({
 	baseUrl: process.env.BACKEND_URL || 'http://localhost:3000',
 	prepareHeaders: (headers, { getState }) => {
@@ -15,7 +17,7 @@ export const productApi = createApi({
 	endpoints: (builder) => ({
 		createProduct: builder.mutation({
 			query: (product) => ({
-				url: `/product`, 
+				url: `/product`,
 				method: 'POST',
 				body: product,
 			}),
@@ -37,11 +39,11 @@ export const productApi = createApi({
 		}),
 
 		getAllProducts: builder.query<
-			{ products: Product[], totalCount: number },
+			ProductWithNumber,
 			{ page: number; limit: number }
 		>({
 			query: ({ page, limit }) => ({
-				url: `product?page=${page}&limit=${limit}`, 
+				url: `product?page=${page}&limit=${limit}`,
 				method: 'GET',
 			}),
 		}),

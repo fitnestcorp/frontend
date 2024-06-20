@@ -11,9 +11,10 @@ import { SearchSchema } from '@/schemas';
 
 interface Props {
 	border?: boolean;
+	onSearch: (value: string) => void;
 }
 
-export const Search = ({ border = false }: Props) => {
+export const Search = ({ border = false, onSearch }: Props) => {
 	const { handleSubmit, control } = useForm<z.infer<typeof SearchSchema>>({
 		resolver: zodResolver(SearchSchema),
 		defaultValues: {
@@ -21,10 +22,14 @@ export const Search = ({ border = false }: Props) => {
 		},
 	});
 
+	const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+		onSearch(event.target.value);
+	};
+
 	// const [findProduct, { data, error }] = useFindProductMutation(); //TODO: Implement this
 
-	const router = useRouter();
-	const [errorMap, setErrorMap] = useState('');
+	// const router = useRouter();
+	// const [errorMap, setErrorMap] = useState('');
 
 	// async function onSubmit(data: z.infer<typeof SearchSchema>) {
 	// 	let errorocurred = false;
@@ -54,6 +59,7 @@ export const Search = ({ border = false }: Props) => {
 						placeholder="Buscar"
 						variant="outlined"
 						size="small"
+						// onChange={handleSearchChange}
 						InputProps={{
 							startAdornment: (
 								<InputAdornment position="start">

@@ -1,4 +1,5 @@
 'use client';
+import { useState } from 'react';
 import { Box, Button, Grid, Typography } from '@mui/material';
 
 import {
@@ -19,12 +20,18 @@ const columns = [
 		align: 'center' as const,
 	},
 	{
-		id: 'categories',
-		label: 'Categorías',
+		id: 'type',
+		label: 'Tipo',
 		minWidth: 100,
 		align: 'center' as const,
 	},
-	{ id: 'uuid', label: 'UUID', minWidth: 170, align: 'center' as const },
+	{
+		id: 'category',
+		label: 'Categoria',
+		minWidth: 100,
+		align: 'center' as const,
+	},
+	{ id: 'id', label: 'ID', minWidth: 170, align: 'center' as const },
 	{
 		id: 'price',
 		label: 'Precio',
@@ -33,13 +40,19 @@ const columns = [
 		format: (value: number) => value.toLocaleString('en-US'),
 	},
 	{
-		id: 'quantity',
-		label: 'Cantidad',
+		id: 'stock',
+		label: 'Stock',
 		minWidth: 100,
 		align: 'center' as const,
 		format: (value: number) => value.toLocaleString('en-US'),
 	},
 	{ id: 'status', label: 'Estatus', minWidth: 100, align: 'center' as const },
+	{
+		id: 'creation_date',
+		label: 'Fecha de Creación',
+		minWidth: 100,
+		align: 'center' as const,
+	},
 	{
 		id: 'actions',
 		label: 'Acciones',
@@ -61,12 +74,33 @@ const rows = [
 ];
 
 export const ManageInventoryPage = () => {
-	const { data: products } = useGetAllProductsQuery({
+	const { data, isLoading } = useGetAllProductsQuery({
 		page: 1,
 		limit: 10,
-	}) as any;
+	});
+	const products = data?.[0] || [];
 
 	console.log(products);
+
+	const [searchTerm, setSearchTerm] = useState('');
+
+	const productRows = products.map((product) => ({
+		id: product.id,
+		name: product.name,
+		type: product.type,
+		creation_date: product.create_date,
+		price: '$' + product.price,
+		image: product.image_url[0],
+		category: product.category.name,
+		status: product.status,
+		stock: product.stock.stock,
+	}));
+
+	console.log('rows', rows);
+
+	const filteredProductRows = productRows.filter((row) =>
+		row.name.toLowerCase().includes(searchTerm.toLowerCase())
+	);
 
 	return (
 		<Grid
@@ -118,7 +152,10 @@ export const ManageInventoryPage = () => {
 							flexWrap: 'wrap',
 						}}
 					>
-						<Search border />
+						<Search
+							border
+							onSearch={(value) => setSearchTerm(value)}
+						/>
 						<AddProductModal />
 						<SortButton />
 						<FilterButton />
@@ -127,8 +164,12 @@ export const ManageInventoryPage = () => {
 			</Grid>
 
 			<Grid item xs={12} mb={10}>
-				{/* <Table columns={columns} rows={products} /> */}
-				<Table columns={columns} rows={rows} />
+				<Table
+					columns={columns}
+					rows={filteredProductRows}
+					isLoading={isLoading}
+				/>
+				{/* <Table columns={columns} rows={rows} /> */}
 			</Grid>
 
 			{/* Groups */}
@@ -158,7 +199,10 @@ export const ManageInventoryPage = () => {
 							flexWrap: 'wrap',
 						}}
 					>
-						<Search border />
+						<Search
+							border
+							onSearch={(value) => setSearchTerm(value)}
+						/>
 						<Button
 							variant="contained"
 							sx={{
@@ -174,7 +218,11 @@ export const ManageInventoryPage = () => {
 			</Grid>
 
 			<Grid item xs={12} mb={10}>
-				<Table columns={columns} rows={rows} />
+				<Table
+					columns={columns}
+					rows={productRows}
+					isLoading={isLoading}
+				/>
 			</Grid>
 
 			{/* Categories */}
@@ -204,7 +252,10 @@ export const ManageInventoryPage = () => {
 							flexWrap: 'wrap',
 						}}
 					>
-						<Search border />
+						<Search
+							border
+							onSearch={(value) => setSearchTerm(value)}
+						/>
 						<Button
 							variant="contained"
 							sx={{
@@ -220,7 +271,11 @@ export const ManageInventoryPage = () => {
 			</Grid>
 
 			<Grid item xs={12} mb={10}>
-				<Table columns={columns} rows={rows} />
+				<Table
+					columns={columns}
+					rows={productRows}
+					isLoading={isLoading}
+				/>
 			</Grid>
 		</Grid>
 	);

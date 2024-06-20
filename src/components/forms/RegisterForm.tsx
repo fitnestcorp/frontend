@@ -12,6 +12,7 @@ import {
 	CircularProgress,
 	IconButton,
 	InputAdornment,
+	DialogActions,
 } from '@mui/material';
 
 import { RegisterSchema } from '@/schemas';
@@ -261,6 +262,30 @@ export const RegisterForm = ({ showRegisterButton = true }: Props) => {
 							}
 						>
 							Registrarse
+						</Button>
+					</Grid>
+				)}
+
+				{!showRegisterButton && (
+					<Grid
+						item
+						xs={12}
+						sx={{
+							display: 'flex',
+							justifyContent: 'center',
+							pb: 2,
+						}}
+					>
+						<Button
+							type="submit"
+							variant="contained"
+							disabled={!isDirty || isSubmitting}
+							endIcon={
+								isSubmitting && <CircularProgress size={20} />
+							}
+							sx={{ borderRadius: '0.5rem', width: '50%', py: 1 }}
+						>
+							Añadir Usuario
 						</Button>
 					</Grid>
 				)}

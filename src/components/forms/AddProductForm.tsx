@@ -22,8 +22,6 @@ import {
 	Typography,
 	Snackbar,
 	Alert,
-	Checkbox,
-	ListItemText,
 } from '@mui/material';
 import { AddPhotoAlternateOutlined, DeleteOutline } from '@mui/icons-material';
 import { Controller, useForm } from 'react-hook-form';
@@ -31,7 +29,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
 
 import { AddProductSchema } from '@/schemas';
-import { useCreateProductMutation } from '@/store';
+import { useCreateProductMutation, useGetAllCategoriesQuery } from '@/store';
 
 const VisuallyHiddenInput = styled('input')({
 	clip: 'rect(0 0 0 0)',
@@ -49,6 +47,11 @@ export const AddProductForm = () => {
 	const theme = useTheme();
 	const [uploadedImages, setUploadedImages] = useState<string[]>([]);
 	const [imageError, setImageError] = useState<string | null>(null);
+	const { data } = useGetAllCategoriesQuery({ page: 1, limit: 10 });
+	const categories = data?.[0] || [];
+
+	console.log('categories:', categories);
+
 	const [createProduct] = useCreateProductMutation();
 
 	const [openSnackbar, setOpenSnackbar] = useState(false);
@@ -73,9 +76,9 @@ export const AddProductForm = () => {
 			price: 0,
 			stock: 0,
 			description: '',
-			group: '',
-			category: [],
-			images: [],
+			category: '',
+			image_url: [],
+			type: '',
 		},
 	});
 
@@ -107,7 +110,7 @@ export const AddProductForm = () => {
 			setImageError(null);
 			const fileURLs = files.map((file) => URL.createObjectURL(file));
 			setUploadedImages((prevImages) => [...prevImages, ...fileURLs]);
-			setValue('images', [...uploadedImages, ...fileURLs], {
+			setValue('image_url', [...uploadedImages, ...fileURLs], {
 				shouldValidate: true,
 			});
 		}
@@ -116,8 +119,9 @@ export const AddProductForm = () => {
 	const handleDeleteImage = (index: number) => {
 		const updatedImages = uploadedImages.filter((_, i) => i !== index);
 		setUploadedImages(updatedImages);
-		setValue('images', updatedImages, { shouldValidate: true });
+		setValue('image_url', updatedImages, { shouldValidate: true });
 	};
+
 	return (
 		<div>
 			<form onSubmit={handleSubmit(onSubmit)}>
@@ -257,60 +261,6 @@ export const AddProductForm = () => {
 							/>
 
 							<Controller
-								name="group"
-								control={control}
-								render={({ field }) => (
-									<FormControl
-										fullWidth
-										sx={{
-											'& label': {
-												color: 'text.primary',
-											},
-											'& .MuiOutlinedInput-root': {
-												'& fieldset': {
-													borderColor: 'gray',
-												},
-											},
-										}}
-									>
-										<InputLabel id="group-label">
-											Grupo
-										</InputLabel>
-										<Select
-											{...field}
-											error={!!errors.group}
-											labelId="group-label"
-											id="group"
-											label="Grupo"
-										>
-											<MenuItem value="Grupo1">
-												Grupo1
-											</MenuItem>
-											<MenuItem value="Grupo2">
-												Grupo2
-											</MenuItem>
-											<MenuItem value="Grupo3">
-												Grupo3
-											</MenuItem>
-										</Select>
-										{errors.group && (
-											<Box
-												component="span"
-												sx={{
-													color: 'error.main',
-													fontSize: '0.75rem',
-													pt: 0.5,
-													pl: 2,
-												}}
-											>
-												{errors.group.message}
-											</Box>
-										)}
-									</FormControl>
-								)}
-							/>
-
-							<Controller
 								name="category"
 								control={control}
 								render={({ field }) => (
@@ -332,50 +282,25 @@ export const AddProductForm = () => {
 										</InputLabel>
 										<Select
 											{...field}
-											multiple
 											error={!!errors.category}
 											labelId="category-label"
 											id="category"
-											label="Categorías"
-											renderValue={(selected) =>
-												(selected as string[]).join(
-													', '
-												)
-											}
+											label="Categoría"
 										>
-											<MenuItem value="Categoria1">
-												<Checkbox
-													checked={field.value.includes(
-														'Categoria1'
-													)}
-													sx={{
-														color: 'gray',
-													}}
-												/>
-												<ListItemText primary="Categoria1" />
-											</MenuItem>
-											<MenuItem value="Categoria2">
-												<Checkbox
-													checked={field.value.includes(
-														'Categoria2'
-													)}
-													sx={{
-														color: 'gray',
-													}}
-												/>
-												<ListItemText primary="Categoria2" />
-											</MenuItem>
-											<MenuItem value="Categoria3">
-												<Checkbox
-													checked={field.value.includes(
-														'Categoria3'
-													)}
-													sx={{
-														color: 'gray',
-													}}
-												/>
-												<ListItemText primary="Categoria3" />
-											</MenuItem>
+											{categories?.length ?? 0 > 0 ? (
+												categories?.map((category) => (
+													<MenuItem
+														key={category.name}
+														value={category.name}
+													>
+														{category.name}
+													</MenuItem>
+												))
+											) : (
+												<MenuItem value="" disabled>
+													No hay categorías
+												</MenuItem>
+											)}
 										</Select>
 										{errors.category && (
 											<Box
@@ -391,6 +316,31 @@ export const AddProductForm = () => {
 											</Box>
 										)}
 									</FormControl>
+								)}
+							/>
+
+							<Controller
+								name="type"
+								control={control}
+								render={({ field }) => (
+									<TextField
+										{...field}
+										label="Tipo"
+										variant="outlined"
+										fullWidth
+										error={!!errors.type}
+										helperText={errors.type?.message}
+										sx={{
+											'& label': {
+												color: 'text.primary',
+											},
+											'& .MuiOutlinedInput-root': {
+												'& fieldset': {
+													borderColor: 'gray',
+												},
+											},
+										}}
+									/>
 								)}
 							/>
 						</Box>
@@ -532,7 +482,7 @@ export const AddProductForm = () => {
 									{imageError}
 								</Typography>
 							)}
-							{errors.images && (
+							{errors.image_url && (
 								<Typography
 									sx={{
 										display: 'flex',
@@ -543,7 +493,7 @@ export const AddProductForm = () => {
 										pl: 2,
 									}}
 								>
-									{errors.images.message}
+									{errors.image_url.message}
 								</Typography>
 							)}
 						</Box>
