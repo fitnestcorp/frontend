@@ -37,14 +37,14 @@ export const groupApi = createApi({
 
 		getAllGroups: builder.query({
 			query: ({ page, limit }) => ({
-				url: `product/group/all?page=${page}&limit=${limit}`,
+				url: `group?page=${page}&limit=${limit}`,
 				method: 'GET',
 			}),
 		}),
 		
 		getGroupByName: builder.query<Group, string>({
 			query: (name) => ({
-				url: `product/group/${name}`,
+				url: `group/${name}`,
 				method: 'GET',
 			}),
 		}),
