@@ -2,6 +2,8 @@ import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 
 import { Category } from '@/interfaces';
 
+type CategoryWithNumber = [Category[], number];
+
 const baseQuery = fetchBaseQuery({
 	baseUrl: process.env.BACKEND_URL || 'http://localhost:3000',
 	prepareHeaders: (headers, { getState }) => {
@@ -37,7 +39,7 @@ export const categoryApi = createApi({
 		}),
 
 		getAllCategories: builder.query<
-			Category[],
+			CategoryWithNumber,
 			{ page: number; limit: number }
 		>({
 			query: ({ page, limit }) => ({

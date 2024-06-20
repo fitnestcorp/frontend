@@ -1,5 +1,6 @@
 'use client';
 import { useState } from 'react';
+import Image from 'next/image';
 import {
 	Table as MuiTable,
 	TableBody,
@@ -12,9 +13,9 @@ import {
 	IconButton,
 	Tooltip,
 	Box,
+	Skeleton,
 } from '@mui/material';
 import { DeleteOutline, EditOutlined } from '@mui/icons-material';
-import Image from 'next/image';
 
 interface Column {
 	id: string;
@@ -27,9 +28,10 @@ interface Column {
 interface Props {
 	columns: Column[];
 	rows: any[];
+	isLoading: boolean;
 }
 
-export const Table = ({ columns, rows }: Props) => {
+export const Table = ({ columns, rows, isLoading }: Props) => {
 	const [page, setPage] = useState(0);
 	const [rowsPerPage, setRowsPerPage] = useState(20);
 
@@ -68,109 +70,139 @@ export const Table = ({ columns, rows }: Props) => {
 						</TableRow>
 					</TableHead>
 					<TableBody>
-						{rows
-							.slice(
-								page * rowsPerPage,
-								page * rowsPerPage + rowsPerPage
-							)
-							.map((row, rowIndex) => {
-								return (
-									<TableRow
-										hover
-										role="checkbox"
-										tabIndex={-1}
-										key={rowIndex}
-									>
-										{columns.map((column) => {
-											const value = row[column.id];
-											if (column.id === 'actions') {
+						{isLoading ? (
+							[...Array(10)].map((_, index) => (
+								<TableRow key={index}>
+									{columns.map((column) => (
+										<TableCell key={column.id}>
+											<Skeleton
+												variant="rectangular"
+												width="100%"
+												height={20}
+											/>
+										</TableCell>
+									))}
+								</TableRow>
+							))
+						) : rows.length === 0 ? (
+							<TableRow>
+								<TableCell
+									colSpan={columns.length}
+									align="center"
+								>
+									No hay productos
+								</TableCell>
+							</TableRow>
+						) : (
+							rows
+								.slice(
+									page * rowsPerPage,
+									page * rowsPerPage + rowsPerPage
+								)
+								.map((row, rowIndex) => {
+									return (
+										<TableRow
+											hover
+											role="checkbox"
+											tabIndex={-1}
+											key={rowIndex}
+										>
+											{columns.map((column) => {
+												const value = row[column.id];
+												if (column.id === 'actions') {
+													return (
+														<TableCell
+															key={column.id}
+															align={column.align}
+														>
+															<Tooltip
+																title="Editar"
+																arrow
+															>
+																<IconButton
+																	sx={{
+																		color: '#1565c0',
+																	}}
+																>
+																	<EditOutlined />
+																</IconButton>
+															</Tooltip>
+															<Tooltip
+																title="Eliminar"
+																arrow
+															>
+																<IconButton
+																	sx={{
+																		color: '#b71c1c',
+																	}}
+																>
+																	<DeleteOutline />
+																</IconButton>
+															</Tooltip>
+														</TableCell>
+													);
+												} else if (
+													column.id === 'image'
+												) {
+													return (
+														<TableCell
+															key={column.id}
+															align={
+																column.align
+																	? column.align
+																	: 'center'
+															}
+															sx={{
+																display: 'flex',
+																justifyContent:
+																	'center',
+															}}
+														>
+															<Box
+																style={{
+																	width: '50px',
+																	height: '50px',
+																	position:
+																		'relative',
+																}}
+															>
+																<Image
+																	src={`/${value}`}
+																	alt="product"
+																	sizes="50px"
+																	style={{
+																		objectFit:
+																			'cover',
+																	}}
+																	fill
+																/>
+															</Box>
+														</TableCell>
+													);
+												}
 												return (
 													<TableCell
 														key={column.id}
 														align={column.align}
-													>
-														<Tooltip
-															title="Editar"
-															arrow
-														>
-															<IconButton
-																sx={{
-																	color: '#1565c0',
-																}}
-															>
-																<EditOutlined />
-															</IconButton>
-														</Tooltip>
-														<Tooltip
-															title="Eliminar"
-															arrow
-														>
-															<IconButton
-																sx={{
-																	color: '#b71c1c',
-																}}
-															>
-																<DeleteOutline />
-															</IconButton>
-														</Tooltip>
-													</TableCell>
-												);
-											} else if (column.id === 'image') {
-												return (
-													<TableCell
-														key={column.id}
-														align={
-															column.align
-																? column.align
-																: 'center'
-														}
 														sx={{
-															display: 'flex',
-															justifyContent:
-																'center',
+															color: 'text.primary',
+															fontSize: '1rem',
 														}}
 													>
-														<Box
-															style={{
-																width: '50px',
-																height: '50px',
-																position:
-																	'relative',
-															}}
-														>
-															<Image
-																src={value}
-																alt="product"
-																sizes="50px"
-																style={{
-																	objectFit:
-																		'cover',
-																}}
-																fill
-															/>
-														</Box>
+														{column.format &&
+														typeof value ===
+															'number'
+															? column.format(
+																	value
+															  )
+															: value}
 													</TableCell>
 												);
-											}
-											return (
-												<TableCell
-													key={column.id}
-													align={column.align}
-													sx={{
-														color: 'text.primary',
-														fontSize: '1rem',
-													}}
-												>
-													{column.format &&
-													typeof value === 'number'
-														? column.format(value)
-														: value}
-												</TableCell>
-											);
-										})}
-									</TableRow>
-								);
-							})}
+											})}
+										</TableRow>
+									);
+								})
+						)}
 					</TableBody>
 				</MuiTable>
 			</TableContainer>

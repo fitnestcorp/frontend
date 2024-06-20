@@ -8,6 +8,7 @@ import {
 	SortButton,
 	Table,
 } from '@/components';
+import { useGetAllUsersQuery } from '@/store';
 
 const columns = [
 	{ id: 'image', label: '', minWidth: 50 },
@@ -47,44 +48,16 @@ const rows = [
 		email: 'anasofia.a024@gmail.com',
 		orders: 3,
 	},
-	{
-		image: '/path/to/image.jpg',
-		name: 'Ana Sofia Londoño Fernandez',
-		birthDate: '01/08/2004',
-		email: 'anasofia.a024@gmail.com',
-		orders: 3,
-	},
-	{
-		image: '/path/to/image.jpg',
-		name: 'Ana Sofia Londoño Fernandez',
-		birthDate: '01/08/2004',
-		email: 'anasofia.a024@gmail.com',
-		orders: 3,
-	},
-	{
-		image: '/path/to/image.jpg',
-		name: 'Ana Sofia Londoño Fernandez',
-		birthDate: '01/08/2004',
-		email: 'anasofia.a024@gmail.com',
-		orders: 3,
-	},
-	{
-		image: '/path/to/image.jpg',
-		name: 'Ana Sofia Londoño Fernandez',
-		birthDate: '01/08/2004',
-		email: 'anasofia.a024@gmail.com',
-		orders: 3,
-	},
-	{
-		image: '/path/to/image.jpg',
-		name: 'Ana Sofia Londoño Fernandez',
-		birthDate: '01/08/2004',
-		email: 'anasofia.a024@gmail.com',
-		orders: 3,
-	},
 ];
 
 export const ManageUsersPage = () => {
+	const { data: users } = useGetAllUsersQuery({
+		page: 1,
+		limit: 10,
+	}) as any;
+
+	console.log(users);
+
 	return (
 		<Grid
 			container
@@ -145,6 +118,7 @@ export const ManageUsersPage = () => {
 
 			<Grid item xs={12} mb={10}>
 				<Table columns={columns} rows={rows} />
+				{/* <Table columns={columns} rows={users} /> */}
 			</Grid>
 		</Grid>
 	);

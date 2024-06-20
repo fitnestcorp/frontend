@@ -23,13 +23,10 @@ export const AddProductSchema = z.object({
 	description: z.string().min(10, {
 		message: 'La descripción debe tener al menos 10 caracteres',
 	}),
-	group: z.string().min(3, {
-		message: 'El grupo debe tener al menos 3 caracteres',
+	category: z.string().min(1, {
+		message: 'Debes seleccionar una categoría',
 	}),
-	category: z.array(z.string()).min(1, {
-		message: 'Debes seleccionar al menos una categoría',
-	}),
-	images: z
+	image_url: z
 		.array(z.string())
 		.min(1, {
 			message: 'Debes agregar al menos una imagen',
@@ -37,4 +34,5 @@ export const AddProductSchema = z.object({
 		.max(4, {
 			message: 'No puedes agregar más de 4 imágenes',
 		}),
+	type: z.string().optional(),
 });

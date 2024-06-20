@@ -74,21 +74,6 @@ export const AddUserModal = () => {
 						<RegisterForm showRegisterButton={false} />
 					</Box>
 				</DialogContent>
-				<DialogActions
-					sx={{
-						display: 'flex',
-						justifyContent: 'center',
-						pr: 4,
-						pb: 4,
-					}}
-				>
-					<Button
-						variant="contained"
-						sx={{ borderRadius: '0.5rem', width: '50%', py: 1 }}
-					>
-						Añadir Usuario
-					</Button>
-				</DialogActions>
 			</Dialog>
 		</div>
 	);
