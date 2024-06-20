@@ -2,24 +2,46 @@
 import { Box } from '@mui/material';
 import { useEffect, useState } from 'react';
 import { Banner, GroupSwiper } from '@/components';
-import { Group } from '@/interfaces';
+import { Group, Product } from '@/interfaces';
 import { useGetAllGroupsQuery } from '@/store/services/groupApi';
+import { useGetAllProductsQuery } from '@/store';
+import ProductGrid from '@/components/products/ProductGrid';
 
 export const Home = () => {
 	const [page, setPage] = useState(1);
 	const [limit, setLimit] = useState(10);
 	const [objects, setObjects] = useState<Group[]>([]);
-	const [count, setCount] = useState(0);
+	const [countGroup, setCountGroup] = useState(0);
 	const { data, error, isLoading } = useGetAllGroupsQuery({ page, limit });
 
-	useEffect(() => {
-		
+	const [products, setProducts] = useState<Product[]>([]);
+	const [countProducts, setCountProducts] = useState(0);
+	const [filePath, setFilePath] = useState<string>("");
 
+	const { data: productsData, error: productsError, isLoading: productsLoading } = useGetAllProductsQuery({ page, limit });
+
+
+	useEffect(() => {
+		console.log('Fetching products data...', { productsData, productsError, productsLoading });
+
+		if (productsData && Array.isArray(productsData) && productsData.length === 2) {
+			const [objectsList, totalCount] = productsData;
+			if (Array.isArray(objectsList)) {
+				setProducts(objectsList);
+				setCountProducts(totalCount);
+				console.log('Fetched products:', objectsList);
+			}
+		} else if (productsError) {
+			console.error('Error fetching products:', productsError);
+		}
+	}, [productsData, productsError]);
+
+	useEffect(() => {
 		if (data && Array.isArray(data) && data.length === 2) {
 			const [groups, totalCount] = data;
 			if (Array.isArray(groups)) {
 				setObjects(groups);
-				setCount(totalCount);
+				setCountGroup(totalCount);
 				
 			}
 		} else if (error) {
@@ -35,6 +57,7 @@ export const Home = () => {
 		<Box>
 			<Banner image={'/banners/Yoga.png'} title={''} />
 			<GroupSwiper groups={objects} />
+			<ProductGrid products={products} />
 		</Box>
 	);
 };
