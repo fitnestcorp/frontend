@@ -13,10 +13,7 @@ const theme = createTheme({
 			primary: '#000000', // Black text color
 			secondary: '#ffffff', // White text color
 		},
-		background: {
-			default: '#111111', // Dark background color
-			paper: '#ffffff', // White paper background
-		},
+		
 	},
 	typography: {
 		// Kanit Font for everything
