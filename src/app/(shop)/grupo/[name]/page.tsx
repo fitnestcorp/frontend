@@ -1,8 +1,8 @@
 'use client';
 import { Box } from '@mui/material';
-import { Banner, Breadcrumb } from '@/components';
+import { Banner, Breadcrumb, CategorySwiper } from '@/components';
 import ProductGrid from '@/components/products/ProductGrid';
-import { Product } from '@/interfaces';
+import { Category, Product } from '@/interfaces';
 import { useEffect, useState } from 'react';
 import { downloadImage } from '@/components/images/downloadImage';
 import { useGetProductsByGroupQuery } from '@/store/services/productApi';
@@ -17,6 +17,7 @@ interface Props {
 export const GroupPage = ({ params }: Props) => {
     const { name } = params;
     const [objects, setObjects] = useState<Product[]>([]);
+    const [categories, setCategories] = useState<Category[]>([]);
     const [count, setCount] = useState(0);
     const [filePath, setFilePath] = useState<string>("");
     const [dataLoaded, setDataLoaded] = useState(false);
@@ -42,6 +43,7 @@ export const GroupPage = ({ params }: Props) => {
     useEffect(() => {
         const fetchImage = async () => {
             if (groupsData && groupsData.image_url) {
+                setCategories(groupsData.categories)
                 const value = await downloadImage(groupsData.image_url);
                 if (value) {
                     setFilePath(URL.createObjectURL(value));
@@ -63,6 +65,7 @@ export const GroupPage = ({ params }: Props) => {
                 title={name}
             />
             <Breadcrumb />
+            <CategorySwiper categories={categories} />
             <ProductGrid products={objects} />
         </Box>
     );

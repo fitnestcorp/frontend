@@ -53,7 +53,7 @@ export const CategorySwiper = ({ categories }: Props) => {
 					display: 'flex',
 				}}
 			>
-				ENTRENAMIENTO
+				CATEGORIAS
 			</Typography>
 			<Swiper
 				spaceBetween={25}
