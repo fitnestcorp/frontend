@@ -1,4 +1,5 @@
-export * from './admin-button/AdminButton';
+export * from './buttons/AdminButton';
+export * from './buttons/LogoutButton';
 
 export * from './banner/Banner';
 
@@ -16,6 +17,7 @@ export * from './options/FilterButton';
 export * from './options/SortButton';
 
 export * from './product/AddProductModal';
+export * from './product/DeleteProductButton';
 export * from './product/ProductDetails';
 
 export * from './sidemenu/Sidemenu';

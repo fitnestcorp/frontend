@@ -15,7 +15,8 @@ import {
 	Box,
 	Skeleton,
 } from '@mui/material';
-import { DeleteOutline, EditOutlined } from '@mui/icons-material';
+import { EditOutlined } from '@mui/icons-material';
+import { DeleteProductButton } from '../product/DeleteProductButton';
 
 interface Column {
 	id: string;
@@ -29,9 +30,10 @@ interface Props {
 	columns: Column[];
 	rows: any[];
 	isLoading: boolean;
+	type: string;
 }
 
-export const Table = ({ columns, rows, isLoading }: Props) => {
+export const Table = ({ columns, rows, isLoading, type }: Props) => {
 	const [page, setPage] = useState(0);
 	const [rowsPerPage, setRowsPerPage] = useState(20);
 
@@ -90,7 +92,7 @@ export const Table = ({ columns, rows, isLoading }: Props) => {
 									colSpan={columns.length}
 									align="center"
 								>
-									No hay productos
+									No hay {type}
 								</TableCell>
 							</TableRow>
 						) : (
@@ -127,18 +129,10 @@ export const Table = ({ columns, rows, isLoading }: Props) => {
 																	<EditOutlined />
 																</IconButton>
 															</Tooltip>
-															<Tooltip
-																title="Eliminar"
-																arrow
-															>
-																<IconButton
-																	sx={{
-																		color: '#b71c1c',
-																	}}
-																>
-																	<DeleteOutline />
-																</IconButton>
-															</Tooltip>
+
+															<DeleteProductButton
+																id={row.id}
+															/>
 														</TableCell>
 													);
 												} else if (

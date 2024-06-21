@@ -22,7 +22,7 @@ export const AddProductModal = () => {
 	};
 
 	return (
-		<div>
+		<>
 			<Button
 				onClick={handleClickOpen}
 				variant="contained"
@@ -61,6 +61,6 @@ export const AddProductModal = () => {
 					<AddProductForm />
 				</DialogContent>
 			</Dialog>
-		</div>
+		</>
 	);
 };

@@ -61,26 +61,12 @@ const columns = [
 	},
 ];
 
-const rows = [
-	{
-		image: '/products/mancuernas-10kg-1.jpg',
-		name: 'Set de mancuernas',
-		categories: 'Fuerza, mancuernas',
-		uuid: '107222fb-d46c-483d-887f-489c9ca0573a',
-		price: 200000,
-		quantity: 158,
-		status: 'Activo',
-	},
-];
-
 export const ManageInventoryPage = () => {
 	const { data, isLoading } = useGetAllProductsQuery({
 		page: 1,
 		limit: 10,
 	});
 	const products = data?.[0] || [];
-
-	console.log(products);
 
 	const [searchTerm, setSearchTerm] = useState('');
 
@@ -95,8 +81,6 @@ export const ManageInventoryPage = () => {
 		status: product.status,
 		stock: product.stock.stock,
 	}));
-
-	console.log('rows', rows);
 
 	const filteredProductRows = productRows.filter((row) =>
 		row.name.toLowerCase().includes(searchTerm.toLowerCase())
@@ -168,8 +152,8 @@ export const ManageInventoryPage = () => {
 					columns={columns}
 					rows={filteredProductRows}
 					isLoading={isLoading}
+					type="productos"
 				/>
-				{/* <Table columns={columns} rows={rows} /> */}
 			</Grid>
 
 			{/* Groups */}
@@ -222,6 +206,7 @@ export const ManageInventoryPage = () => {
 					columns={columns}
 					rows={productRows}
 					isLoading={isLoading}
+					type="grupos"
 				/>
 			</Grid>
 
@@ -275,6 +260,7 @@ export const ManageInventoryPage = () => {
 					columns={columns}
 					rows={productRows}
 					isLoading={isLoading}
+					type="categorías"
 				/>
 			</Grid>
 		</Grid>

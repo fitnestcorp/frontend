@@ -1,6 +1,7 @@
 'use client';
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
+import { useDispatch } from 'react-redux';
 import { Controller, useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
@@ -12,12 +13,11 @@ import {
 	CircularProgress,
 	IconButton,
 	InputAdornment,
-	DialogActions,
 } from '@mui/material';
+import { Visibility, VisibilityOff } from '@mui/icons-material';
 
 import { RegisterSchema } from '@/schemas';
-import { useRegisterUserMutation } from '@/store';
-import { Visibility, VisibilityOff } from '@mui/icons-material';
+import { setUser, useRegisterUserMutation } from '@/store';
 
 interface Props {
 	showRegisterButton?: boolean;
@@ -47,26 +47,32 @@ export const RegisterForm = ({ showRegisterButton = true }: Props) => {
 	const [passwordVisible, setPasswordVisible] = useState(false);
 	const [confirmPasswordVisible, setConfirmPasswordVisible] = useState(false);
 
-	const [registerUser, { data, error }] = useRegisterUserMutation();
+	const [registerUser] = useRegisterUserMutation();
+	const dispatch = useDispatch();
 
 	async function onSubmit(data: z.infer<typeof RegisterSchema>) {
-		let errorocurred = false;
-		const response = await registerUser(data)
-			.unwrap()
-			.catch((error) => {
-				setErrorMap('Ocurrió un error al registrar el usuario');
-				errorocurred = true;
-			});
-		if (!errorocurred && data) {
+		try {
+			const response = await registerUser(data).unwrap();
+			console.log(response);
+			dispatch(setUser({ user: response.user }));
 			setErrorMap('');
 			setSuccessfully('Usuario registrado correctamente');
 			router.push('/');
+		} catch (error) {
+			setErrorMap('Ocurrió un error al registrar el usuario');
 		}
 	}
 
 	return (
 		<form onSubmit={handleSubmit(onSubmit)}>
 			<Grid container spacing={{ xs: 2, md: 3 }}>
+				<Grid item xs={12}>
+					{errorMap && (
+						<Alert severity="error" sx={{ mb: 2 }}>
+							{errorMap}
+						</Alert>
+					)}
+				</Grid>
 				<Grid item xs={12}>
 					<Controller
 						name="first_name"
@@ -237,18 +243,6 @@ export const RegisterForm = ({ showRegisterButton = true }: Props) => {
 							/>
 						)}
 					/>
-				</Grid>
-				<Grid item xs={12}>
-					{/* {successfully && (
-							<Alert severity="success" sx={{ mb: 2 }}>
-								{successfully}
-							</Alert>
-						)} */}
-					{errorMap && (
-						<Alert severity="error" sx={{ mb: 2 }}>
-							{errorMap}
-						</Alert>
-					)}
 				</Grid>
 				{showRegisterButton && (
 					<Grid item xs={12}>

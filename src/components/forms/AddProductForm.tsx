@@ -560,6 +560,7 @@ export const AddProductForm = () => {
 					onClose={handleCloseSnackbar}
 					severity={snackbarSeverity}
 					sx={{ width: '100%' }}
+					variant="filled"
 				>
 					{snackbarMessage}
 				</Alert>
