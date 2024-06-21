@@ -1,9 +1,10 @@
 'use client';
+import { Box } from '@mui/material';
 import { useEffect, useState } from 'react';
+
 import { Banner, GroupSwiper } from '@/components';
 import { Group, Product } from '@/interfaces';
-import { useGetAllGroupsQuery } from '@/store/services/groupApi';
-import { useGetAllProductsQuery } from '@/store';
+import { useGetAllGroupsQuery, useGetAllProductsQuery } from '@/store';
 import ProductGrid from '@/components/products/ProductGrid';
 
 export const Home = () => {
@@ -15,15 +16,26 @@ export const Home = () => {
 
 	const [products, setProducts] = useState<Product[]>([]);
 	const [countProducts, setCountProducts] = useState(0);
-	const [filePath, setFilePath] = useState<string>("");
+	const [filePath, setFilePath] = useState<string>('');
 
-	const { data: productsData, error: productsError, isLoading: productsLoading } = useGetAllProductsQuery({ page, limit });
-
+	const {
+		data: productsData,
+		error: productsError,
+		isLoading: productsLoading,
+	} = useGetAllProductsQuery({ page, limit });
 
 	useEffect(() => {
-		console.log('Fetching products data...', { productsData, productsError, productsLoading });
+		console.log('Fetching products data...', {
+			productsData,
+			productsError,
+			productsLoading,
+		});
 
-		if (productsData && Array.isArray(productsData) && productsData.length === 2) {
+		if (
+			productsData &&
+			Array.isArray(productsData) &&
+			productsData.length === 2
+		) {
 			const [objectsList, totalCount] = productsData;
 			if (Array.isArray(objectsList)) {
 				setProducts(objectsList);
@@ -33,7 +45,7 @@ export const Home = () => {
 		} else if (productsError) {
 			console.error('Error fetching products:', productsError);
 		}
-	}, [productsData, productsError]);
+	}, [productsData, productsError, productsLoading]);
 
 	useEffect(() => {
 		if (data && Array.isArray(data) && data.length === 2) {
