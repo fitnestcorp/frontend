@@ -53,7 +53,7 @@ export const CategorySwiper = ({ categories }: Props) => {
 					display: 'flex',
 				}}
 			>
-				ENTRENAMIENTO
+				CATEGORIAS
 			</Typography>
 			<Swiper
 				spaceBetween={25}
@@ -75,7 +75,7 @@ export const CategorySwiper = ({ categories }: Props) => {
 			>
 				{categories.map((category, index) => (
 					<SwiperSlide key={index}>
-						<Link href={`/grupo/${category.name}`}>
+						<Link href={`/categoria/${category.name}`}>
 							<Card
 								sx={{
 									position: 'relative',
