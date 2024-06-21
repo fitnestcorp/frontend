@@ -73,7 +73,7 @@ export const GroupSwiper = ({ groups }: Props) => {
 			>
 				{groups.map((group, index) => (
 					<SwiperSlide key={index}>
-						<Link href={`/${group.name}`}>
+						<Link href={`/grupo/${group.name}`}>
 							<Card
 								sx={{
 									position: 'relative',

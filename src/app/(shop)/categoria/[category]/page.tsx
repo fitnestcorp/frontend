@@ -1,29 +1,30 @@
 'use client';
-import { Box } from '@mui/material';
+import { Box, Typography } from '@mui/material';
 import { Banner, Breadcrumb, CategorySwiper } from '@/components';
 import ProductGrid from '@/components/products/ProductGrid';
 import { Category, Product } from '@/interfaces';
 import { useEffect, useState } from 'react';
 import { downloadImage } from '@/components/images/downloadImage';
-import { useGetProductsByGroupQuery } from '@/store/services/productApi';
-import { useGetGroupByNameQuery } from '@/store/services/groupApi';
+import { useGetProductsByCategoryQuery } from '@/store/services/productApi';
+import { useGetCategoryByNameQuery } from '@/store/services/categoryApi';
 
 interface Props {
     params: {
-        name: string;
+        category: string;
+        group: string;
     };
 }
 
-export const GroupPage = ({ params }: Props) => {
-    const { name } = params;
+export const CategoryPage = ({ params }: Props) => {
+    const { group, category } = params;
     const [objects, setObjects] = useState<Product[]>([]);
     const [categories, setCategories] = useState<Category[]>([]);
     const [count, setCount] = useState(0);
     const [filePath, setFilePath] = useState<string>("");
     const [dataLoaded, setDataLoaded] = useState(false);
 
-    const { data: productsData, error: productsError, isLoading: productsLoading } = useGetProductsByGroupQuery({ page: 1, limit: 10, group: name });
-    const { data: groupsData, error: groupsError, isLoading:  groupLoading } = useGetGroupByNameQuery(name);
+    const { data: productsData, error: productsError, isLoading: productsLoading } = useGetProductsByCategoryQuery({ page: 1, limit: 10, category: category });
+    const { data: groupsData, error: groupsError, isLoading: groupLoading } = useGetCategoryByNameQuery(category);
 
     useEffect(() => {
         if (productsData) {
@@ -43,7 +44,6 @@ export const GroupPage = ({ params }: Props) => {
     useEffect(() => {
         const fetchImage = async () => {
             if (groupsData && groupsData.image_url) {
-                setCategories(groupsData.categories)
                 const value = await downloadImage(groupsData.image_url);
                 if (value) {
                     setFilePath(URL.createObjectURL(value));
@@ -57,18 +57,24 @@ export const GroupPage = ({ params }: Props) => {
         fetchImage();
     }, [groupsData, groupsError]);
 
+    if (groupLoading) {
+        return <Typography>Loading...</Typography>;
+    }
+
+    if (!groupsData || groupsError) {
+        return <Typography>La categoría &quot;{category}&quot; no existe.</Typography>;
+    }
 
     return (
         <Box>
             <Banner
                 image={filePath}
-                title={name}
+                title={category}
             />
             <Breadcrumb />
-            <CategorySwiper categories={categories} />
             <ProductGrid products={objects} />
         </Box>
     );
 };
 
-export default GroupPage;
+export default CategoryPage;
