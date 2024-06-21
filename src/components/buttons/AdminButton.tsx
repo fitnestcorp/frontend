@@ -10,8 +10,16 @@ const options = [
 		href: '/admin/getionar-usuarios',
 	},
 	{
-		name: 'Gestionar inventario',
-		href: '/admin/gestionar-inventario',
+		name: 'Gestionar productos',
+		href: '/admin/gestionar-productos',
+	},
+	{
+		name: 'Gestionar grupos',
+		href: '/admin/gestionar-grupos',
+	},
+	{
+		name: 'Gestionar categorias',
+		href: '/admin/gestionar-categorias',
 	},
 ];
 
@@ -68,7 +76,6 @@ export const AdminButton = () => {
 						<MenuItem
 							onClick={handleClose}
 							sx={{
-								// mx: 1,
 								color: 'text.primary',
 								'&:hover': {
 									backgroundColor: 'primary.main',

@@ -64,6 +64,7 @@ export const Table = ({ columns, rows, isLoading, type }: Props) => {
 										color: 'text.secondary',
 										fontWeight: 'bold',
 										fontSize: '1rem',
+										backgroundColor: 'primary.main',
 									}}
 								>
 									{column.label}

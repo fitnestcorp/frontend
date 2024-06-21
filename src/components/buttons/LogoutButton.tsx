@@ -21,9 +21,7 @@ export const LogoutButton = () => {
 		setTimeout(() => {
 			localStorage.removeItem('token');
 			dispatch(clearUser());
-		}, 6000);
-		// localStorage.removeItem('token');
-		// dispatch(clearUser());
+		}, 1500);
 	};
 
 	return (
