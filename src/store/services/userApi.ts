@@ -1,6 +1,7 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 
 import { User } from '@/interfaces';
+import { verify } from 'crypto';
 
 const baseQuery = fetchBaseQuery({
 	baseUrl: process.env.BACKEND_URL || 'http://localhost:3000', //Va a fallar el env porque no tenemos el redux persist
@@ -59,6 +60,16 @@ export const userApi = createApi({
 				method: 'GET',
 			}),
 		}),
+
+		verifyToken: builder.query({
+			query: (token) => ({
+				url: 'auth/client/verify_token',
+				method: 'GET',
+				headers: {
+					Authorization: `Bearer ${token}`,
+				},
+			}),
+		}),
 	}),
 });
 
@@ -67,5 +78,5 @@ export const {
 	useRegisterUserMutation,
 	useGetAllUsersQuery,
 	useGetUserByEmailQuery,
+	useVerifyTokenQuery,
 } = userApi;
-

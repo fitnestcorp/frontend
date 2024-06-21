@@ -1,5 +1,7 @@
 'use client';
+import { useState } from 'react';
 import NextLink from 'next/link';
+import { useSelector } from 'react-redux';
 import {
 	AppBar,
 	Toolbar,
@@ -11,11 +13,21 @@ import {
 	IconButton,
 	Tooltip,
 } from '@mui/material';
-import { LogoutOutlined, PersonOutlineOutlined } from '@mui/icons-material';
+import { PersonOutlineOutlined } from '@mui/icons-material';
 
-import { AdminButton, Cart, Search, Sidemenu } from '@/components';
+import {
+	AdminButton,
+	Cart,
+	LogoutButton,
+	Search,
+	Sidemenu,
+} from '@/components';
+import { RootState } from '@/store';
 
 export const Navbar = () => {
+	const [searchTerm, setSearchTerm] = useState('');
+	const user = useSelector((state: RootState) => state.user.user);
+
 	return (
 		<AppBar position="static" sx={{ backgroundColor: 'black' }}>
 			<Container maxWidth="xl">
@@ -104,78 +116,61 @@ export const Navbar = () => {
 								display: { xs: 'none', md: 'block' },
 							}}
 						>
-							<Search />
+							<Search
+								onSearch={(value) => setSearchTerm(value)}
+							/>
 						</Box>
 
 						{/* Shopping Cart */}
 						<Cart />
-					
+
 						<Box sx={{ display: { xs: 'none', md: 'block' } }}>
 							<Box sx={{ display: 'flex', gap: 2 }}>
-								{/* Show if user is not authenticated */}
-								<Tooltip title="Iniciar Sesión" arrow>
-									<IconButton
-										component={NextLink}
-										href="/iniciar-sesion"
-										color="inherit"
-										sx={{
-											position: 'relative',
-											display: 'flex',
-											alignItems: 'center',
-											justifyContent: 'center',
-											width: '40px',
-											height: '40px',
-											borderRadius: '0.5rem',
-											color: 'text.secondary',
-											backgroundColor: 'primary.main',
-											'&:hover': {
-												backgroundColor:
-													'secondary.main',
-												color: 'text.primary',
-												border: '1px solid black',
-											},
-										}}
-									>
-										<PersonOutlineOutlined />
-									</IconButton>
-								</Tooltip>
 								{/* Show if user is admin */}
-								<Box
-									sx={{
-										display: { xs: 'none', md: 'block' },
-									}}
-								>
-									<AdminButton />
-								</Box>
-
-								{/* Show if user is autehnticated */}
-								<Tooltip title="Cerrar Sesión" arrow>
-									<IconButton
-										component={NextLink}
-										onClick={() => {}}
-										href="/"
-										color="inherit"
+								{user?.role === 'ADMIN' && (
+									<Box
 										sx={{
-											position: 'relative',
-											display: 'flex',
-											alignItems: 'center',
-											justifyContent: 'center',
-											width: '40px',
-											height: '40px',
-											borderRadius: '0.5rem',
-											color: 'text.secondary',
-											backgroundColor: 'primary.main',
-											'&:hover': {
-												backgroundColor:
-													'secondary.main',
-												color: 'text.primary',
-												border: '1px solid black',
+											display: {
+												xs: 'none',
+												md: 'block',
 											},
 										}}
 									>
-										<LogoutOutlined />
-									</IconButton>
-								</Tooltip>
+										<AdminButton />
+									</Box>
+								)}
+
+								{/* Show if user is not authenticated */}
+								{user ? (
+									<LogoutButton />
+								) : (
+									<Tooltip title="Iniciar Sesión" arrow>
+										<IconButton
+											component={NextLink}
+											href="/iniciar-sesion"
+											color="inherit"
+											sx={{
+												position: 'relative',
+												display: 'flex',
+												alignItems: 'center',
+												justifyContent: 'center',
+												width: '40px',
+												height: '40px',
+												borderRadius: '0.5rem',
+												color: 'text.secondary',
+												backgroundColor: 'primary.main',
+												'&:hover': {
+													backgroundColor:
+														'secondary.main',
+													color: 'text.primary',
+													border: '1px solid black',
+												},
+											}}
+										>
+											<PersonOutlineOutlined />
+										</IconButton>
+									</Tooltip>
+								)}
 							</Box>
 						</Box>
 

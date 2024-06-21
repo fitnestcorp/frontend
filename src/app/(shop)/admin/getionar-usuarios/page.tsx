@@ -26,13 +26,6 @@ const columns = [
 	},
 	{ id: 'email', label: 'Email', minWidth: 170, align: 'center' as const },
 	{
-		id: 'orders',
-		label: 'Ordenes',
-		minWidth: 100,
-		align: 'center' as const,
-		format: (value: number) => value.toLocaleString('en-US'),
-	},
-	{
 		id: 'actions',
 		label: 'Acciones',
 		minWidth: 100,

@@ -2,6 +2,7 @@
 import { useState } from 'react';
 import NextLink from 'next/link';
 import { useRouter } from 'next/navigation';
+import { useDispatch } from 'react-redux';
 import { Controller, useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
@@ -15,10 +16,10 @@ import {
 	IconButton,
 	Link,
 } from '@mui/material';
+import { Visibility, VisibilityOff } from '@mui/icons-material';
 
 import { LoginSchema } from '@/schemas';
-import { useLoginUserMutation } from '@/store';
-import { Visibility, VisibilityOff } from '@mui/icons-material';
+import { setUser, useLoginUserMutation } from '@/store';
 
 export const LoginForm = () => {
 	const {
@@ -39,26 +40,31 @@ export const LoginForm = () => {
 	const [errorMap, setErrorMap] = useState('');
 	const [passwordVisible, setPasswordVisible] = useState(false);
 
-	const [loginUser, { data, error }] = useLoginUserMutation();
+	const [loginUser] = useLoginUserMutation();
+	const dispatch = useDispatch();
 
 	async function onSubmit(data: z.infer<typeof LoginSchema>) {
-		let errorocurred = false;
-		await loginUser(data)
-			.unwrap()
-			.catch((error) => {
-				setErrorMap('Ocurrió un error al iniciar sesión');
-				errorocurred = true;
-			});
-
-		if (!errorocurred && data) {
+		try {
+			const response = await loginUser(data).unwrap();
+			dispatch(setUser({ user: response.user }));
 			setErrorMap('');
 			setSuccessfully('Sesión iniciada correctamente');
 			router.push('/');
+		} catch (error: any) {
+			if (error?.status === 401) {
+				setErrorMap('Email o contraseña incorrectos');
+			} else {
+				setErrorMap('Ocurrió un error al iniciar sesión');
+			}
 		}
 	}
+
 	return (
 		<form onSubmit={handleSubmit(onSubmit)}>
 			<Grid container spacing={{ xs: 2, md: 3 }}>
+				<Grid item xs={12}>
+					{errorMap && <Alert severity="error">{errorMap}</Alert>}
+				</Grid>
 				<Grid item xs={12}>
 					<Controller
 						name="email"
@@ -134,12 +140,6 @@ export const LoginForm = () => {
 					>
 						¿Olvidaste la contraseña?
 					</Link>
-				</Grid>
-				<Grid item xs={12}>
-					{/* {successfully && (
-							<Alert severity="success">{successfully}</Alert>
-						)} */}
-					{errorMap && <Alert severity="error">{errorMap}</Alert>}
 				</Grid>
 				<Grid item xs={12}>
 					<Button

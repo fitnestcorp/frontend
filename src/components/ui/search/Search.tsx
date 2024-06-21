@@ -1,9 +1,5 @@
 'use client';
 import { useState } from 'react';
-import { useRouter } from 'next/navigation';
-import { Controller, useForm } from 'react-hook-form';
-import { z } from 'zod';
-import { zodResolver } from '@hookform/resolvers/zod';
 import { TextField, InputAdornment } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
 
@@ -15,70 +11,50 @@ interface Props {
 }
 
 export const Search = ({ border = false, onSearch }: Props) => {
-	const { handleSubmit, control } = useForm<z.infer<typeof SearchSchema>>({
-		resolver: zodResolver(SearchSchema),
-		defaultValues: {
-			search: '',
-		},
-	});
+	const [searchValue, setSearchValue] = useState('');
+	const [error, setError] = useState('');
 
 	const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-		onSearch(event.target.value);
+		const value = event.target.value;
+		setSearchValue(value);
+
+		const validationResult = SearchSchema.safeParse({ search: value });
+		if (!validationResult.success) {
+			setError(validationResult.error.errors[0].message);
+		} else {
+			setError('');
+			onSearch(value);
+		}
 	};
 
-	// const [findProduct, { data, error }] = useFindProductMutation(); //TODO: Implement this
-
-	// const router = useRouter();
-	// const [errorMap, setErrorMap] = useState('');
-
-	// async function onSubmit(data: z.infer<typeof SearchSchema>) {
-	// 	let errorocurred = false;
-	// 	await findProduct(data)
-	// 		.unwrap()
-	// 		.catch((error) => {
-	// 			setErrorMap('Ocurrió un error al buscar el producto');
-	// 			errorocurred = true;
-	// 		});
-
-	// 	if (!errorocurred && data) {
-	// 		setErrorMap('');
-	// 		router.push('/'); //TODO: Redirect to search page
-	// 	}
-	// }
-
 	return (
-		// <form onSubmit={handleSubmit(onSubmit)}>
-		<form>
-			<Controller
-				name="search"
-				control={control}
-				render={({ field }) => (
-					<TextField
-						{...field}
-						fullWidth
-						placeholder="Buscar"
-						variant="outlined"
-						size="small"
-						// onChange={handleSearchChange}
-						InputProps={{
-							startAdornment: (
-								<InputAdornment position="start">
-									<SearchIcon />
-								</InputAdornment>
-							),
-						}}
-						sx={{
-							'& .MuiOutlinedInput-root': {
-								border: border ? '1px solid lightgray' : 'none',
-								backgroundColor: 'background.paper',
-								borderRadius: '0.5rem',
-							},
-							'& .MuiOutlinedInput-notchedOutline': {
-								border: border ? '1px solid lightgray' : 'none',
-							},
-						}}
-					/>
-				)}
+		<form onSubmit={(e) => e.preventDefault()}>
+			<TextField
+				value={searchValue}
+				onChange={handleSearchChange}
+				fullWidth
+				placeholder="Buscar"
+				variant="outlined"
+				size="small"
+				InputProps={{
+					startAdornment: (
+						<InputAdornment position="start">
+							<SearchIcon />
+						</InputAdornment>
+					),
+				}}
+				error={!!error}
+				helperText={error}
+				sx={{
+					'& .MuiOutlinedInput-root': {
+						border: border ? '1px solid lightgray' : 'none',
+						backgroundColor: 'background.paper',
+						borderRadius: '0.5rem',
+					},
+					'& .MuiOutlinedInput-notchedOutline': {
+						border: border ? '1px solid lightgray' : 'none',
+					},
+				}}
 			/>
 		</form>
 	);

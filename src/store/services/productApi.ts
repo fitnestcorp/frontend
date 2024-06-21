@@ -17,7 +17,7 @@ export const productApi = createApi({
 	endpoints: (builder) => ({
 		createProduct: builder.mutation({
 			query: (product) => ({
-				url: `/product`,
+				url: `product`,
 				method: 'POST',
 				body: product,
 			}),
@@ -33,7 +33,7 @@ export const productApi = createApi({
 
 		deleteProduct: builder.mutation({
 			query: (id) => ({
-				url: ``, //TODO definir la url
+				url: `product/${id}`,
 				method: 'DELETE',
 			}),
 		}),
