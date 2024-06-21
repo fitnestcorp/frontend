@@ -25,7 +25,7 @@ export const GroupSwiper = ({ groups }: Props) => {
 				const paths = await Promise.all(
 					groups.map(async (group) => {
 						const value = await downloadImage(group.image_url);
-						return value ? URL.createObjectURL(value) : '/public/not_found.jpg'; 
+						return value ? URL.createObjectURL(value) : '/public/not_found.jpg';
 					})
 				);
 				setImagePaths(paths);
@@ -87,12 +87,12 @@ export const GroupSwiper = ({ groups }: Props) => {
 							>
 								<CardMedia
 									component="img"
-									height="140"
 									image={imagePaths[index]}
 									alt={group.name}
 									sx={{
-										height: '100%',
-										width: '100%',
+										height: '250px', // Altura fija
+										width: '100%',  // Ancho fijo
+										objectFit: 'cover' // Asegura que la imagen cubra todo el área
 									}}
 								/>
 								<CardContent
@@ -110,13 +110,11 @@ export const GroupSwiper = ({ groups }: Props) => {
 										sx={{
 											color: 'white',
 											fontWeight: 'bold',
-											textShadow:
-												'2px 2px 4px rgba(0,0,0,0.6)',
+											textShadow: '2px 2px 4px rgba(0,0,0,0.6)',
 											textAlign: 'center',
 										}}
 									>
-										{group.name[0].toUpperCase() +
-											group.name.slice(1)}
+										{group.name[0].toUpperCase() + group.name.slice(1)}
 									</Typography>
 								</CardContent>
 							</Card>

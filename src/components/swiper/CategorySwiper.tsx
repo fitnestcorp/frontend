@@ -21,7 +21,7 @@ export const CategorySwiper = ({ categories }: Props) => {
 
 	const [imagePaths, setImagePaths] = useState<string[]>([]);
 
-    useEffect(() => {
+	useEffect(() => {
 		async function fetchImages() {
 			try {
 				const paths = await Promise.all(
@@ -89,13 +89,12 @@ export const CategorySwiper = ({ categories }: Props) => {
 							>
 								<CardMedia
 									component="img"
-									height="140"
 									image={imagePaths[index]}
 									alt={category.name}
 									sx={{
-										height: '100%',
-										width: '100%',
-										// filter: 'blur(1px)',
+										height: '250px', // Altura fija
+										width: '100%',  // Ancho fijo
+										objectFit: 'cover' // Asegura que la imagen cubra todo el área
 									}}
 								/>
 								<CardContent
@@ -113,13 +112,11 @@ export const CategorySwiper = ({ categories }: Props) => {
 										sx={{
 											color: 'white',
 											fontWeight: 'bold',
-											textShadow:
-												'2px 2px 4px rgba(0,0,0,0.6)',
+											textShadow: '2px 2px 4px rgba(0,0,0,0.6)',
 											textAlign: 'center',
 										}}
 									>
-										{category.name[0].toUpperCase() +
-											category.name.slice(1)}
+										{category.name[0].toUpperCase() + category.name.slice(1)}
 									</Typography>
 								</CardContent>
 							</Card>
