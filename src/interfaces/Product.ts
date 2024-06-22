@@ -19,5 +19,4 @@ export interface Product {
 	status: string;
 	stock: Stock;
 	reviews: Review[];
-	rate: number;
 }

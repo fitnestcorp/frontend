@@ -57,25 +57,30 @@ export const productApi = createApi({
 
 		getProductById: builder.query<Product, string>({
 			query: (id) => ({
-				url: ``, //TODO definir la url
+				url: `product/${id}`,
 				method: 'GET',
 			}),
 		}),
 
-		getProductsByCategory: builder.query<[Product[], number], { page: number; limit: number, category: string }>({
+		getProductsByCategory: builder.query<
+			[Product[], number],
+			{ page: number; limit: number; category: string }
+		>({
 			query: ({ page, limit, category }) => ({
-			  url: `/product/category/${category}?page=${page}&limit=${limit}`,
-			  method: 'GET',
+				url: `/product/category/${category}?page=${page}&limit=${limit}`,
+				method: 'GET',
 			}),
-		  }),
-	
-		getProductsByGroup: builder.query<[Product[], number], { page: number; limit: number, group: string }>({
+		}),
+
+		getProductsByGroup: builder.query<
+			[Product[], number],
+			{ page: number; limit: number; group: string }
+		>({
 			query: ({ page, limit, group }) => ({
 				url: `/product/group/${group}?page=${page}&limit=${limit}`,
 				method: 'GET',
 			}),
 		}),
-		
 	}),
 });
 

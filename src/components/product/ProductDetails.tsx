@@ -11,14 +11,15 @@ import {
 } from '@mui/material';
 import { AddShoppingCart } from '@mui/icons-material';
 
-import { ProductSwiper } from './ProductSwiper';
+import { ProductSwiper } from '@/components';
 import { Product } from '@/interfaces';
 
 interface Props {
 	product: Product;
+	isLoading?: boolean;
 }
 
-export const ProductDetails = ({ product }: Props) => {
+export const ProductDetails = ({ product, isLoading }: Props) => {
 	return (
 		<Box sx={{ display: 'flex', justifyContent: 'center', p: 3 }}>
 			<Card
@@ -33,7 +34,7 @@ export const ProductDetails = ({ product }: Props) => {
 				<Grid container spacing={2}>
 					<Grid item xs={12} md={4}>
 						<ProductSwiper
-							images={product!.images}
+							images={product!.image_url}
 							name={product!.name}
 						/>
 					</Grid>
@@ -62,7 +63,10 @@ export const ProductDetails = ({ product }: Props) => {
 							>
 								<Rating
 									name="read-only"
-									value={product!.rate}
+									value={product!.reviews.reduce(
+										(acc, review) => acc + review.score,
+										0
+									)}
 									readOnly
 									precision={0.5}
 								/>
@@ -99,11 +103,11 @@ export const ProductDetails = ({ product }: Props) => {
 							<Button
 								variant="contained"
 								color="primary"
-								disabled={product!.stock === 0}
+								disabled={product!.status === 'Agotado'}
 								startIcon={<AddShoppingCart />}
 								sx={{ borderRadius: '8px' }}
 							>
-								{product!.stock === 0
+								{product!.status === 'Agotado'
 									? 'Agotado'
 									: 'Agregar al carrito'}
 							</Button>
