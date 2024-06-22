@@ -1,9 +1,25 @@
 'use client';
 import { useState } from 'react';
-import { Box, Button, Grid, Typography } from '@mui/material';
+import { Box, Grid, Typography } from '@mui/material';
 
-import { FilterButton, Search, SortButton, Table } from '@/components';
+import {
+	AddCategoryModal,
+	FilterButton,
+	Search,
+	SortButton,
+	Table,
+} from '@/components';
 import { useGetAllCategoriesQuery } from '@/store';
+
+interface SortConfig {
+	key: string;
+	direction: 'asc' | 'desc';
+}
+
+interface FilterConfig {
+	key: string;
+	value: string;
+}
 
 const columns = [
 	{ id: 'image', label: '', minWidth: 50, align: 'center' as const },
@@ -19,17 +35,28 @@ const columns = [
 		minWidth: 100,
 		align: 'center' as const,
 	},
+	{
+		id: 'group',
+		label: 'Grupo',
+		minWidth: 100,
+		align: 'center' as const,
+	},
 ];
 
 export const ManageCategoriesPage = () => {
-	const { data, isLoading } = useGetAllCategoriesQuery({
+	const { data: dataCategories, isLoading } = useGetAllCategoriesQuery({
 		page: 1,
 		limit: 10,
 	});
 
-	const categories = data?.[0] || [];
+	const categories = dataCategories?.[0] || [];
 
 	const [searchTerm, setSearchTerm] = useState('');
+	const [sortConfig, setSortConfig] = useState<SortConfig>({
+		key: '',
+		direction: 'asc',
+	});
+	const [filter, setFilter] = useState<FilterConfig>({ key: '', value: '' });
 
 	const categoryRows = categories.map((category) => ({
 		name: category.name,
@@ -40,6 +67,18 @@ export const ManageCategoriesPage = () => {
 	const filteredCategoryRows = categoryRows.filter((row) =>
 		row.name.toLowerCase().includes(searchTerm.toLowerCase())
 	);
+
+	const handleSort = (key: string) => {
+		let direction: 'asc' | 'desc' = 'asc';
+		if (sortConfig.key === key && sortConfig.direction === 'asc') {
+			direction = 'desc';
+		}
+		setSortConfig({ key, direction });
+	};
+
+	const handleFilter = (key: string, value: string) => {
+		setFilter({ key, value });
+	};
 
 	return (
 		<Grid
@@ -80,16 +119,9 @@ export const ManageCategoriesPage = () => {
 							border
 							onSearch={(value) => setSearchTerm(value)}
 						/>
-						<Button
-							variant="contained"
-							sx={{
-								borderRadius: '0.5rem',
-							}}
-						>
-							Crear Categoría
-						</Button>
-						<SortButton />
-						<FilterButton />
+						<AddCategoryModal />
+						<SortButton onSort={handleSort} />
+						<FilterButton onFilter={handleFilter} />
 					</Grid>
 				</Grid>
 			</Grid>

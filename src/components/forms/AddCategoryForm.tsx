@@ -15,14 +15,18 @@ import {
 	Typography,
 	Snackbar,
 	Alert,
+	FormControl,
+	InputLabel,
+	Select,
+	MenuItem,
 } from '@mui/material';
 import { AddPhotoAlternateOutlined, DeleteOutline } from '@mui/icons-material';
 import { Controller, useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
 
-import { useCreateGroupMutation } from '@/store';
-import { AddGroupSchema } from '@/schemas';
+import { useCreateCategoryMutation, useGetAllGroupsQuery } from '@/store';
+import { AddCategorySchema } from '@/schemas';
 
 const VisuallyHiddenInput = styled('input')({
 	clip: 'rect(0 0 0 0)',
@@ -36,7 +40,7 @@ const VisuallyHiddenInput = styled('input')({
 	width: 1,
 });
 
-export const AddGroupForm = () => {
+export const AddCategoryForm = () => {
 	const [uploadedImage, setUploadedImage] = useState<string>('');
 	const [openSnackbar, setOpenSnackbar] = useState(false);
 	const [snackbarMessage, setSnackbarMessage] = useState('');
@@ -44,7 +48,12 @@ export const AddGroupForm = () => {
 		'error' | 'success'
 	>('success');
 
-	const [createGroup] = useCreateGroupMutation();
+	const [createCategory] = useCreateCategoryMutation();
+	const { data: dataGroups } = useGetAllGroupsQuery({
+		page: 1,
+		limit: 10,
+	});
+	const groups = dataGroups?.[0] || [];
 
 	const handleCloseSnackbar = () => {
 		setOpenSnackbar(false);
@@ -55,23 +64,24 @@ export const AddGroupForm = () => {
 		control,
 		setValue,
 		formState: { errors, isSubmitting, isDirty },
-	} = useForm<z.infer<typeof AddGroupSchema>>({
-		resolver: zodResolver(AddGroupSchema),
+	} = useForm<z.infer<typeof AddCategorySchema>>({
+		resolver: zodResolver(AddCategorySchema),
 		defaultValues: {
 			name: '',
 			description: '',
 			url: '',
+			groupId: '',
 		},
 	});
 
-	async function onSubmit(data: z.infer<typeof AddGroupSchema>) {
+	async function onSubmit(data: z.infer<typeof AddCategorySchema>) {
 		try {
-			await createGroup(data);
-			setSnackbarMessage('Grupo creado exitosamente');
+			await createCategory(data);
+			setSnackbarMessage('Categoria creada exitosamente');
 			setSnackbarSeverity('success');
 			setOpenSnackbar(true);
 		} catch (error) {
-			setSnackbarMessage('Ocurrió un error al crear el grupo');
+			setSnackbarMessage('Ocurrió un error al crear la categoria');
 			setSnackbarSeverity('error');
 			setOpenSnackbar(true);
 		}
@@ -259,6 +269,65 @@ export const AddGroupForm = () => {
 							)}
 						/>
 					</Grid>
+					<Grid item xs={12}>
+						<Controller
+							name="groupId"
+							control={control}
+							render={({ field }) => (
+								<FormControl
+									fullWidth
+									sx={{
+										'& label': {
+											color: 'text.primary',
+										},
+										'& .MuiOutlinedInput-root': {
+											'& fieldset': {
+												borderColor: 'gray',
+											},
+										},
+									}}
+								>
+									<InputLabel id="group-select-label">
+										Grupo
+									</InputLabel>
+									<Select
+										{...field}
+										labelId="group-select-label"
+										label="Grupo"
+										error={!!errors.groupId}
+									>
+										{groups?.length ?? 0 > 0 ? (
+											groups?.map((group) => (
+												<MenuItem
+													key={group.name}
+													value={group.name}
+												>
+													{group.name}
+												</MenuItem>
+											))
+										) : (
+											<MenuItem value="" disabled>
+												No hay grupos
+											</MenuItem>
+										)}
+									</Select>
+									{errors.groupId && (
+										<Box
+											component="span"
+											sx={{
+												color: 'error.main',
+												fontSize: '0.75rem',
+												pt: 0.5,
+												pl: 2,
+											}}
+										>
+											{errors.groupId.message}
+										</Box>
+									)}
+								</FormControl>
+							)}
+						/>
+					</Grid>
 				</Grid>
 				<DialogActions
 					sx={{
@@ -279,7 +348,7 @@ export const AddGroupForm = () => {
 						disabled={isSubmitting || !isDirty}
 						endIcon={isSubmitting && <CircularProgress size={20} />}
 					>
-						Añadir grupo
+						Añadir categoría
 					</Button>
 				</DialogActions>
 			</form>

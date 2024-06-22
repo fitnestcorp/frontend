@@ -1,3 +1,4 @@
+export * from './category/AddCategorySchema';
 export * from './group/AddGroupSchema';
 export * from './product/AddProductSchema';
 export * from './login/LoginSchema';
