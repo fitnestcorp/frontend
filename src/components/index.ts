@@ -9,6 +9,8 @@ export * from './cart/Cart';
 
 export * from './swiper/CategorySwiper';
 export * from './swiper/GroupSwiper';
+export * from './swiper/ProductImagesSwiper';
+export * from './swiper/ProductSwiper';
 
 export * from './forms/AddGroupForm';
 export * from './forms/AddProductForm';
@@ -24,7 +26,6 @@ export * from './options/SortButton';
 export * from './product/AddProductModal';
 export * from './product/DeleteProductButton';
 export * from './product/ProductDetails';
-export * from './product/ProductSwiper';
 
 export * from './sidemenu/Sidemenu';
 
