@@ -2,7 +2,12 @@
 import { useState, useEffect } from 'react';
 import { Alert, Box, Grid, Snackbar, Typography } from '@mui/material';
 
-import { ProductDetails, ProductImagesSwiper } from '@/components';
+import {
+	CommentsSection,
+	ProductDetails,
+	ProductImagesSwiper,
+	ProductSwiper,
+} from '@/components';
 import { useGetProductByIdQuery } from '@/store';
 
 interface Props {
@@ -28,7 +33,7 @@ export const ProductPage = ({ params }: Props) => {
 	}, [error]);
 
 	return (
-		<Box>
+		<>
 			{error || !product ? (
 				<Snackbar
 					anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
@@ -46,26 +51,49 @@ export const ProductPage = ({ params }: Props) => {
 					</Alert>
 				</Snackbar>
 			) : (
-				<Grid
-					container
-					spacing={4}
+				<Box
 					sx={{
-						maxWidth: { xs: '100%', md: '80%' },
-						py: 4,
+						display: 'flex',
+						flexDirection: 'column',
+						justifyContent: 'center',
+						mx: 10,
 					}}
 				>
-					<Grid item xs={12} md={6}>
-						<ProductImagesSwiper images={product.image_url} />
-					</Grid>
-					<Grid item xs={12} md={6}>
-						<ProductDetails
-							product={product}
-							isLoading={isLoading}
-						/>
-					</Grid>
-				</Grid>
+					<Box
+						sx={{
+							display: 'flex',
+							flexDirection: 'column',
+							alignItems: 'center',
+							justifyContent: 'center',
+							py: 5,
+						}}
+					>
+						<Grid
+							container
+							spacing={4}
+							sx={{
+								maxWidth: { xs: '100%', md: '80%' },
+								gap: 2,
+							}}
+						>
+							<Grid item xs={12} md={6}>
+								<ProductImagesSwiper
+									images={[]}
+									name={product.name}
+								/>
+							</Grid>
+							<Grid item xs={12} md={5}>
+								<ProductDetails
+									product={product}
+									isLoading={isLoading}
+								/>
+							</Grid>
+						</Grid>
+					</Box>
+					<CommentsSection comments={product.reviews} />
+				</Box>
 			)}
-		</Box>
+		</>
 	);
 };
 

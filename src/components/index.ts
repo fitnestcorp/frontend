@@ -7,6 +7,9 @@ export * from './breadcrumb/Breadcrumb';
 
 export * from './cart/Cart';
 
+export * from './comment/Comment';
+export * from './comment/CommentsSection';
+
 export * from './swiper/CategorySwiper';
 export * from './swiper/GroupSwiper';
 export * from './swiper/ProductImagesSwiper';

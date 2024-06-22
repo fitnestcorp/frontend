@@ -11,7 +11,7 @@ export interface Product {
 	id: string;
 	name: string;
 	type: string;
-	create_date: string;
+	creation_date: string;
 	description: string;
 	price: number;
 	image_url: string[];

@@ -55,7 +55,13 @@ export const ProductDetails = ({ product, isLoading }: Props) => {
 	};
 
 	return (
-		<>
+		<Box
+			sx={{
+				display: 'flex',
+				flexDirection: 'column',
+				gap: 1.5,
+			}}
+		>
 			<Typography
 				variant="h4"
 				component="h1"
@@ -71,7 +77,7 @@ export const ProductDetails = ({ product, isLoading }: Props) => {
 				sx={{
 					display: 'flex',
 					alignItems: 'center',
-					mb: 2,
+					mb: 1,
 				}}
 			>
 				<Rating
@@ -84,7 +90,7 @@ export const ProductDetails = ({ product, isLoading }: Props) => {
 					precision={0.5}
 				/>
 				<Typography variant="body2" color="text.primary" sx={{ ml: 1 }}>
-					{reviews.length} reseñas
+					{reviews.length} reseña(s)
 				</Typography>
 			</Box>
 			<ToggleButtonGroup
@@ -97,7 +103,6 @@ export const ProductDetails = ({ product, isLoading }: Props) => {
 						textTransform: 'none',
 						fontSize: '0.875rem',
 						mx: 0.5,
-						py: 0.5,
 						px: 1,
 					},
 				}}
@@ -115,7 +120,7 @@ export const ProductDetails = ({ product, isLoading }: Props) => {
 			<Typography
 				variant="h5"
 				component="div"
-				sx={{ fontWeight: 'bold', mb: 2 }}
+				sx={{ fontWeight: 'bold', mb: 1 }}
 			>
 				{formatCurrency(price)}
 			</Typography>
@@ -125,10 +130,10 @@ export const ProductDetails = ({ product, isLoading }: Props) => {
 				disabled={status === 'Agotado'}
 				startIcon={<AddShoppingCart />}
 				fullWidth
-				sx={{ borderRadius: '8px', py: 1.5 }}
+				sx={{ borderRadius: '8px', py: 1 }}
 			>
 				{status === 'Agotado' ? 'Agotado' : 'Agregar al carrito'}
 			</Button>
-		</>
+		</Box>
 	);
 };
