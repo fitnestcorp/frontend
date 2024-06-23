@@ -80,6 +80,9 @@ export const ManageInventoryPage = () => {
 
 	const products = (data?.[0] || []) as Product[];
 
+	console.log(products);
+	
+
 	const [searchTerm, setSearchTerm] = useState<string>('');
 	const [sortConfig, setSortConfig] = useState<SortConfig>({
 		key: '',
@@ -87,14 +90,34 @@ export const ManageInventoryPage = () => {
 	});
 	const [filter, setFilter] = useState<FilterConfig>({ key: '', value: '' });
 
+	const formatCurrency = (value: number) => {
+		const formattedValue = new Intl.NumberFormat('es-CO', {
+			style: 'currency',
+			currency: 'COP',
+			minimumFractionDigits: 0,
+			maximumFractionDigits: 0,
+		}).format(value);
+
+		return formattedValue.replace('COP', '').trim();
+	};
+
+	const formatDate = (dateString: string) => {
+		const date = new Date(dateString);
+		return date.toLocaleDateString('es-CO', {
+		  day: '2-digit',
+		  month: '2-digit',
+		  year: 'numeric',
+		});
+	  };
+
 	const productRows = products.map((product) => ({
 		id: product.id,
 		name: product.name,
 		type: product.type,
-		creation_date: product.create_date,
-		price: product.price,
+		creation_date: formatDate(product.creation_date),
+		price: formatCurrency(product.price),
 		image: product.image_url[0],
-		category: product.category.name,
+		// category: product.category.name,
 		status: product.status,
 		stock: product.stock.stock,
 	}));

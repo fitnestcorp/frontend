@@ -50,8 +50,6 @@ export const AddProductForm = () => {
 	const { data } = useGetAllCategoriesQuery({ page: 1, limit: 10 });
 	const categories = data?.[0] || [];
 
-	console.log('categories:', categories);
-
 	const [createProduct] = useCreateProductMutation();
 
 	const [openSnackbar, setOpenSnackbar] = useState(false);
@@ -451,11 +449,9 @@ export const AddProductForm = () => {
 										fontSize: '0.8rem',
 										backgroundColor: 'secondary.main',
 										color: 'primary.main',
+										textTransform: 'none',
 										'&:hover': {
 											color: 'secondary.main',
-										},
-										[theme.breakpoints.down('sm')]: {
-											textTransform: 'none',
 										},
 									}}
 								>
@@ -555,6 +551,7 @@ export const AddProductForm = () => {
 				open={openSnackbar}
 				autoHideDuration={6000}
 				onClose={handleCloseSnackbar}
+				anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
 			>
 				<Alert
 					onClose={handleCloseSnackbar}

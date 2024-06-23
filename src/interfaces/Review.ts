@@ -1,8 +1,16 @@
 import { User } from './User';
 
+// export interface Review {
+// 	id: string;
+// 	comment: string;
+// 	score: number;
+// 	user: User;
+// }
 export interface Review {
 	id: string;
-	comment: string;
+	author: string;
+	publication_date: string;
 	score: number;
-	user: User;
+	title: string;
+	content: string;
 }

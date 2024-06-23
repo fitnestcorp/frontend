@@ -7,11 +7,24 @@ export * from './breadcrumb/Breadcrumb';
 
 export * from './cart/Cart';
 
+export * from './category/AddCategoryModal';
+
+export * from './comment/Comment';
+export * from './comment/CommentsSection';
+
 export * from './swiper/CategorySwiper';
 export * from './swiper/GroupSwiper';
+export * from './swiper/ProductImagesSwiper';
+export * from './swiper/ProductSwiper';
 
+export * from './forms/AddCategoryForm';
+export * from './forms/AddGroupForm';
+export * from './forms/AddProductForm';
+export * from './forms/EditForm';
 export * from './forms/LoginForm';
 export * from './forms/RegisterForm';
+
+export * from './group/AddGroupModal';
 
 export * from './options/FilterButton';
 export * from './options/SortButton';

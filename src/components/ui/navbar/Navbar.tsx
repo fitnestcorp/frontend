@@ -29,7 +29,12 @@ export const Navbar = () => {
 	const user = useSelector((state: RootState) => state.user.user);
 
 	return (
-		<AppBar position="static" sx={{ backgroundColor: 'black' }}>
+		<AppBar
+			position="sticky"
+			sx={{
+				backgroundColor: 'primary.main',
+			}}
+		>
 			<Container maxWidth="xl">
 				<Toolbar
 					disableGutters

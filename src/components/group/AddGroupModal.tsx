@@ -9,9 +9,9 @@ import {
 } from '@mui/material';
 import { Close } from '@mui/icons-material';
 
-import { AddProductForm } from '@/components';
+import { AddGroupForm } from '@/components';
 
-export const AddProductModal = () => {
+export const AddGroupModal = () => {
 	const [open, setOpen] = useState(false);
 
 	const handleClickOpen = () => {
@@ -31,7 +31,7 @@ export const AddProductModal = () => {
 					borderRadius: '0.5rem',
 				}}
 			>
-				Crear Producto
+				Crear Grupo
 			</Button>
 
 			<Dialog
@@ -59,7 +59,7 @@ export const AddProductModal = () => {
 					</IconButton>
 				</DialogTitle>
 				<DialogContent>
-					<AddProductForm />
+					<AddGroupForm />
 				</DialogContent>
 			</Dialog>
 		</>

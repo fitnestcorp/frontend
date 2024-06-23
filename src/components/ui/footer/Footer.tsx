@@ -7,7 +7,7 @@ export const Footer = () => {
 	return (
 		<Box
 			component="footer"
-			sx={{ backgroundColor: 'black', color: 'white', py: 8 }}
+			sx={{ backgroundColor: 'black', color: 'white', py: 5, mt: 'auto' }}
 		>
 			<Container maxWidth="lg">
 				<Grid container spacing={3}>

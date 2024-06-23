@@ -11,7 +11,7 @@ const ProductCard = ({ product }: ProductCardProps) => {
 
     return (
         <div className='group bg-white rounded-lg shadow-md hover:shadow-lg transition-shadow p-6'>
-            <Link href={`/product/${product.id}`} passHref>
+            <Link href={`/producto/${product.id}`} passHref>
                 <div className="block cursor-pointer">
                     <ProductImage title={product.name} url={product.image_url[0]} />
 

@@ -2,8 +2,24 @@
 import { useState } from 'react';
 import { Box, Button, Grid, Typography } from '@mui/material';
 
-import { FilterButton, Search, SortButton, Table } from '@/components';
+import {
+	AddGroupModal,
+	FilterButton,
+	Search,
+	SortButton,
+	Table,
+} from '@/components';
 import { useGetAllGroupsQuery } from '@/store';
+
+interface SortConfig {
+	key: string;
+	direction: 'asc' | 'desc';
+}
+
+interface FilterConfig {
+	key: string;
+	value: string;
+}
 
 const columns = [
 	{
@@ -14,7 +30,7 @@ const columns = [
 	},
 	{
 		id: 'name',
-		label: 'Nombre Grupo',
+		label: 'Nombre',
 		minWidth: 100,
 		align: 'center' as const,
 	},
@@ -42,6 +58,11 @@ export const ManageGroupsPage = () => {
 	const groups = dataGroups?.[0] || [];
 
 	const [searchTerm, setSearchTerm] = useState('');
+	const [sortConfig, setSortConfig] = useState<SortConfig>({
+		key: '',
+		direction: 'asc',
+	});
+	const [filter, setFilter] = useState<FilterConfig>({ key: '', value: '' });
 
 	const groupRows = groups.map((group) => ({
 		name: group.name,
@@ -55,6 +76,18 @@ export const ManageGroupsPage = () => {
 	const filteredGroupRows = groupRows.filter((row) =>
 		row.name.toLowerCase().includes(searchTerm.toLowerCase())
 	);
+
+	const handleSort = (key: string) => {
+		let direction: 'asc' | 'desc' = 'asc';
+		if (sortConfig.key === key && sortConfig.direction === 'asc') {
+			direction = 'desc';
+		}
+		setSortConfig({ key, direction });
+	};
+
+	const handleFilter = (key: string, value: string) => {
+		setFilter({ key, value });
+	};
 
 	return (
 		<Grid
@@ -95,16 +128,9 @@ export const ManageGroupsPage = () => {
 							border
 							onSearch={(value) => setSearchTerm(value)}
 						/>
-						<Button
-							variant="contained"
-							sx={{
-								borderRadius: '0.5rem',
-							}}
-						>
-							Crear Grupo
-						</Button>
-						<SortButton />
-						<FilterButton />
+						<AddGroupModal />
+						<SortButton onSort={handleSort} />
+						<FilterButton onFilter={handleFilter} />
 					</Grid>
 				</Grid>
 			</Grid>
