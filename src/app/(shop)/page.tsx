@@ -6,6 +6,7 @@ import { Banner, GroupSwiper } from '@/components';
 import { Group, Product } from '@/interfaces';
 import { useGetAllGroupsQuery, useGetAllProductsQuery } from '@/store';
 import ProductGrid from '@/components/products/ProductGrid';
+import LogoLoader from '@/components/logo/LogoLoader';
 
 export const Home = () => {
 	const [page, setPage] = useState(1);
@@ -59,8 +60,8 @@ export const Home = () => {
 		}
 	}, [data, error]);
 
-	if (isLoading) {
-		return <div>Cargando...</div>;
+	if (isLoading || productsLoading) {
+		return <LogoLoader />;
 	}
 
 	return (

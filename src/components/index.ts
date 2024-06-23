@@ -20,7 +20,6 @@ export * from './swiper/ProductSwiper';
 export * from './forms/AddCategoryForm';
 export * from './forms/AddGroupForm';
 export * from './forms/AddProductForm';
-export * from './forms/EditForm';
 export * from './forms/LoginForm';
 export * from './forms/RegisterForm';
 
