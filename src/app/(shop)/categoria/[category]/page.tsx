@@ -22,6 +22,8 @@ export const CategoryPage = ({ params }: Props) => {
   const [categories, setCategories] = useState<Category[]>([]);
   const [count, setCount] = useState(0);
   const [filePath, setFilePath] = useState<string>("");
+  const [name, setName] = useState<string>("");
+
   const [dataLoaded, setDataLoaded] = useState(false);
 
   const { data: productsData, error: productsError, isLoading: productsLoading } = useGetProductsByCategoryQuery({ page: 1, limit: 10, category: category });
@@ -45,6 +47,7 @@ export const CategoryPage = ({ params }: Props) => {
   useEffect(() => {
     const fetchImage = async () => {
       if (groupsData && groupsData.image_url) {
+        setName(groupsData.name)
         const value = await downloadImage(groupsData.image_url);
         if (value) {
           setFilePath(URL.createObjectURL(value));
@@ -70,7 +73,7 @@ export const CategoryPage = ({ params }: Props) => {
     <Box>
       <Banner
         image={filePath}
-        title={category}
+        title={name}
       />
       <Breadcrumb />
       <ProductGrid products={objects} />

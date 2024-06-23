@@ -21,6 +21,7 @@ export const GroupPage = ({ params }: Props) => {
   const [categories, setCategories] = useState<Category[]>([]);
   const [count, setCount] = useState(0);
   const [filePath, setFilePath] = useState<string>("");
+  const [name, setName] = useState<string>("");
   const [dataLoaded, setDataLoaded] = useState(false);
 
   const { data: productsData, error: productsError, isLoading: productsLoading } = useGetProductsByGroupQuery({ page: 1, limit: 10, group: grupo });
@@ -45,6 +46,7 @@ export const GroupPage = ({ params }: Props) => {
     const fetchImage = async () => {
       if (groupsData && groupsData.image_url) {
         setCategories(groupsData.categories);
+        setName(groupsData.name)
         const value = await downloadImage(groupsData.image_url);
         if (value) {
           setFilePath(URL.createObjectURL(value));
@@ -70,7 +72,7 @@ export const GroupPage = ({ params }: Props) => {
     <Box>
       <Banner
         image={filePath}
-        title={grupo}
+        title={name}
       />
       <Breadcrumb />
       <CategorySwiper categories={categories} />
