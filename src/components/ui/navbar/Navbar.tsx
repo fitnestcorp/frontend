@@ -142,7 +142,35 @@ export const Navbar = () => {
 
 								{/* Show if user is not authenticated */}
 								{user ? (
+									
+									<><Tooltip title="Perfil" arrow>
+										<IconButton
+											component={NextLink}
+											href="/perfil"
+											color="inherit"
+											sx={{
+												position: 'relative',
+												display: 'flex',
+												alignItems: 'center',
+												justifyContent: 'center',
+												width: '40px',
+												height: '40px',
+												borderRadius: '0.5rem',
+												color: 'text.secondary',
+												backgroundColor: 'primary.main',
+												'&:hover': {
+													backgroundColor: 'secondary.main',
+													color: 'text.primary',
+													border: '1px solid black',
+												},
+											}}
+										>
+											<PersonOutlineOutlined />
+										</IconButton>
+									</Tooltip>
 									<LogoutButton />
+									</>
+									
 								) : (
 									<Tooltip title="Iniciar Sesión" arrow>
 										<IconButton
