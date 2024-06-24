@@ -22,6 +22,7 @@ export * from './forms/AddCategoryForm';
 export * from './forms/AddGroupForm';
 export * from './forms/AddProductForm';
 export * from './forms/LoginForm';
+export * from './forms/PasswordRecoveryForm';
 export * from './forms/RegisterForm';
 
 export * from './group/AddGroupModal';
