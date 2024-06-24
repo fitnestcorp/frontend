@@ -1,6 +1,6 @@
 // components/profile/OrdersGrid.tsx
 import React from 'react';
-import { Box, Grid, Typography } from '@mui/material';
+import { Box, Typography } from '@mui/material';
 import Order from './Order';
 import { Order as OrderType } from '@/interfaces/Order';
 
@@ -21,7 +21,7 @@ const orders: OrderType[] = [
           name: 'Set de Mancuernas',
           description: 'dasdasdasdasdas',
           price: 600000,
-          create_date: "10-10-2024",
+          creation_date: "10-10-2024",
           status: "Activo",
           rate: 4.5,
           reviews: [],
@@ -33,6 +33,7 @@ const orders: OrderType[] = [
           },
           type: 'Juego de 130 lb',
           category: {
+            id:'123',
             name: 'Mancuernas',
             description: 'Palos de metal',
             image_url: '51FKyNvkUzL._AC_SX679_.jpg',
@@ -47,7 +48,7 @@ const orders: OrderType[] = [
           name: 'Set de Mancuernas',
           description: 'dasdasdasdasdas',
           price: 600000,
-          create_date: "10-10-2024",
+          creation_date: "10-10-2024",
           status: "Activo",
           rate: 4.5,
           reviews: [],
@@ -59,6 +60,7 @@ const orders: OrderType[] = [
           },
           type: 'Juego de 130 lb',
           category: {
+            id:'123',
             name: 'Mancuernas',
             description: 'Palos de metal',
             image_url: '51FKyNvkUzL._AC_SX679_.jpg',
@@ -84,7 +86,7 @@ const OrdersGrid: React.FC = () => {
       <Typography variant="h4" component="div" sx={{ mb: 4, textAlign: 'center', fontWeight: 'bold' }}>
         MIS ORDENES
       </Typography>
-      <Box sx={{ display: 'flex', flexDirection: 'row', flexWrap: 'wrap', gap: 2 }}>
+      <Box sx={{ display: 'flex', flexDirection: 'row', flexWrap: 'wrap', gap: 2, justifyContent: 'center' }}>
         {orders.map((order) => (
           <Order key={order.id} {...order} />
         ))}

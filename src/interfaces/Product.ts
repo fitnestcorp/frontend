@@ -18,5 +18,6 @@ export interface Product {
 	category: Category;
 	status: string;
 	stock: Stock;
+	rate: number;
 	reviews: Review[];
 }
