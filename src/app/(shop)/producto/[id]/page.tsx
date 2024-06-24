@@ -1,14 +1,14 @@
 'use client';
 import { useState, useEffect } from 'react';
-import { Alert, Box, Grid, Snackbar, Typography } from '@mui/material';
+import { Alert, Box, Grid, Snackbar } from '@mui/material';
 
 import {
 	CommentsSection,
 	ProductDetails,
 	ProductImagesSwiper,
-	ProductSwiper,
 } from '@/components';
 import { useGetProductByIdQuery, useGetProductReviewsQuery } from '@/store';
+import LogoLoader from '@/components/logo/LogoLoader';
 
 interface Props {
 	params: {
@@ -34,6 +34,10 @@ export const ProductPage = ({ params }: Props) => {
 			setOpenSnackbar(true);
 		}
 	}, [error]);
+
+	if (isLoading) {
+		return <LogoLoader />;
+	}
 
 	return (
 		<>
@@ -93,10 +97,7 @@ export const ProductPage = ({ params }: Props) => {
 							</Grid>
 						</Grid>
 					</Box>
-					<CommentsSection
-						comments={reviews}
-						isLoading={isLoadingReviews}
-					/>
+					<CommentsSection comments={reviews} />
 				</Box>
 			)}
 		</>

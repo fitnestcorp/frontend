@@ -67,7 +67,7 @@ export const productApi = createApi({
 			{ page: number; limit: number; category: string }
 		>({
 			query: ({ page, limit, category }) => ({
-				url: `/product/category/${category}?page=${page}&limit=${limit}`,
+				url: `/product/filter/category/${category}?page=${page}&limit=${limit}`,
 				method: 'GET',
 			}),
 		}),
@@ -77,7 +77,7 @@ export const productApi = createApi({
 			{ page: number; limit: number; group: string }
 		>({
 			query: ({ page, limit, group }) => ({
-				url: `/product/group/${group}?page=${page}&limit=${limit}`,
+				url: `/product/filter/group/${group}?page=${page}&limit=${limit}`,
 				method: 'GET',
 			}),
 		}),
