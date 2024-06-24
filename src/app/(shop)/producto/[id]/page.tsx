@@ -8,7 +8,7 @@ import {
 	ProductImagesSwiper,
 	ProductSwiper,
 } from '@/components';
-import { useGetProductByIdQuery } from '@/store';
+import { useGetProductByIdQuery, useGetProductReviewsQuery } from '@/store';
 
 interface Props {
 	params: {
@@ -19,6 +19,9 @@ interface Props {
 export const ProductPage = ({ params }: Props) => {
 	const { id } = params;
 	const { data: product, error, isLoading } = useGetProductByIdQuery(id);
+	const { data: dataReviews, isLoading: isLoadingReviews } =
+		useGetProductReviewsQuery({ page: 1, limit: 5, productId: id });
+	const reviews = dataReviews?.[0] || [];
 
 	const [openSnackbar, setOpenSnackbar] = useState(false);
 
@@ -90,7 +93,10 @@ export const ProductPage = ({ params }: Props) => {
 							</Grid>
 						</Grid>
 					</Box>
-					<CommentsSection comments={product.reviews} />
+					<CommentsSection
+						comments={reviews}
+						isLoading={isLoadingReviews}
+					/>
 				</Box>
 			)}
 		</>

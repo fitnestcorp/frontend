@@ -1,15 +1,18 @@
 'use client';
 import { useState } from 'react';
-import { Box, Pagination, Typography } from '@mui/material';
+import { Box, Pagination, Skeleton, Typography } from '@mui/material';
 
 import { Comment } from '@/components';
 import { Review } from '@/interfaces';
 
 interface Props {
 	comments: Review[];
+	isLoading: boolean;
 }
 
-export const CommentsSection = ({ comments }: Props) => {
+export const CommentsSection = ({ comments, isLoading }: Props) => {
+	console.log('CommentsSection', comments);
+
 	const [page, setPage] = useState(1);
 	const commentsPerPage = 5;
 	const totalPages = Math.ceil(comments.length / commentsPerPage);
@@ -35,9 +38,22 @@ export const CommentsSection = ({ comments }: Props) => {
 			>
 				COMENTARIOS
 			</Typography>
-			{displayedComments.map((comment, index) => (
-				<Comment key={index} {...comment} />
-			))}
+			{isLoading ? (
+				<Skeleton
+					variant="rectangular"
+					width="100%"
+					height={200}
+					sx={{ borderRadius: '8px' }}
+				/>
+			) : displayedComments.length > 0 ? (
+				displayedComments.map((comment, index) => (
+					<Comment key={index} comment={comment} />
+				))
+			) : (
+				<Typography variant="body1" component="div">
+					No hay comentarios
+				</Typography>
+			)}
 			<Pagination
 				count={totalPages}
 				page={page}

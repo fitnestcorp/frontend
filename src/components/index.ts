@@ -6,6 +6,7 @@ export * from './banner/Banner';
 export * from './breadcrumb/Breadcrumb';
 
 export * from './cart/Cart';
+export * from './cart/CartItem';
 
 export * from './category/AddCategoryModal';
 
@@ -20,7 +21,6 @@ export * from './swiper/ProductSwiper';
 export * from './forms/AddCategoryForm';
 export * from './forms/AddGroupForm';
 export * from './forms/AddProductForm';
-export * from './forms/EditForm';
 export * from './forms/LoginForm';
 export * from './forms/RegisterForm';
 
