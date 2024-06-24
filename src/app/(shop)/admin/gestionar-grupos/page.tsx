@@ -8,6 +8,7 @@ import {
 	Search,
 	SortButton,
 	Table,
+	isAdmin,
 } from '@/components';
 import { useGetAllGroupsQuery } from '@/store';
 
@@ -147,4 +148,4 @@ export const ManageGroupsPage = () => {
 	);
 };
 
-export default ManageGroupsPage;
+export default isAdmin(ManageGroupsPage);

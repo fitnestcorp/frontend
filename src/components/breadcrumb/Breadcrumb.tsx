@@ -4,7 +4,11 @@ import Link from 'next/link';
 import { Breadcrumbs, Typography } from '@mui/material';
 import NavigateNextIcon from '@mui/icons-material/NavigateNext';
 
-export const Breadcrumb = () => {
+interface Props {
+	name?: string;
+}
+
+export const Breadcrumb = ({ name }: Props) => {
 	const pathname = usePathname();
 	const pathSegments = pathname.split('/').filter((segment) => segment);
 
@@ -16,7 +20,7 @@ export const Breadcrumb = () => {
 
 	return (
 		<Breadcrumbs
-			separator={<NavigateNextIcon fontSize="small" color='primary' />}
+			separator={<NavigateNextIcon fontSize="small" color="primary" />}
 			aria-label="breadcrumb"
 		>
 			<Link href="/" passHref>
@@ -35,14 +39,15 @@ export const Breadcrumb = () => {
 			{breadcrumbLinks.map((link, index) => {
 				const isLast = index === breadcrumbLinks.length - 1;
 				const isCategory = link.label === 'Categoria' && !isLast;
-				return isLast || isCategory ? (
+				const isProduct = link.label === 'Producto' && !isLast;
+				return isLast || isCategory || isProduct ? (
 					<Typography
 						key={index}
 						color="text.primary"
 						variant="body1"
 						sx={{ fontWeight: 'bold' }}
 					>
-						{link.label}
+						{name}
 					</Typography>
 				) : (
 					<Link key={index} href={link.href} passHref>

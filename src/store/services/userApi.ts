@@ -47,6 +47,14 @@ export const userApi = createApi({
 			},
 		}),
 
+		recoverPassword: builder.mutation({
+			query: (email) => ({
+				url: 'user/password-recovery',
+				method: 'POST',
+				body: { email },
+			}),
+		}),
+
 		getAllUsers: builder.query<User[], { page: number; limit: number }>({
 			query: ({ page, limit }) => ({
 				url: `users?page=${page}&limit=${limit}`,
@@ -63,7 +71,7 @@ export const userApi = createApi({
 
 		verifyToken: builder.query({
 			query: (token) => ({
-				url: 'auth/client/verify_token',
+				url: 'user/verify_token',
 				method: 'GET',
 				headers: {
 					Authorization: `Bearer ${token}`,
@@ -76,6 +84,7 @@ export const userApi = createApi({
 export const {
 	useLoginUserMutation,
 	useRegisterUserMutation,
+	useRecoverPasswordMutation,
 	useGetAllUsersQuery,
 	useGetUserByEmailQuery,
 	useVerifyTokenQuery,

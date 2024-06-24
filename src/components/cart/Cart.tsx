@@ -28,7 +28,9 @@ export const Cart = () => {
 
 	const user = useSelector((state: RootState) => state.user.user);
 
-	const { data: dataCart } = useGetCartQuery(user!.id, { skip: !user });
+	const { data: dataCart } = useGetCartQuery(user?.id || '', {
+		skip: !user,
+	});
 	const cart = dataCart?.[0];
 
 	const toggleDrawer = () => {

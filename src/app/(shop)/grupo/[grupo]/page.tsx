@@ -71,7 +71,7 @@ export const GroupPage = ({ params }: Props) => {
         image={image}
         title={name}
       />
-      <Breadcrumb />
+      <Breadcrumb name={groupsData.name} />
       <CategorySwiper categories={categories} />
       <ProductGrid products={objects} />
     </Box>

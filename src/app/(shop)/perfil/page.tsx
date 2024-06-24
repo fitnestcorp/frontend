@@ -1,7 +1,9 @@
+'use client';
 import React from 'react';
 import Profile from '@/components/profile/Profile';
 import { Container, Box, Grid } from '@mui/material';
 import OrdersGrid from '@/components/profile/OrdersGrid';
+import { isAuth } from '@/components';
 
 export const ProfilePage = () => {
   return (
@@ -20,6 +22,7 @@ export const ProfilePage = () => {
       </Grid>
     </Container>
   );
+
 };
 
-export default ProfilePage;
+export default isAuth(ProfilePage);
