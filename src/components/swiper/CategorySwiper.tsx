@@ -89,7 +89,7 @@ export const CategorySwiper = ({ categories }: Props) => {
 							>
 								<CardMedia
 									component="img"
-									image={imagePaths[index]}
+									image={category.image_url}
 									alt={category.name}
 									sx={{
 										height: '250px', // Altura fija

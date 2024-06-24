@@ -9,11 +9,13 @@ import ProductGrid from '@/components/products/ProductGrid';
 import LogoLoader from '@/components/logo/LogoLoader';
 
 export const Home = () => {
-	const [page, setPage] = useState(1);
-	const [limit, setLimit] = useState(10);
+	const [page1, setPage1] = useState(1);
+	const [limit1, setLimit1] = useState(10);
+	const [page2, setPage2] = useState(1);
+	const [limit2, setLimit2] = useState(10);
 	const [objects, setObjects] = useState<Group[]>([]);
 	const [countGroup, setCountGroup] = useState(0);
-	const { data, error, isLoading } = useGetAllGroupsQuery({ page, limit });
+	const { data, error, isLoading } = useGetAllGroupsQuery({ page: page1, limit : limit1 });
 
 	const [products, setProducts] = useState<Product[]>([]);
 	const [countProducts, setCountProducts] = useState(0);
@@ -23,7 +25,7 @@ export const Home = () => {
 		data: productsData,
 		error: productsError,
 		isLoading: productsLoading,
-	} = useGetAllProductsQuery({ page, limit });
+	} = useGetAllProductsQuery({ page: page2, limit : limit2  });
 
 	useEffect(() => {
 		console.log('Fetching products data...', {

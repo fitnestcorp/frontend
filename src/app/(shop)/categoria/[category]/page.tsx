@@ -22,6 +22,7 @@ export const CategoryPage = ({ params }: Props) => {
   const [categories, setCategories] = useState<Category[]>([]);
   const [count, setCount] = useState(0);
   const [filePath, setFilePath] = useState<string>("");
+  const [image, setImage] = useState<string>("");
   const [name, setName] = useState<string>("");
 
   const [dataLoaded, setDataLoaded] = useState(false);
@@ -48,10 +49,7 @@ export const CategoryPage = ({ params }: Props) => {
     const fetchImage = async () => {
       if (groupsData && groupsData.image_url) {
         setName(groupsData.name)
-        const value = await downloadImage(groupsData.image_url);
-        if (value) {
-          setFilePath(URL.createObjectURL(value));
-        }
+        setImage(groupsData.image_url)
       }
       if (groupsError) {
         console.error('Error fetching groups:', groupsError);
@@ -72,7 +70,7 @@ export const CategoryPage = ({ params }: Props) => {
   return (
     <Box>
       <Banner
-        image={filePath}
+        image={image}
         title={name}
       />
       <Breadcrumb />
