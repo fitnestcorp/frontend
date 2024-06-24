@@ -5,7 +5,7 @@ import { useSelector } from 'react-redux';
 
 import { RootState } from '@/store';
 
-export const isAdmin = (Component: any) => {
+export const isAdmin = (Component: React.ComponentType) => {
 	return function IsAdmin(props: any) {
 		const role = useSelector((state: RootState) => state.user.user?.role);
 		const admin = role === 'ADMIN';
@@ -23,3 +23,5 @@ export const isAdmin = (Component: any) => {
 		return <Component {...props} />;
 	};
 };
+
+export default isAdmin;

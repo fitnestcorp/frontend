@@ -1,5 +1,4 @@
-// pages/ProfilePage.tsx
-import React from 'react';
+'use client';
 import Profile from '@/components/profile/Profile';
 import { Container, Box, Grid } from '@mui/material';
 import OrdersGrid from '@/components/profile/OrdersGrid';

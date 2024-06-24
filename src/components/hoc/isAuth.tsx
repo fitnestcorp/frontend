@@ -5,7 +5,7 @@ import { useSelector } from 'react-redux';
 
 import { RootState } from '@/store';
 
-export const isAuth = (Component: any) => {
+export const isAuth = (Component: React.ComponentType) => {
 	return function IsAuth(props: any) {
 		const user = useSelector((state: RootState) => state.user.user);
 
@@ -22,3 +22,5 @@ export const isAuth = (Component: any) => {
 		return <Component {...props} />;
 	};
 };
+
+export default isAuth;
