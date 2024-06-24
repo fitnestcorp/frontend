@@ -1,5 +1,6 @@
 'use client';
-import { Box, Button, Grid, Typography } from '@mui/material';
+import { useState } from 'react';
+import { Box, Grid, Typography } from '@mui/material';
 
 import {
 	AddUserModal,
@@ -7,11 +8,22 @@ import {
 	Search,
 	SortButton,
 	Table,
+	isAdmin,
 } from '@/components';
 import { useGetAllUsersQuery } from '@/store';
 
+interface SortConfig {
+	key: string;
+	direction: 'asc' | 'desc';
+}
+
+interface FilterConfig {
+	key: string;
+	value: string;
+}
+
 const columns = [
-	{ id: 'image', label: '', minWidth: 50 },
+	{ id: 'id', label: 'ID', minWidth: 50, align: 'center' as const },
 	{
 		id: 'name',
 		label: 'Nombre completo',
@@ -33,23 +45,74 @@ const columns = [
 	},
 ];
 
-const rows = [
-	{
-		image: '/path/to/image.jpg',
-		name: 'Ana Sofia Londoño Fernandez',
-		birthDate: '01/08/2004',
-		email: 'anasofia.a024@gmail.com',
-		orders: 3,
-	},
-];
-
 export const ManageUsersPage = () => {
-	const { data: users } = useGetAllUsersQuery({
+	const { data: usersData, isLoading } = useGetAllUsersQuery({
 		page: 1,
 		limit: 10,
-	}) as any;
+	});
 
-	console.log(users);
+	const users = usersData || [];
+
+	const [searchTerm, setSearchTerm] = useState<string>('');
+	const [sortConfig, setSortConfig] = useState<SortConfig>({
+		key: '',
+		direction: 'asc',
+	});
+	const [filter, setFilter] = useState<FilterConfig>({ key: '', value: '' });
+
+	const formatDate = (dateString: string) => {
+		const date = new Date(dateString);
+		return date.toLocaleDateString('es-CO', {
+			day: '2-digit',
+			month: '2-digit',
+			year: 'numeric',
+		});
+	};
+
+	const usersRows = users?.map((user) => ({
+		name: user.first_name + ' ' + user.last_name,
+		id: user.id,
+		birthDate: formatDate(user.birthdate),
+		email: user.email,
+	}));
+
+	const filteredUserRows = usersRows
+		.filter((row) =>
+			row.name.toLowerCase().includes(searchTerm.toLowerCase())
+		)
+		.filter((row) =>
+			filter.key
+				? (row[filter.key as keyof typeof row] as string)
+						?.toString()
+						.includes(filter.value)
+				: true
+		);
+
+	const sortedUserRows = [...filteredUserRows].sort((a, b) => {
+		if (sortConfig.key) {
+			const aValue: any = a[sortConfig.key as keyof typeof a];
+			const bValue: any = b[sortConfig.key as keyof typeof b];
+			if (aValue < bValue) {
+				return sortConfig.direction === 'asc' ? -1 : 1;
+			}
+			if (aValue > bValue) {
+				return sortConfig.direction === 'asc' ? 1 : -1;
+			}
+		}
+		return 0;
+	});
+
+	const handleSort = (key: string) => {
+		let direction: 'asc' | 'desc' = 'asc';
+		if (sortConfig.key === key && sortConfig.direction === 'asc') {
+			direction = 'desc';
+		}
+		setSortConfig({ key, direction });
+	};
+
+	const handleFilter = (key: string, value: string) => {
+		setFilter({ key, value });
+	};
 
 	return (
 		<Grid
@@ -101,20 +164,27 @@ export const ManageUsersPage = () => {
 							flexWrap: 'wrap',
 						}}
 					>
-						<Search border />
+						<Search
+							border
+							onSearch={(value: string) => setSearchTerm(value)}
+						/>
 						<AddUserModal />
-						<SortButton />
-						<FilterButton />
+						<SortButton onSort={handleSort} />
+						<FilterButton onFilter={handleFilter} />
 					</Grid>
 				</Grid>
 			</Grid>
 
 			<Grid item xs={12} mb={10}>
-				<Table columns={columns} rows={rows} />
-				{/* <Table columns={columns} rows={users} /> */}
+				<Table
+					columns={columns}
+					rows={sortedUserRows}
+					isLoading={isLoading}
+					type="usuarios"
+				/>
 			</Grid>
 		</Grid>
 	);
 };
 
-export default ManageUsersPage;
+export default isAdmin(ManageUsersPage);

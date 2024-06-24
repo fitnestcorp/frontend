@@ -8,6 +8,7 @@ import {
 	Search,
 	SortButton,
 	Table,
+	isAdmin,
 } from '@/components';
 import { useGetAllCategoriesQuery } from '@/store';
 
@@ -138,4 +139,4 @@ export const ManageCategoriesPage = () => {
 	);
 };
 
-export default ManageCategoriesPage;
+export default isAdmin(ManageCategoriesPage);

@@ -33,6 +33,9 @@ export * from './product/AddProductModal';
 export * from './product/DeleteProductButton';
 export * from './product/ProductDetails';
 
+export * from './secure/isAdmin';
+export * from './secure/isAuth';
+
 export * from './sidemenu/Sidemenu';
 
 export * from './table/Table';

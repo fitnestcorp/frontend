@@ -8,6 +8,7 @@ import {
 	Search,
 	SortButton,
 	Table,
+	isAdmin,
 } from '@/components';
 import { useGetAllProductsQuery } from '@/store';
 import { Product } from '@/interfaces';
@@ -80,9 +81,6 @@ export const ManageInventoryPage = () => {
 
 	const products = (data?.[0] || []) as Product[];
 
-	console.log(products);
-	
-
 	const [searchTerm, setSearchTerm] = useState<string>('');
 	const [sortConfig, setSortConfig] = useState<SortConfig>({
 		key: '',
@@ -104,11 +102,11 @@ export const ManageInventoryPage = () => {
 	const formatDate = (dateString: string) => {
 		const date = new Date(dateString);
 		return date.toLocaleDateString('es-CO', {
-		  day: '2-digit',
-		  month: '2-digit',
-		  year: 'numeric',
+			day: '2-digit',
+			month: '2-digit',
+			year: 'numeric',
 		});
-	  };
+	};
 
 	const productRows = products.map((product) => ({
 		id: product.id,
@@ -219,4 +217,4 @@ export const ManageInventoryPage = () => {
 	);
 };
 
-export default ManageInventoryPage;
+export default isAdmin(ManageInventoryPage);
