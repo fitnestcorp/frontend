@@ -17,25 +17,7 @@ interface Props {
 }
 
 export const GroupSwiper = ({ groups }: Props) => {
-	const [imagePaths, setImagePaths] = useState<string[]>([]);
-
-	useEffect(() => {
-		async function fetchImages() {
-			try {
-				const paths = await Promise.all(
-					groups.map(async (group) => {
-						const value = await downloadImage(group.image_url);
-						return value ? URL.createObjectURL(value) : '/public/not_found.jpg';
-					})
-				);
-				setImagePaths(paths);
-			} catch (error) {
-				console.error('Error fetching images:', error);
-			}
-		}
-		fetchImages();
-	}, [groups]);
-
+	
 	return (
 		<Box sx={{ maxWidth: '100%', py: 2, mx: 5 }}>
 			<Typography
@@ -87,7 +69,7 @@ export const GroupSwiper = ({ groups }: Props) => {
 							>
 								<CardMedia
 									component="img"
-									image={imagePaths[index]}
+									image={group.image_url}
 									alt={group.name}
 									sx={{
 										height: '250px', // Altura fija

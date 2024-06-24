@@ -8,12 +8,12 @@ interface ProductCardProps {
 
 const ProductCard = ({ product }: ProductCardProps) => {
     const averageRating = product.reviews.reduce((sum, review) => sum + review.score, 0) / product.reviews.length;
-
+    console.log("caca",product)
     return (
         <div className='group bg-white rounded-lg shadow-md hover:shadow-lg transition-shadow p-6'>
             <Link href={`/producto/${product.id}`} passHref>
                 <div className="block cursor-pointer">
-                    <ProductImage title={product.name} url={product.image_url[0]} />
+                    <ProductImage title={product.name} url={product.image_urls[0]} />
 
                     <div className="mt-4 text-center">
                         <h3 className="font-semibold text-xl line-clamp-1 overflow-ellipsis text-gray-800">

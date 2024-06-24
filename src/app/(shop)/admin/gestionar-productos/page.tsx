@@ -116,7 +116,7 @@ export const ManageInventoryPage = () => {
 		type: product.type,
 		creation_date: formatDate(product.creation_date),
 		price: formatCurrency(product.price),
-		image: product.image_url[0],
+		image: product.image_urls[0],
 		// category: product.category.name,
 		status: product.status,
 		stock: product.stock.stock,

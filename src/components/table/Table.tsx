@@ -162,7 +162,7 @@ export const Table = ({ columns, rows, isLoading, type }: Props) => {
 																}}
 															>
 																<Image
-																	src={`/${value}`}
+																	src={`${value}`}
 																	alt="product"
 																	sizes="50px"
 																	style={{
