@@ -7,10 +7,9 @@ import { Review } from '@/interfaces';
 
 interface Props {
 	comments: Review[];
-	isLoading: boolean;
 }
 
-export const CommentsSection = ({ comments, isLoading }: Props) => {
+export const CommentsSection = ({ comments }: Props) => {
 	console.log('CommentsSection', comments);
 
 	const [page, setPage] = useState(1);
@@ -38,14 +37,7 @@ export const CommentsSection = ({ comments, isLoading }: Props) => {
 			>
 				COMENTARIOS
 			</Typography>
-			{isLoading ? (
-				<Skeleton
-					variant="rectangular"
-					width="100%"
-					height={200}
-					sx={{ borderRadius: '8px' }}
-				/>
-			) : displayedComments.length > 0 ? (
+			{displayedComments.length > 0 ? (
 				displayedComments.map((comment, index) => (
 					<Comment key={index} comment={comment} />
 				))
