@@ -1,20 +1,13 @@
+import { Review } from '@/interfaces';
 import { Box, Typography, Rating } from '@mui/material';
 
 interface Props {
-	author: string;
-	publication_date: string;
-	score: number;
-	title: string;
-	content: string;
+	comment: Review;
 }
 
-export const Comment = ({
-	author,
-	publication_date,
-	score,
-	title,
-	content,
-}: Props) => {
+export const Comment = ({ comment }: Props) => {
+	const { user, publication_date, score, title, comment: content } = comment;
+	
 	const formatDate = (dateString: string) => {
 		const date = new Date(dateString);
 		return date.toLocaleDateString('es-CO', {
@@ -29,7 +22,7 @@ export const Comment = ({
 			sx={{ mb: 3, p: 2, border: '1px solid #ddd', borderRadius: '8px' }}
 		>
 			<Typography variant="h6" component="div">
-				{author}
+				{user}
 			</Typography>
 			<Typography variant="caption" color="text.secondary">
 				Publicado el {formatDate(publication_date)}

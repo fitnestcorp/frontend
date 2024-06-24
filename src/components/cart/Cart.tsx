@@ -1,6 +1,7 @@
 'use client';
-import { useEffect, useRef, useState } from 'react';
 import NextLink from 'next/link';
+import { useEffect, useRef, useState } from 'react';
+import { useSelector } from 'react-redux';
 import {
 	Drawer,
 	IconButton,
@@ -18,11 +19,17 @@ import {
 	Close as CloseIcon,
 } from '@mui/icons-material';
 
-import { CartItem } from './CartItem';
+import { RootState, useGetCartQuery } from '@/store';
+import { CartItem } from '@/components';
 
 export const Cart = () => {
 	const [isDrawerOpen, setIsDrawerOpen] = useState<boolean>(false);
 	const drawerRef = useRef<HTMLDivElement>(null);
+
+	const user = useSelector((state: RootState) => state.user.user);
+
+	const { data: dataCart } = useGetCartQuery(user!.id, { skip: !user });
+	const cart = dataCart?.[0];
 
 	const toggleDrawer = () => {
 		setIsDrawerOpen(!isDrawerOpen);
@@ -124,9 +131,9 @@ export const Cart = () => {
 
 					<Box sx={{ flexGrow: 1, overflowY: 'auto' }}>
 						<List>
-							{[...Array(20)].map((_, index) => (
-								<ListItem key={index}>
-									<CartItem />
+							{cart?.cartItems.map((item) => (
+								<ListItem key={item.id}>
+									<CartItem cartItem={item} />
 								</ListItem>
 							))}
 						</List>

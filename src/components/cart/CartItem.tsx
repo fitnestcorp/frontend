@@ -7,19 +7,15 @@ import {
 	Close as CloseIcon,
 } from '@mui/icons-material';
 
+import { CartItem as ICartItem } from '@/interfaces';
+
 interface Props {
-	name?: string;
-	description?: string;
-	price?: string;
-	imageSrc?: string;
+	cartItem: ICartItem;
 }
 
-export const CartItem = ({
-	name = 'Set de Mancuernas',
-	description = 'Juego de 149.9 lbs',
-	price = '$200.000',
-	imageSrc = '/products/mancuernas-10kg-1.jpg',
-}: Props) => {
+export const CartItem = ({ cartItem }: Props) => {
+	const { name, description, price, image_url } = cartItem;
+
 	const [quantity, setQuantity] = useState<number>(1);
 
 	const increaseQuantity = () => {
@@ -46,7 +42,7 @@ export const CartItem = ({
 		>
 			<Box sx={{ display: 'flex', alignItems: 'center', width: '100%' }}>
 				<Image
-					src={imageSrc}
+					src={image_url}
 					alt={name}
 					width={100}
 					height={100}

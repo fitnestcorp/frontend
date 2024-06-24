@@ -1,6 +1,6 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 
-import { Product } from '@/interfaces';
+import { Product, Review } from '@/interfaces';
 
 type ProductWithNumber = [Product[], number];
 
@@ -81,6 +81,16 @@ export const productApi = createApi({
 				method: 'GET',
 			}),
 		}),
+
+		getProductReviews: builder.query<
+			[Review[], number],
+			{ page: number; limit: number; productId: string }
+		>({
+			query: ({ page, limit, productId }) => ({
+				url: `/review/product/${productId}?page=${page}&limit=${limit}`,
+				method: 'GET',
+			}),
+		}),
 	}),
 });
 
@@ -93,4 +103,5 @@ export const {
 	useGetProductByIdQuery,
 	useGetProductsByCategoryQuery,
 	useGetProductsByGroupQuery,
+	useGetProductReviewsQuery,
 } = productApi;

@@ -6,6 +6,7 @@ export * from './banner/Banner';
 export * from './breadcrumb/Breadcrumb';
 
 export * from './cart/Cart';
+export * from './cart/CartItem';
 
 export * from './category/AddCategoryModal';
 
