@@ -10,7 +10,6 @@ import 'swiper/css/pagination';
 import 'swiper/css/autoplay';
 
 import { Category } from '@/interfaces';
-import { downloadImage } from '../images/downloadImage';
 import { useEffect, useState } from 'react';
 
 interface Props {
@@ -18,25 +17,6 @@ interface Props {
 }
 
 export const CategorySwiper = ({ categories }: Props) => {
-
-	const [imagePaths, setImagePaths] = useState<string[]>([]);
-
-	useEffect(() => {
-		async function fetchImages() {
-			try {
-				const paths = await Promise.all(
-					categories.map(async (category) => {
-						const value = await downloadImage(category.image_url);
-						return value ? URL.createObjectURL(value) : '/public/not_found.jpg'; 
-					})
-				);
-				setImagePaths(paths);
-			} catch (error) {
-				console.error('Error fetching images:', error);
-			}
-		}
-		fetchImages();
-	}, [categories]);
 
 	return (
 		<Box sx={{ maxWidth: '100%', py: 2, mx: 5 }}>

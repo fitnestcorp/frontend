@@ -9,7 +9,6 @@ import 'swiper/css/navigation';
 import 'swiper/css/pagination';
 import 'swiper/css/autoplay';
 import { Group } from '@/interfaces';
-import { downloadImage } from '../images/downloadImage';
 import { useEffect, useState } from 'react';
 
 interface Props {
