@@ -22,7 +22,7 @@ interface Props {
 export const ProductDetails = ({ product, isLoading }: Props) => {
 	if (isLoading) {
 		return (
-			<Grid container spacing={2}>
+			<Grid container>
 				<Grid item xs={12} md={6}>
 					<Skeleton variant="text" width="80%" height={50} />
 					<Skeleton variant="text" width="100%" height={150} />
@@ -41,7 +41,7 @@ export const ProductDetails = ({ product, isLoading }: Props) => {
 		);
 	}
 
-	const { name, description, price, status, reviews } = product;
+	const { name, description, price, status, reviews, type } = product;
 
 	const formatCurrency = (value: number) => {
 		const formattedValue = new Intl.NumberFormat('es-CO', {
@@ -107,14 +107,8 @@ export const ProductDetails = ({ product, isLoading }: Props) => {
 					},
 				}}
 			>
-				<ToggleButton value="149.9lbs" size="small" selected>
-					Juego de 149.9 lbs
-				</ToggleButton>
-				<ToggleButton value="99.2lbs" size="small">
-					Juego de 99.2 lbs
-				</ToggleButton>
-				<ToggleButton value="170lbs" size="small">
-					Juego de 170 lbs
+				<ToggleButton value={type} size="small" selected>
+					{type}
 				</ToggleButton>
 			</ToggleButtonGroup>
 			<Typography

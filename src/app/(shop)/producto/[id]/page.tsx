@@ -60,6 +60,7 @@ export const ProductPage = ({ params }: Props) => {
 			) : (
 				<Box
 					sx={{
+						padding: 4,
 						display: 'flex',
 						flexDirection: 'column',
 						justifyContent: 'center',
@@ -68,28 +69,21 @@ export const ProductPage = ({ params }: Props) => {
 				>
 					<Box
 						sx={{
+							padding: 4,
 							display: 'flex',
-							flexDirection: 'column',
 							alignItems: 'center',
-							justifyContent: 'center',
-							py: 5,
+							mx: 20,
 						}}
 					>
-						<Grid
-							container
-							spacing={4}
-							sx={{
-								maxWidth: { xs: '100%', md: '80%' },
-								gap: 2,
-							}}
-						>
+						<Grid container spacing={4}>
 							<Grid item xs={12} md={6}>
 								<ProductImagesSwiper
-									images={[]}
+									images={product.image_urls}
 									name={product.name}
 								/>
 							</Grid>
-							<Grid item xs={12} md={5}>
+
+							<Grid item xs={12} md={6}>
 								<ProductDetails
 									product={product}
 									isLoading={isLoading}

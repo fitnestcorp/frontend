@@ -1,11 +1,11 @@
 'use client';
 import Image from 'next/image';
 import { useState } from 'react';
-import { Box, Card, IconButton } from '@mui/material';
-import { Add, AddPhotoAlternateOutlined } from '@mui/icons-material';
+import { Box, Card } from '@mui/material';
+import { AddPhotoAlternateOutlined } from '@mui/icons-material';
 import SwiperCore from 'swiper';
 import { Swiper, SwiperSlide } from 'swiper/react';
-import { FreeMode, Navigation, Pagination, Thumbs } from 'swiper/modules';
+import { FreeMode, Navigation, Thumbs } from 'swiper/modules';
 
 import 'swiper/css';
 import 'swiper/css/navigation';
@@ -48,60 +48,76 @@ export const ProductImagesSwiper = ({ images, name }: Props) => {
 				</Card>
 			) : (
 				<>
-					<Swiper
-						style={
-							{
-								'--swiper-navigation-color': 'white',
-								'--swiper-pagination-color': 'white',
-							} as React.CSSProperties
-						}
-						spaceBetween={10}
-						navigation
-						thumbs={{ swiper: thumbsSwiper }}
-						modules={[FreeMode, Navigation, Thumbs]}
+					<Box
+						sx={{
+							borderRadius: '10px',
+							boxShadow: '0px 0px 10px rgba(0, 0, 0, 0.1)',
+						}}
 					>
-						{images.map((image, index) => (
-							<SwiperSlide key={index}>
-								<Image
-									width={1024}
-									height={800}
-									alt={name}
-									src={`/${image}`}
-									style={{
-										objectFit: 'contain',
-										borderRadius: '8px',
-									}}
-								/>
-							</SwiperSlide>
-						))}
-					</Swiper>
+						<Swiper
+							style={
+								{
+									'--swiper-navigation-color': 'lightgray',
+									'--swiper-pagination-color': 'lightgray',
+								} as React.CSSProperties
+							}
+							spaceBetween={10}
+							navigation
+							thumbs={{ swiper: thumbsSwiper }}
+							modules={[FreeMode, Navigation, Thumbs]}
+						>
+							{images.map((image, index) => (
+								<SwiperSlide key={index}>
+									<Image
+										alt={name}
+										src={image}
+										// src={'/products/estirillas-yoga-1.jpg'}
+										width={500}
+										height={500}
+										style={{
+											objectFit: 'cover',
+										}}
+									/>
+								</SwiperSlide>
+							))}
+						</Swiper>
+					</Box>
 
-					<Swiper
-						onSwiper={setThumbsSwiper}
-						spaceBetween={10}
-						slidesPerView={3}
-						freeMode
-						watchSlidesProgress
-						modules={[FreeMode, Navigation, Thumbs]}
+					<Box
+						sx={{
+							borderRadius: '10px',
+							boxShadow: '0px 0px 10px rgba(0, 0, 0, 0.1)',
+							p: 1,
+						}}
 					>
-						{images.map((image, index) => (
-							<SwiperSlide key={index}>
-								<Image
-									width={200}
-									height={200}
-									alt={name}
-									src={`/${image}`}
-									style={{
-										objectFit: 'contain',
-										borderRadius: '8px',
-									}}
-								/>
-							</SwiperSlide>
-						))}
-					</Swiper>
+						<Swiper
+							onSwiper={setThumbsSwiper}
+							spaceBetween={10}
+							slidesPerView={5}
+							freeMode
+							watchSlidesProgress
+							modules={[FreeMode, Navigation, Thumbs]}
+						>
+							{images.map((image, index) => (
+								<SwiperSlide key={index}>
+									<Image
+										alt={name}
+										src={image}
+										// src={'/products/estirillas-yoga-1.jpg'}
+										width={100}
+										height={100}
+										style={{
+											objectFit: 'cover',
+										}}
+									/>
+								</SwiperSlide>
+							))}
+						</Swiper>
+					</Box>
 				</>
 			)}
-			{/* </Box> */}
 		</>
+
+		// </Box>
 	);
 };
