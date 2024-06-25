@@ -9,7 +9,6 @@ import 'swiper/css/navigation';
 import 'swiper/css/pagination';
 import 'swiper/css/autoplay';
 import { Group } from '@/interfaces';
-import { downloadImage } from '../images/downloadImage';
 import { useEffect, useState } from 'react';
 
 interface Props {
@@ -19,14 +18,14 @@ interface Props {
 export const GroupSwiper = ({ groups }: Props) => {
 	
 	return (
-		<Box sx={{ maxWidth: '100%', py: 2, mx: 5 }}>
+		<Box sx={{ maxWidth: '100%', my: 4, mx: 5 }}>
 			<Typography
 				variant="h4"
 				align="center"
 				justifyContent="center"
 				gutterBottom
 				sx={{
-					fontWeight: 800,
+					fontWeight: 'bold',
 					my: 2,
 					mx: 2,
 					color: 'text.primary',

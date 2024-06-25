@@ -25,7 +25,7 @@ const orders: OrderType[] = [
           status: "Activo",
           rate: 4.5,
           reviews: [],
-          image_url: ['812w7U9WzwL._AC_SX679_.jpg'],
+          image_urls: ['812w7U9WzwL._AC_SX679_.jpg'],
           stock: {
             id: "123",
             stock: 20,
@@ -52,7 +52,7 @@ const orders: OrderType[] = [
           status: "Activo",
           rate: 4.5,
           reviews: [],
-          image_url: ['812w7U9WzwL._AC_SX679_.jpg'],
+          image_urls: ['812w7U9WzwL._AC_SX679_.jpg'],
           stock: {
             id: "123",
             stock: 20,
@@ -83,7 +83,7 @@ const orders: OrderType[] = [
 const OrdersGrid: React.FC = () => {
   return (
     <Box sx={{ height: 'calc(100vh - 64px)', overflowY: 'auto' }}>
-      <Typography variant="h4" component="div" sx={{ mb: 4, textAlign: 'center', fontWeight: 'bold' }}>
+      <Typography variant="h4" component="div" sx={{ mb: 4, textAlign: 'center', fontWeight: 'bold',  }}>
         MIS ORDENES
       </Typography>
       <Box sx={{ display: 'flex', flexDirection: 'row', flexWrap: 'wrap', gap: 2, justifyContent: 'center' }}>

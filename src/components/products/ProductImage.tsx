@@ -1,7 +1,6 @@
 'use client'
 import React, { useEffect, useState } from 'react';
 import Image from 'next/image';
-import { downloadImage } from '../images/downloadImage';
 
 interface ProductImageProps {
     url: string;

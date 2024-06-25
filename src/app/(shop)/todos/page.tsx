@@ -1,5 +1,5 @@
 'use client';
-import { Box } from '@mui/material';
+import { Box, IconButton, Menu, MenuItem, Typography } from '@mui/material';
 import { useEffect, useState } from 'react';
 
 import { Banner, GroupSwiper } from '@/components';
@@ -7,20 +7,18 @@ import { Group, Product } from '@/interfaces';
 import { useGetAllGroupsQuery, useGetAllProductsQuery } from '@/store';
 import ProductGrid from '@/components/products/ProductGrid';
 import LogoLoader from '@/components/logo/LogoLoader';
-import SeeMore from '@/components/products/SeeMore';
+import FilterListIcon from '@mui/icons-material/FilterList';
+import Filters from '@/components/products/Filters';
 
-export const Home = () => {
-	const [page1, setPage1] = useState(1);
-	const [limit1, setLimit1] = useState(10);
+export const AllProducts = () => {
+
 	const [page2, setPage2] = useState(1);
 	const [limit2, setLimit2] = useState(10);
-	const [objects, setObjects] = useState<Group[]>([]);
-	const [countGroup, setCountGroup] = useState(0);
-	const { data, error, isLoading } = useGetAllGroupsQuery({ page: page1, limit : limit1 });
-
 	const [products, setProducts] = useState<Product[]>([]);
 	const [countProducts, setCountProducts] = useState(0);
 	const [filePath, setFilePath] = useState<string>('');
+    const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+    const [selectedFilter, setSelectedFilter] = useState('');
 
 	const {
 		data: productsData,
@@ -51,30 +49,34 @@ export const Home = () => {
 		}
 	}, [productsData, productsError, productsLoading]);
 
-	useEffect(() => {
-		if (data && Array.isArray(data) && data.length === 2) {
-			const [groups, totalCount] = data;
-			if (Array.isArray(groups)) {
-				setObjects(groups);
-				setCountGroup(totalCount);
-			}
-		} else if (error) {
-			console.error('Error fetching objects:', error);
-		}
-	}, [data, error]);
 
-	if (isLoading || productsLoading) {
+	if ( productsLoading) {
 		return <LogoLoader />;
 	}
 
+    
+
+    const handleSelectFilter = (filter: string) => {
+        setSelectedFilter(filter);
+        console.log('Selected Filter:', filter);
+    };
+
 	return (
 		<Box>
-			<Banner image={'/banners/Yoga.png'} title={''} />
-			<GroupSwiper groups={objects} />
-			<SeeMore />
+			<Typography
+				variant="h3"
+				sx={{
+					
+					fontWeight: 'bold',
+					my: 2,
+				}}
+			>
+				{"TODOS NUESTROS PRODUCTOS"}
+			</Typography>
+            <Filters onSelectFilter={handleSelectFilter} />
 			<ProductGrid products={products} />
 		</Box>
 	);
 };
 
-export default Home;
+export default AllProducts;

@@ -1,4 +1,3 @@
-// components/Profile.tsx
 "use client";
 
 import React, { useState } from 'react';
@@ -25,7 +24,10 @@ const Profile: React.FC = () => {
   const handleClose = () => setOpen(false);
 
   return (
-    <Container maxWidth="xs" sx={{ mt: 7, ml: 2, mb: 7 }}>
+    <Container disableGutters maxWidth={false} sx={{ mb: 7 }}>
+      <Typography variant="h4" align="center" gutterBottom sx={{ fontWeight: 'bold', mb: 2 }}>
+        MI PERFIL
+      </Typography>
       <Paper elevation={3}
         sx={{
           p: 4,
@@ -34,9 +36,6 @@ const Profile: React.FC = () => {
           position: 'relative',
         }}
       >
-        <Typography variant="h4" align="center" gutterBottom sx={{ fontWeight: 'bold' }}>
-          Mi Perfil
-        </Typography>
         <Box sx={{ mb: 3, textAlign: 'left' }}>
           <Typography variant="subtitle1" gutterBottom sx={{ fontWeight: 'bold' }}>
             Nombres
@@ -99,11 +98,7 @@ const Profile: React.FC = () => {
           <Typography id="edit-profile-title" variant="h6" align="center" gutterBottom>
             Editar Información
           </Typography>
-          <Typography variant="body2" align="center" gutterBottom sx={{ mb: 3, color: 'gray' }}>
-            No modifiques los campos que no deseas cambiar.
-          </Typography>
           <Box component="form" noValidate autoComplete="off">
-            
             <TextField
               fullWidth
               margin="normal"
@@ -130,9 +125,9 @@ const Profile: React.FC = () => {
                 style: { color: 'black' }
               }}
             />
-            <Box sx={{ display: 'flex', justifyContent: 'center', mt: 2 }}>
+            <Box sx={{ display: 'flex', justifyContent: 'center', mt: 2, fontWeight: 'bold' }}>
               <Button variant="contained" color="primary">
-                Editar datos
+                Editar contraseña
               </Button>
             </Box>
           </Box>
