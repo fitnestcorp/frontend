@@ -1,7 +1,6 @@
 'use client'
 import React, { useEffect, useState } from 'react';
 import { Box, Card, CardContent, Typography } from '@mui/material';
-import { downloadImage } from '../images/downloadImage';
 
 interface OrderItemProps {
   image: string;
@@ -14,15 +13,6 @@ interface OrderItemProps {
 const OrderItem: React.FC<OrderItemProps> = ({ image, title, description, quantity, price }) => {
   const [filePath, setFilePath] = useState<string>("");
 
-  useEffect(() => {
-    async function fetchImage() {
-      const value = await downloadImage(image);
-      if (value) {
-        setFilePath(URL.createObjectURL(value));
-      }
-    }
-    fetchImage();
-  }, [image]);
 
   return (
     <Card sx={{ display: 'flex', alignItems: 'center', mb: 2, p: 1, width: '45%', minWidth: '300px' ,boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)', borderRadius: '16px',}}>

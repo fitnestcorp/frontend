@@ -8,7 +8,7 @@ import { userApi } from './services/userApi';
 import { productApi } from './services/productApi';
 import { categoryApi } from './services/categoryApi';
 import { groupApi } from './services/groupApi';
-import { cartApi } from './services/cartApi';
+import { shoppingCartApi } from './services/shoppingCartApi';
 
 const persistConfig = {
 	key: 'root',
@@ -24,7 +24,7 @@ export const store = configureStore({
 		[groupApi.reducerPath]: groupApi.reducer,
 		[productApi.reducerPath]: productApi.reducer,
 		[userApi.reducerPath]: userApi.reducer,
-		[cartApi.reducerPath]: cartApi.reducer,
+		[shoppingCartApi.reducerPath]: shoppingCartApi.reducer,
 		user: persistedReducer,
 	},
 	middleware: (getDefaultMiddleware) =>
@@ -35,7 +35,7 @@ export const store = configureStore({
 			productApi.middleware,
 			categoryApi.middleware,
 			groupApi.middleware,
-			cartApi.middleware
+			shoppingCartApi.middleware
 		),
 });
 

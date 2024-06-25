@@ -1,5 +1,8 @@
+import { ShoppingCart } from '@/interfaces/ShoppingCart';
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
-import { ShoppingCart } from '@/interfaces';
+
+
+type ShoppingCartWithNumber = [ShoppingCart[], number];
 
 const baseQuery = fetchBaseQuery({
   baseUrl: process.env.BACKEND_URL || 'http://localhost:3000',
@@ -21,7 +24,7 @@ export const shoppingCartApi = createApi({
     }),
 
     updateShoppingCart: builder.mutation({
-      query: ({ id, ...updateShoppingCartDto }) => ({
+      query: ({ id, updateShoppingCartDto }) => ({
         url: `shoppingcart/${id}`,
         method: 'PATCH',
         body: updateShoppingCartDto,
@@ -35,9 +38,9 @@ export const shoppingCartApi = createApi({
       }),
     }),
 
-    getAllShoppingCarts: builder.query<ShoppingCart[], void>({
-      query: () => ({
-        url: `shoppingcart`,
+    getAllShoppingCarts: builder.query<ShoppingCartWithNumber, { page: number; limit: number }>({
+      query: ({ page, limit }) => ({
+        url: `shoppingcart?page=${page}&limit=${limit}`,
         method: 'GET',
       }),
     }),

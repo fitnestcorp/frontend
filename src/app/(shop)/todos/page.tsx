@@ -63,7 +63,16 @@ export const AllProducts = () => {
 
 	return (
 		<Box>
-			<Banner image={'/banners/Todos.jpg'} title={'Todos nuestros productos'} />
+			<Typography
+				variant="h3"
+				sx={{
+					
+					fontWeight: 'bold',
+					my: 2,
+				}}
+			>
+				{"TODOS NUESTROS PRODUCTOS"}
+			</Typography>
             <Filters onSelectFilter={handleSelectFilter} />
 			<ProductGrid products={products} />
 		</Box>
