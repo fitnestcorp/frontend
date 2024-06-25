@@ -1,16 +1,8 @@
 'use client';
+import React, { useState } from 'react';
 import Image from 'next/image';
-import { useState } from 'react';
-import { Box, Card } from '@mui/material';
+import { Box, Card, Grid } from '@mui/material';
 import { AddPhotoAlternateOutlined } from '@mui/icons-material';
-import SwiperCore from 'swiper';
-import { Swiper, SwiperSlide } from 'swiper/react';
-import { FreeMode, Navigation, Thumbs } from 'swiper/modules';
-
-import 'swiper/css';
-import 'swiper/css/navigation';
-import 'swiper/css/free-mode';
-import 'swiper/css/thumbs';
 
 interface Props {
 	images: string[];
@@ -18,106 +10,112 @@ interface Props {
 }
 
 export const ProductImagesSwiper = ({ images, name }: Props) => {
-	const [thumbsSwiper, setThumbsSwiper] = useState<SwiperCore>();
+	const [selectedImage, setSelectedImage] = useState(images[0] || '');
+
+	const handleImageClick = (image: string) => {
+		setSelectedImage(image);
+	};
 
 	return (
-		// <Box
-		// 	sx={{
-		// 		position: 'relative',
-		// 		width: '100%',
-		// 		height: '100%',
-		// 		display: 'flex',
-		// 		alignItems: 'center',
-		// 		justifyContent: 'center',
-		// 		bgcolor: images.length === 0 ? 'grey.300' : 'transparent',
-		// 	}}
-		// >
-		<>
-			{images.length === 0 ? (
+		<Grid container spacing={2}>
+			<Grid
+				item
+				xs={12}
+				md={2}
+				sx={{
+					display: 'flex',
+					flexDirection: { xs: 'row', md: 'column' },
+					overflowX: { xs: 'scroll', md: 'hidden' },
+					gap: 2,
+					mb: { xs: 2, md: 0 },
+				}}
+			>
+				{images.length === 0 ? (
+					<Card
+						sx={{
+							display: 'flex',
+							alignItems: 'center',
+							justifyContent: 'center',
+							width: '100%',
+							height: '100%',
+							borderRadius: '8px',
+						}}
+					>
+						<AddPhotoAlternateOutlined />
+					</Card>
+				) : (
+					<Box
+						sx={{
+							display: 'flex',
+							flexDirection: { xs: 'row', md: 'column' },
+							gap: 2,
+						}}
+					>
+						{images.map((image, index) => (
+							<Card
+								key={index}
+								sx={{
+									display: 'flex',
+									alignItems: 'center',
+									justifyContent: 'center',
+									width: { xs: 60, md: 100 },
+									height: { xs: 60, md: 100 },
+									cursor: 'pointer',
+									border:
+										selectedImage === image
+											? '2px solid #000'
+											: 'none',
+								}}
+								onClick={() => handleImageClick(image)}
+							>
+								<Image
+									priority
+									src={image}
+									alt={`${name}-${index}`}
+									width={100}
+									height={100}
+									style={{ objectFit: 'cover' }}
+								/>
+							</Card>
+						))}
+					</Box>
+				)}
+			</Grid>
+			<Grid item xs={12} md={10}>
 				<Card
 					sx={{
 						display: 'flex',
 						alignItems: 'center',
 						justifyContent: 'center',
 						width: '100%',
-						height: '100%',
+						height: { xs: 300, md: 475, lg: 700 },
 						borderRadius: '8px',
+						overflow: 'hidden',
 					}}
 				>
-					<AddPhotoAlternateOutlined />
+					{selectedImage ? (
+						<Box
+							sx={{
+								position: 'relative',
+								width: '100%',
+								height: '100%',
+							}}
+						>
+							<Image
+								priority
+								src={selectedImage}
+								alt={name}
+								layout="fill"
+								objectFit="contain"
+							/>
+						</Box>
+					) : (
+						<AddPhotoAlternateOutlined />
+					)}
 				</Card>
-			) : (
-				<>
-					<Box
-						sx={{
-							borderRadius: '10px',
-							boxShadow: '0px 0px 10px rgba(0, 0, 0, 0.1)',
-						}}
-					>
-						<Swiper
-							style={
-								{
-									'--swiper-navigation-color': 'lightgray',
-									'--swiper-pagination-color': 'lightgray',
-								} as React.CSSProperties
-							}
-							spaceBetween={10}
-							navigation
-							thumbs={{ swiper: thumbsSwiper }}
-							modules={[FreeMode, Navigation, Thumbs]}
-						>
-							{images.map((image, index) => (
-								<SwiperSlide key={index}>
-									<Image
-										alt={name}
-										src={image}
-										// src={'/products/estirillas-yoga-1.jpg'}
-										width={500}
-										height={500}
-										style={{
-											objectFit: 'cover',
-										}}
-									/>
-								</SwiperSlide>
-							))}
-						</Swiper>
-					</Box>
-
-					<Box
-						sx={{
-							borderRadius: '10px',
-							boxShadow: '0px 0px 10px rgba(0, 0, 0, 0.1)',
-							p: 1,
-						}}
-					>
-						<Swiper
-							onSwiper={setThumbsSwiper}
-							spaceBetween={10}
-							slidesPerView={5}
-							freeMode
-							watchSlidesProgress
-							modules={[FreeMode, Navigation, Thumbs]}
-						>
-							{images.map((image, index) => (
-								<SwiperSlide key={index}>
-									<Image
-										alt={name}
-										src={image}
-										// src={'/products/estirillas-yoga-1.jpg'}
-										width={100}
-										height={100}
-										style={{
-											objectFit: 'cover',
-										}}
-									/>
-								</SwiperSlide>
-							))}
-						</Swiper>
-					</Box>
-				</>
-			)}
-		</>
-
-		// </Box>
+			</Grid>
+		</Grid>
 	);
 };
+
+export default ProductImagesSwiper;

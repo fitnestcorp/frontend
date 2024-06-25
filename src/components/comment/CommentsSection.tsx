@@ -10,8 +10,6 @@ interface Props {
 }
 
 export const CommentsSection = ({ comments }: Props) => {
-	console.log('CommentsSection', comments);
-
 	const [page, setPage] = useState(1);
 	const commentsPerPage = 5;
 	const totalPages = Math.ceil(comments.length / commentsPerPage);
@@ -29,7 +27,7 @@ export const CommentsSection = ({ comments }: Props) => {
 	);
 
 	return (
-		<Box sx={{ my: 4 }}>
+		<Box sx={{ my: 10 }}>
 			<Typography
 				variant="h5"
 				component="div"
@@ -55,3 +53,5 @@ export const CommentsSection = ({ comments }: Props) => {
 		</Box>
 	);
 };
+
+export default CommentsSection;

@@ -22,5 +22,3 @@ export const isAuth = (Component: React.ComponentType) => {
 		return <Component {...props} />;
 	};
 };
-
-export default isAuth;

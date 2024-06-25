@@ -12,7 +12,6 @@ import {
 import { AddShoppingCart } from '@mui/icons-material';
 
 import { Product } from '@/interfaces';
-import { parse } from 'path';
 
 interface Props {
 	product: Product;
@@ -131,3 +130,5 @@ export const ProductDetails = ({ product, isLoading }: Props) => {
 		</Box>
 	);
 };
+
+export default ProductDetails;
