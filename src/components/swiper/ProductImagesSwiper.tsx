@@ -88,9 +88,10 @@ export const ProductImagesSwiper = ({ images, name }: Props) => {
 						alignItems: 'center',
 						justifyContent: 'center',
 						width: '100%',
-						height: { xs: 300, md: 475, lg: 700 },
+						height: { xs: 300, md: 475, lg: 600 },
 						borderRadius: '8px',
 						overflow: 'hidden',
+						p: 2,
 					}}
 				>
 					{selectedImage ? (
