@@ -37,6 +37,7 @@ export const RegisterForm = ({ showRegisterButton = true }: Props) => {
 			email: '',
 			password: '',
 			confirmPassword: '',
+			role: 'CLIENT'
 		},
 	});
 
