@@ -45,6 +45,7 @@ export const RegisterSchema = z
 				message: 'La contraseña debe tener al menos un número',
 			}),
 		confirmPassword: z.string(),
+		role: z.string(),
 	})
 	.superRefine((data, ctx) => {
 		if (data.password !== data.confirmPassword) {
