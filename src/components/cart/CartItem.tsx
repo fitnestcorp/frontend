@@ -7,25 +7,25 @@ import {
 	Add as AddIcon,
 	Close as CloseIcon,
 } from '@mui/icons-material';
+import { ShoppingCartItem } from '@/interfaces/ShoppingCartItem';
 
-import { CartItem as ICartItem } from '@/interfaces';
 
 interface Props {
-	cartItem: ICartItem;
+	cartItem: ShoppingCartItem;
 }
 
 export const CartItem = ({ cartItem }: Props) => {
-	const { name, description, price, image_url } = cartItem;
+	const { quantity, price, product } = cartItem;
 
-	const [quantity, setQuantity] = useState<number>(1);
+	const [quantityShopin, setQuantityShopin] = useState<number>(1);
 
 	const increaseQuantity = () => {
-		setQuantity(quantity + 1);
+		setQuantityShopin(quantity + 1);
 	};
 
 	const decreaseQuantity = () => {
 		if (quantity > 1) {
-			setQuantity(quantity - 1);
+			setQuantityShopin(quantity - 1);
 		}
 	};
 
@@ -43,8 +43,8 @@ export const CartItem = ({ cartItem }: Props) => {
 		>
 			<Box sx={{ display: 'flex', alignItems: 'center', width: '100%' }}>
 				<Image
-					src={image_url}
-					alt={name}
+					src={product.image_urls[0]}
+					alt={product.name}
 					width={100}
 					height={100}
 					style={{ borderRadius: '8px' }}
@@ -54,10 +54,10 @@ export const CartItem = ({ cartItem }: Props) => {
 						variant="h6"
 						sx={{ fontWeight: 'bold', color: 'text.primary' }}
 					>
-						{name}
+						{product.name}
 					</Typography>
 					<Typography variant="body2" color="text.primary">
-						{description}
+						{product.description}
 					</Typography>
 					<Box
 						sx={{

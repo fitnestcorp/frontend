@@ -19,7 +19,7 @@ import {
 	Close as CloseIcon,
 } from '@mui/icons-material';
 
-import { RootState, useGetCartQuery } from '@/store';
+import { RootState, useGetShoppingCartByUserIdQuery } from '@/store';
 import { CartItem } from '@/components';
 
 export const Cart = () => {
@@ -28,10 +28,10 @@ export const Cart = () => {
 
 	const user = useSelector((state: RootState) => state.user.user);
 
-	const { data: dataCart } = useGetCartQuery(user?.id || '', {
+	const { data: dataCart } = useGetShoppingCartByUserIdQuery(user?.id || '', {
 		skip: !user,
 	});
-	const cart = dataCart?.[0];
+	const cart = dataCart;
 
 	const toggleDrawer = () => {
 		setIsDrawerOpen(!isDrawerOpen);
