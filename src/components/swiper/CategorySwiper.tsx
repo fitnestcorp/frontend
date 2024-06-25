@@ -26,7 +26,7 @@ export const CategorySwiper = ({ categories }: Props) => {
 				justifyContent="center"
 				gutterBottom
 				sx={{
-					fontWeight: 800,
+					fontWeight: 'bold',
 					my: 2,
 					mx: 2,
 					color: 'text.primary',

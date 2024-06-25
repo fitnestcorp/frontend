@@ -4,10 +4,10 @@ import { Banner, Breadcrumb, CategorySwiper } from '@/components';
 import ProductGrid from '@/components/products/ProductGrid';
 import { Category, Product } from '@/interfaces';
 import { useEffect, useState } from 'react';
-import { downloadImage } from '@/components/images/downloadImage';
 import { useGetProductsByCategoryQuery } from '@/store/services/productApi';
 import { useGetCategoryByNameQuery } from '@/store/services/categoryApi';
 import LogoLoader from '@/components/logo/LogoLoader';
+import Filters from '@/components/products/Filters';
 
 interface Props {
 	params: {
@@ -25,9 +25,7 @@ export const CategoryPage = ({ params }: Props) => {
   const [filePath, setFilePath] = useState<string>("");
   const [image, setImage] = useState<string>("");
   const [name, setName] = useState<string>("");
-
-
-	const [dataLoaded, setDataLoaded] = useState(false);
+  const [selectedFilter, setSelectedFilter] = useState('');
 
 	const {
 		data: productsData,
@@ -85,6 +83,11 @@ export const CategoryPage = ({ params }: Props) => {
 		);
 	}
 
+	const handleSelectFilter = (filter: string) => {
+        setSelectedFilter(filter);
+        console.log('Selected Filter:', filter);
+    };
+
   return (
     <Box>
       <Banner
@@ -92,6 +95,7 @@ export const CategoryPage = ({ params }: Props) => {
         title={name}
       />
       <Breadcrumb />
+	  <Filters onSelectFilter={handleSelectFilter} />
       <ProductGrid products={objects} />
     </Box>
   );

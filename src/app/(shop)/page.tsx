@@ -7,6 +7,7 @@ import { Group, Product } from '@/interfaces';
 import { useGetAllGroupsQuery, useGetAllProductsQuery } from '@/store';
 import ProductGrid from '@/components/products/ProductGrid';
 import LogoLoader from '@/components/logo/LogoLoader';
+import SeeMore from '@/components/products/SeeMore';
 
 export const Home = () => {
 	const [page1, setPage1] = useState(1);
@@ -70,6 +71,7 @@ export const Home = () => {
 		<Box>
 			<Banner image={'/banners/Yoga.png'} title={''} />
 			<GroupSwiper groups={objects} />
+			<SeeMore />
 			<ProductGrid products={products} />
 		</Box>
 	);

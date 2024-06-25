@@ -4,10 +4,10 @@ import { Banner, Breadcrumb, CategorySwiper } from '@/components';
 import ProductGrid from '@/components/products/ProductGrid';
 import { Category, Product } from '@/interfaces';
 import { useEffect, useState } from 'react';
-import { downloadImage } from '@/components/images/downloadImage';
 import { useGetProductsByGroupQuery } from '@/store/services/productApi';
 import { useGetGroupByNameQuery } from '@/store/services/groupApi';
 import LogoLoader from '@/components/logo/LogoLoader';
+import Filters from '@/components/products/Filters';
 
 interface Props {
   params: {
@@ -23,6 +23,7 @@ export const GroupPage = ({ params }: Props) => {
   const [image, setImage] = useState<string>("");
   const [name, setName] = useState<string>("");
   const [dataLoaded, setDataLoaded] = useState(false);
+  const [selectedFilter, setSelectedFilter] = useState('');
 
   const { data: productsData, error: productsError, isLoading: productsLoading } = useGetProductsByGroupQuery({ page: 1, limit: 10, group: grupo });
   const { data: groupsData, error: groupsError, isLoading: groupLoading } = useGetGroupByNameQuery(grupo);
@@ -65,6 +66,11 @@ export const GroupPage = ({ params }: Props) => {
     return <Typography>El grupo &quot;{grupo}&quot; no existe.</Typography>;
   }
 
+  const handleSelectFilter = (filter: string) => {
+    setSelectedFilter(filter);
+    console.log('Selected Filter:', filter);
+};
+
   return (
     <Box>
       <Banner
@@ -73,6 +79,7 @@ export const GroupPage = ({ params }: Props) => {
       />
       <Breadcrumb name={groupsData.name} />
       <CategorySwiper categories={categories} />
+      <Filters onSelectFilter={handleSelectFilter} />
       <ProductGrid products={objects} />
     </Box>
   );
