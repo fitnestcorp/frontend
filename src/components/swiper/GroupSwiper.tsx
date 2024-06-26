@@ -25,8 +25,8 @@ export const GroupSwiper = ({ groups }: Props) => {
 				gutterBottom
 				sx={{
 					fontWeight: 'bold',
-					my: 2,
-					mx: 2,
+					my: 3,
+					mx: 3,
 					color: 'text.primary',
 					display: 'flex',
 				}}

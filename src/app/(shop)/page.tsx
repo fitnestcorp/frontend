@@ -1,6 +1,6 @@
 'use client';
 import { useEffect, useState } from 'react';
-import { Box } from '@mui/material';
+import { Box, Button, Link } from '@mui/material';
 
 import { Group, Product } from '@/interfaces';
 import { useGetAllGroupsQuery, useGetProductsSortedByRatingQuery } from '@/store';
@@ -63,7 +63,31 @@ export const Home = () => {
 
 	return (
 		<>
-			<Banner image={'/banners/Yoga.png'} title={''} />
+			<div style={{position: 'relative'}}>
+				<Banner image={'/banners/Yoga.png'} title={''} />
+				<div style={{
+					position: 'absolute',
+					top: '50%',
+					left: '25%',
+					transform: 'translate(-50%, -50%)',
+					color: 'rgba(255, 255, 255, 0.9)', 
+					fontSize: '45px',
+					textAlign: 'left',
+					padding: '10px', // Optional: adds padding around the text
+					lineHeight: '1.2'
+					}}>
+         		 Potencia tu <b>cuerpo</b>,
+				 <br/>
+				 Transforma tu <b>vida</b>
+				 <br/>
+				 <Link href={`/todos`} >
+					<Button variant="contained" color="primary"  sx={{ textTransform: 'none' }}>
+						Conoce nuestros productos
+					</Button>
+				</Link>
+				 
+        		</div>
+			</div>
 			<Box sx={{ flex: 1, px: { xs: 2, sm: 3, md: 4, lg: 5 } }}>
 				<GroupSwiper groups={objects} />
 				<SeeMore />
