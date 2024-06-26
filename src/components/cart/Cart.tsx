@@ -21,7 +21,7 @@ import {
 } from '@mui/icons-material';
 
 import { RootState, useGetShoppingCartByUserIdQuery } from '@/store';
-import { clearUser } from '@/store/slices/userSlice'; // Importa la acción de clearUser
+import { clearUser } from '@/store/slices/userSlice';
 import { CartItem } from '@/components';
 
 export const Cart = () => {
@@ -31,6 +31,7 @@ export const Cart = () => {
 
 	const dispatch = useDispatch();
 	const user = useSelector((state: RootState) => state.user.user);
+	const cartItems = useSelector((state: RootState) => state.cart.items);
 	const { data: dataCart } = useGetShoppingCartByUserIdQuery(user?.id || '', {
 		skip: !user,
 	});
@@ -76,6 +77,10 @@ export const Cart = () => {
 		dispatch(clearUser());
 	};
 
+	const calculateSubtotal = () => {
+		return cartItems.reduce((acc, item) => acc + item.price * item.quantity, 0);
+	};
+
 	return (
 		<>
 			<Tooltip title="Carrito" arrow>
@@ -99,7 +104,7 @@ export const Cart = () => {
 						},
 					}}
 				>
-					<Badge badgeContent={3} color="error">
+					<Badge badgeContent={cartItems.length} color="error">
 						<ShoppingCartIcon />
 					</Badge>
 				</IconButton>
@@ -148,7 +153,7 @@ export const Cart = () => {
 
 					<Box sx={{ flexGrow: 1, overflowY: 'auto' }}>
 						<List>
-							{cart?.items.map((item) => (
+							{cartItems.map((item) => (
 								<ListItem key={item.id}>
 									<CartItem cartItem={item} />
 								</ListItem>
@@ -178,7 +183,7 @@ export const Cart = () => {
 								fontWeight="bold"
 								color="text.primary"
 							>
-								${cart?.sub_total}
+								${calculateSubtotal()}
 							</Typography>
 						</Box>
 						<Button
@@ -228,6 +233,6 @@ export const Cart = () => {
 					<Button onClick={handleModalClose}>Cerrar</Button>
 				</Box>
 			</Modal>
-		</> 
+		</>
 	);
 };
