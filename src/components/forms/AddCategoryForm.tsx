@@ -45,7 +45,7 @@ interface Props {
 }
 
 export const AddCategoryForm = ({ refetch }: Props) => {
-	const [uploadedImage, setUploadedImage] = useState<string>('');
+	const [uploadedImage, setUploadedImage] = useState<File | null>(null);
 	const [openSnackbar, setOpenSnackbar] = useState(false);
 	const [snackbarMessage, setSnackbarMessage] = useState('');
 	const [snackbarSeverity, setSnackbarSeverity] = useState<
@@ -74,29 +74,46 @@ export const AddCategoryForm = ({ refetch }: Props) => {
 			name: '',
 			description: '',
 			url: '',
-			groupId: '',
+			groupName: '',
 		},
 	});
 
 	async function onSubmit(data: z.infer<typeof AddCategorySchema>) {
-		try {
-			await createCategory(data);
-			setSnackbarMessage('Categoria creada exitosamente');
+		const formData = new FormData();
+		formData.append('name', data.name);
+		formData.append('description', data.description);
+		formData.append('groupName', data.groupName);
+		if (uploadedImage) {
+			formData.append('category_image', uploadedImage);
+		}
+
+		let errorOccurred = false;
+		await createCategory(formData)
+			.unwrap()
+			.catch((error) => {
+				errorOccurred = true;
+				setSnackbarSeverity('error');
+				// setSnackbarMessage('Ocurrió un error al crear la categoría');
+				setSnackbarMessage(
+					error?.data?.message ||
+						'Ocurrió un error al crear la categoría'
+				);
+				setOpenSnackbar(true);
+			});
+
+		if (!errorOccurred) {
+			setSnackbarMessage('Categoría creada exitosamente');
 			setSnackbarSeverity('success');
 			setOpenSnackbar(true);
 			refetch();
-		} catch (error) {
-			setSnackbarMessage('Ocurrió un error al crear la categoria');
-			setSnackbarSeverity('error');
-			setOpenSnackbar(true);
 		}
 	}
 
 	const handleImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
 		if (event.target.files) {
 			const file = event.target.files[0];
+			setUploadedImage(file);
 			const fileURL = URL.createObjectURL(file);
-			setUploadedImage(fileURL);
 			setValue('url', fileURL, {
 				shouldValidate: true,
 			});
@@ -104,7 +121,7 @@ export const AddCategoryForm = ({ refetch }: Props) => {
 	};
 
 	const handleDeleteImage = () => {
-		setUploadedImage('');
+		setUploadedImage(null);
 		setValue('url', '', { shouldValidate: true });
 	};
 
@@ -125,8 +142,10 @@ export const AddCategoryForm = ({ refetch }: Props) => {
 								<Card sx={{ borderRadius: '8px' }}>
 									{uploadedImage ? (
 										<Image
-											src={uploadedImage}
-											alt="Group"
+											src={URL.createObjectURL(
+												uploadedImage
+											)}
+											alt="Category"
 											width={400}
 											height={200}
 											style={{
@@ -276,7 +295,7 @@ export const AddCategoryForm = ({ refetch }: Props) => {
 					</Grid>
 					<Grid item xs={12}>
 						<Controller
-							name="groupId"
+							name="groupName"
 							control={control}
 							render={({ field }) => (
 								<FormControl
@@ -299,7 +318,7 @@ export const AddCategoryForm = ({ refetch }: Props) => {
 										{...field}
 										labelId="group-select-label"
 										label="Grupo"
-										error={!!errors.groupId}
+										error={!!errors.groupName}
 									>
 										{groups?.length ?? 0 > 0 ? (
 											groups?.map((group) => (
@@ -316,7 +335,7 @@ export const AddCategoryForm = ({ refetch }: Props) => {
 											</MenuItem>
 										)}
 									</Select>
-									{errors.groupId && (
+									{errors.groupName && (
 										<Box
 											component="span"
 											sx={{
@@ -326,7 +345,7 @@ export const AddCategoryForm = ({ refetch }: Props) => {
 												pl: 2,
 											}}
 										>
-											{errors.groupId.message}
+											{errors.groupName.message}
 										</Box>
 									)}
 								</FormControl>

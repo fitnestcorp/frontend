@@ -41,7 +41,8 @@ interface Props {
 }
 
 export const AddGroupForm = ({ refetch }: Props) => {
-	const [uploadedImage, setUploadedImage] = useState<string>('');
+	const [uploadedImage, setUploadedImage] = useState<File | null>(null);
+	const [imageError, setImageError] = useState<string | null>(null);
 	const [openSnackbar, setOpenSnackbar] = useState(false);
 	const [snackbarMessage, setSnackbarMessage] = useState('');
 	const [snackbarSeverity, setSnackbarSeverity] = useState<
@@ -69,8 +70,16 @@ export const AddGroupForm = ({ refetch }: Props) => {
 	});
 
 	async function onSubmit(data: z.infer<typeof AddGroupSchema>) {
+		const formData = new FormData();
+
+		formData.append('name', data.name);
+		formData.append('description', data.description);
+		if (uploadedImage) {
+			formData.append('group_image', uploadedImage);
+		}
+
 		try {
-			await createGroup(data);
+			await createGroup(formData).unwrap();
 			setSnackbarMessage('Grupo creado exitosamente');
 			setSnackbarSeverity('success');
 			setOpenSnackbar(true);
@@ -85,16 +94,14 @@ export const AddGroupForm = ({ refetch }: Props) => {
 	const handleImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
 		if (event.target.files) {
 			const file = event.target.files[0];
+			setUploadedImage(file);
 			const fileURL = URL.createObjectURL(file);
-			setUploadedImage(fileURL);
-			setValue('url', fileURL, {
-				shouldValidate: true,
-			});
+			setValue('url', fileURL, { shouldValidate: true });
 		}
 	};
 
 	const handleDeleteImage = () => {
-		setUploadedImage('');
+		setUploadedImage(null);
 		setValue('url', '', { shouldValidate: true });
 	};
 
@@ -115,7 +122,9 @@ export const AddGroupForm = ({ refetch }: Props) => {
 								<Card sx={{ borderRadius: '8px' }}>
 									{uploadedImage ? (
 										<Image
-											src={uploadedImage}
+											src={URL.createObjectURL(
+												uploadedImage
+											)}
 											alt="Group"
 											width={400}
 											height={200}

@@ -10,7 +10,7 @@ export const AddCategorySchema = z.object({
 	url: z.string().min(1, {
 		message: 'Debes agregar una imagen',
 	}),
-	groupId: z.string().min(1, {
+	groupName: z.string().min(1, {
 		message: 'Debes seleccionar un grupo',
 	}),
 });
