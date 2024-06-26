@@ -27,7 +27,6 @@ export const Cart = () => {
 	const drawerRef = useRef<HTMLDivElement>(null);
 
 	const user = useSelector((state: RootState) => state.user.user);
-	console.log("popo",user)
 	const { data: dataCart } = useGetShoppingCartByUserIdQuery(user?.id || '', {
 		skip: !user,
 	});
