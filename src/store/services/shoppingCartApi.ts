@@ -1,7 +1,6 @@
 import { ShoppingCart } from '@/interfaces/ShoppingCart';
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 
-
 type ShoppingCartWithNumber = [ShoppingCart[], number];
 
 const baseQuery = fetchBaseQuery({
@@ -24,16 +23,16 @@ export const shoppingCartApi = createApi({
     }),
 
     updateShoppingCart: builder.mutation({
-      query: ({ id, updateShoppingCartDto }) => ({
-        url: `shoppingcart/${id}`,
+      query: ({ userId, updateShoppingCartDto }) => ({
+        url: `shoppingcart/${userId}`,
         method: 'PATCH',
         body: updateShoppingCartDto,
       }),
     }),
 
     deleteShoppingCart: builder.mutation({
-      query: (id) => ({
-        url: `shoppingcart/${id}`,
+      query: (userId) => ({
+        url: `shoppingcart/${userId}`,
         method: 'DELETE',
       }),
     }),
@@ -60,11 +59,19 @@ export const shoppingCartApi = createApi({
     }),
 
     buyShoppingCart: builder.mutation({
-      query: (id) => ({
-        url: `shoppingcart/${id}`,
+      query: (userId) => ({
+        url: `shoppingcart/${userId}`,
         method: 'POST',
       }),
     }),
+
+    removeItem: builder.mutation({
+      query: ({ userId, productId }) => ({
+        url: `shoppingcart/${userId}/${productId}`,
+        method: 'DELETE',
+      }),
+    }),
+
   }),
 });
 
@@ -76,4 +83,5 @@ export const {
   useGetShoppingCartByIdQuery,
   useGetShoppingCartByUserIdQuery,
   useBuyShoppingCartMutation,
+  useRemoveItemMutation, 
 } = shoppingCartApi;

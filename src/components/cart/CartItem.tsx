@@ -1,122 +1,156 @@
 'use client'
 import { useState } from 'react';
 import Image from 'next/image';
-import { IconButton, Box, Typography, Paper } from '@mui/material';
-import {
-	Remove as RemoveIcon,
-	Add as AddIcon,
-	Close as CloseIcon,
-} from '@mui/icons-material';
+import Link from 'next/link';
+import { IconButton, Box, Typography, Paper, CircularProgress } from '@mui/material';
+import { Remove as RemoveIcon, Add as AddIcon, Close as CloseIcon } from '@mui/icons-material';
 import { ShoppingCartItem } from '@/interfaces/ShoppingCartItem';
-
+import { RootState, useRemoveItemMutation, useUpdateShoppingCartMutation } from '@/store';
+import { useDispatch, useSelector } from 'react-redux';
+import { removeItem as removeItemFromState, updateItem as updateItemInState } from '@/store/slices/cartSlice';
 
 interface Props {
-	cartItem: ShoppingCartItem;
+    cartItem: ShoppingCartItem;
 }
 
 export const CartItem = ({ cartItem }: Props) => {
-	const { quantity, price, product } = cartItem;
+    const { quantity, price, product } = cartItem;
+    const user = useSelector((state: RootState) => state.user.user);
+    const dispatch = useDispatch();
+    const [removeItem, { isLoading: isRemoving }] = useRemoveItemMutation();
+    const [updateShoppingCart, { isLoading: isUpdating }] = useUpdateShoppingCartMutation();
+    const [quantityShopin, setQuantityShopin] = useState<number>(quantity);
 
-	const [quantityShopin, setQuantityShopin] = useState<number>(1);
+    const handleRemoveItem = async () => {
+        if (user && product) {
+            await removeItem({ userId: user.id, productId: product.id });
+            dispatch(removeItemFromState({ id: cartItem.id }));
+        }
+    };
 
-	const increaseQuantity = () => {
-		setQuantityShopin(quantity + 1);
-	};
+    const handleUpdateQuantity = async (operation: 'add' | 'remove') => {
+        if (user && product) {
+            await updateShoppingCart({
+                userId: user.id,
+                updateShoppingCartDto: {
+                    productIds: [product.id],
+                    operation
+                }
+            }).unwrap();
 
-	const decreaseQuantity = () => {
-		if (quantity > 1) {
-			setQuantityShopin(quantity - 1);
-		}
-	};
+            if (operation === 'add') {
+                setQuantityShopin(quantityShopin + 1);
+                dispatch(updateItemInState({ id: cartItem.id, quantity: quantityShopin + 1 }));
+            } else if (operation === 'remove' && quantityShopin > 1) {
+                setQuantityShopin(quantityShopin - 1);
+                dispatch(updateItemInState({ id: cartItem.id, quantity: quantityShopin - 1 }));
+            } else if (operation === 'remove' && quantityShopin === 1) {
+                handleRemoveItem();
+            }
+        }
+    };
 
-	return (
-		<Paper
-			elevation={3}
-			sx={{
-				p: 2,
-				mb: 2,
-				position: 'relative',
-				display: 'flex',
-				alignItems: 'center',
-				width: '100%',
-			}}
-		>
-			<Box sx={{ display: 'flex', alignItems: 'center', width: '100%' }}>
-				<Image
-					src={product.image_urls[0]}
-					alt={product.name}
-					width={100}
-					height={100}
-					style={{ borderRadius: '8px' }}
-				/>
-				<Box sx={{ flexGrow: 1, ml: 2 }}>
-					<Typography
-						variant="h6"
-						sx={{ fontWeight: 'bold', color: 'text.primary' }}
-					>
-						{product.name}
-					</Typography>
-					<Typography variant="body2" color="text.primary">
-						{product.description}
-					</Typography>
-					<Box
-						sx={{
-							display: 'flex',
-							justifyContent: 'space-between',
-							alignItems: 'center',
-							mt: 2,
-						}}
-					>
-						<Box sx={{ display: 'flex', alignItems: 'center' }}>
-							<IconButton
-								onClick={decreaseQuantity}
-								sx={{
-									backgroundColor: 'gray',
-									color: 'white',
-									width: 25,
-									height: 25,
-									'&:hover': { backgroundColor: 'darkgray' },
-								}}
-							>
-								<RemoveIcon fontSize="small" />
-							</IconButton>
-							<Typography
-								variant="body2"
-								color="text.primary"
-								sx={{ mx: 2 }}
-							>
-								{quantity}
-							</Typography>
-							<IconButton
-								size="small"
-								onClick={increaseQuantity}
-								sx={{
-									backgroundColor: 'gray',
-									color: 'white',
-									width: 25,
-									height: 25,
-									'&:hover': { backgroundColor: 'darkgray' },
-								}}
-							>
-								<AddIcon fontSize="small" />
-							</IconButton>
-						</Box>
-						<Typography variant="h6" sx={{ fontWeight: 'bold' }}>
-							{price}
-						</Typography>
-					</Box>
-				</Box>
-				<IconButton
-					sx={{
-						position: 'absolute',
-						top: 8,
-						right: 8,
-						color: 'gray',
-					}}
-				>
-					<CloseIcon />
-				</IconButton>
-			</Box>
-		</Paper>
-	);
+    const increaseQuantity = () => {
+        handleUpdateQuantity('add');
+    };
+
+    const decreaseQuantity = () => {
+        handleUpdateQuantity('remove');
+    };
+
+    return (
+        <Paper
+            elevation={3}
+            sx={{
+                p: 2,
+                mb: 2,
+                position: 'relative',
+                display: 'flex',
+                alignItems: 'center',
+                width: '100%',
+            }}
+        >
+            <Box sx={{ display: 'flex', alignItems: 'center', width: '100%' }}>
+                <Link href={`/producto/${cartItem.product.id}`} passHref>
+                    <Image
+                        src={product.image_urls[0]}
+                        alt={product.name}
+                        width={100}
+                        height={100}
+                        style={{ borderRadius: '8px' }}
+                    />
+                </Link>
+                <Box sx={{ flexGrow: 1, ml: 2 }}>
+                    <Typography
+                        variant="h6"
+                        sx={{ fontWeight: 'bold', color: 'text.primary' }}
+                    >
+                        {product.name}
+                    </Typography>
+                    <Typography variant="body2" color="text.primary">
+                        {product.type}
+                    </Typography>
+                    <Box
+                        sx={{
+                            display: 'flex',
+                            justifyContent: 'space-between',
+                            alignItems: 'center',
+                            mt: 2,
+                        }}
+                    >
+                        <Box sx={{ display: 'flex', alignItems: 'center' }}>
+                            <IconButton
+                                onClick={decreaseQuantity}
+                                disabled={isUpdating}
+                                sx={{
+                                    backgroundColor: 'gray',
+                                    color: 'white',
+                                    width: 25,
+                                    height: 25,
+                                    '&:hover': { backgroundColor: 'darkgray' },
+                                }}
+                            >
+                                <RemoveIcon fontSize="small" />
+                            </IconButton>
+                            <Typography
+                                variant="body2"
+                                color="text.primary"
+                                sx={{ mx: 2 }}
+                            >
+                                {quantityShopin}
+                            </Typography>
+                            <IconButton
+                                size="small"
+                                onClick={increaseQuantity}
+                                disabled={isUpdating}
+                                sx={{
+                                    backgroundColor: 'gray',
+                                    color: 'white',
+                                    width: 25,
+                                    height: 25,
+                                    '&:hover': { backgroundColor: 'darkgray' },
+                                }}
+                            >
+                                <AddIcon fontSize="small" />
+                            </IconButton>
+                        </Box>
+                        <Typography variant="h6" sx={{ fontWeight: 'bold' }}>
+                            {price}
+                        </Typography>
+                    </Box>
+                </Box>
+                <IconButton
+                    onClick={handleRemoveItem}
+                    sx={{
+                        position: 'absolute',
+                        top: 8,
+                        right: 8,
+                        color: 'gray',
+                    }}
+                >
+                    {isRemoving ? <CircularProgress size={20} /> : <CloseIcon />}
+                </IconButton>
+            </Box>
+        </Paper>
+    );
 };

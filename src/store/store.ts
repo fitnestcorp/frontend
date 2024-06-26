@@ -4,6 +4,7 @@ import storage from 'redux-persist/lib/storage';
 import { persistReducer, persistStore } from 'redux-persist';
 
 import userReducer from './slices/userSlice';
+import cartReducer from './slices/cartSlice';
 import { userApi } from './services/userApi';
 import { productApi } from './services/productApi';
 import { categoryApi } from './services/categoryApi';
@@ -20,12 +21,14 @@ const persistedReducer = persistReducer(persistConfig, userReducer);
 
 export const store = configureStore({
 	reducer: {
+		cart: cartReducer,
 		[categoryApi.reducerPath]: categoryApi.reducer,
 		[groupApi.reducerPath]: groupApi.reducer,
 		[productApi.reducerPath]: productApi.reducer,
 		[userApi.reducerPath]: userApi.reducer,
 		[shoppingCartApi.reducerPath]: shoppingCartApi.reducer,
 		user: persistedReducer,
+		
 	},
 	middleware: (getDefaultMiddleware) =>
 		getDefaultMiddleware({
