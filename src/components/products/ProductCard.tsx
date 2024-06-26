@@ -7,9 +7,12 @@ interface ProductCardProps {
 }
 
 const ProductCard = ({ product }: ProductCardProps) => {
+
+	//console.log("producto", product)
+
 	const averageRating =
 		product.reviews.reduce((sum, review) => sum + review.score, 0) /
-		product.reviews.length;
+		product.reviews.length | 0;
 
 	const formatCurrency = (value: number) => {
 		const formattedValue = new Intl.NumberFormat('es-CO', {
@@ -51,11 +54,16 @@ const ProductCard = ({ product }: ProductCardProps) => {
 							<span className="text-gray-600 ml-2">
 								({product.reviews.length} reseñas)
 							</span>
+
+							
 						</div>
 
 						<div className="mt-2 text-lg font-semibold text-gray-800">
 							{formatCurrency(product.price)}
 						</div>
+						<span className="text-gray-400 ml-2">
+							({product.stock.unities_sold} vendidos)
+						</span>
 					</div>
 				</div>
 			</Link>

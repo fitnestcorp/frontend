@@ -1,10 +1,15 @@
 'use client';
-import { Box, Typography } from '@mui/material';
+import { Box, Pagination, Typography } from '@mui/material';
 import { Banner, Breadcrumb, CategorySwiper } from '@/components';
 import ProductGrid from '@/components/products/ProductGrid';
 import { Category, Product } from '@/interfaces';
 import { useEffect, useState } from 'react';
-import { useGetProductsByGroupQuery } from '@/store/services/productApi';
+import { 
+  useGetProductsByGroupFilterQuery,
+	useGetProductsSortedByPriceForGroupQuery, 
+	useGetProductsSortedByRatingForGroupQuery, 
+	useGetProductsSortedBySoldUnitsForGroupQuery 
+} from '@/store/services/productApi';
 import { useGetGroupByNameQuery } from '@/store/services/groupApi';
 import LogoLoader from '@/components/logo/LogoLoader';
 import Filters from '@/components/products/Filters';
@@ -22,21 +27,18 @@ export const GroupPage = ({ params }: Props) => {
   const [count, setCount] = useState(0);
   const [image, setImage] = useState<string>("");
   const [name, setName] = useState<string>("");
-  const [dataLoaded, setDataLoaded] = useState(false);
-  const [selectedFilter, setSelectedFilter] = useState('');
+  const [selectedFilter, setSelectedFilter] = useState('Más vendidos');
+  const [filterParams, setFilterParams] = useState({ filter: 'rating', order: 'DESC' as 'ASC' | 'DESC', page: 1, limit: 12 });
 
-  const { data: productsData, error: productsError, isLoading: productsLoading } = useGetProductsByGroupQuery({ page: 1, limit: 10, group: grupo });
   const { data: groupsData, error: groupsError, isLoading: groupLoading } = useGetGroupByNameQuery(grupo);
+  const { data: productsData, error: productsError, isLoading: productsLoading } = useGetProductsByGroupFilterQuery({ groupId: grupo, ...filterParams });
 
   useEffect(() => {
     if (productsData) {
-      const products: Product[] = productsData[0];
-      const totalCount: number = productsData[1];
+      const [products, totalCount] = productsData;
       if (Array.isArray(products)) {
         setObjects(products);
         setCount(totalCount);
-      } else {
-        console.error('products is not an array:', products);
       }
     } else if (productsError) {
       console.error('Error fetching products:', productsError);
@@ -44,18 +46,13 @@ export const GroupPage = ({ params }: Props) => {
   }, [productsData, productsError]);
 
   useEffect(() => {
-    const fetchImage = async () => {
-      if (groupsData && groupsData.image_url) {
-        setCategories(groupsData.categories);
-        setName(groupsData.name)
-        setImage(groupsData.image_url)
-      }
-      if (groupsError) {
-        console.error('Error fetching groups:', groupsError);
-      }
-    };
-
-    fetchImage();
+    if (groupsData) {
+      setCategories(groupsData.categories);
+      setName(groupsData.name);
+      setImage(groupsData.image_url);
+    } else if (groupsError) {
+      console.error('Error fetching group:', groupsError);
+    }
   }, [groupsData, groupsError]);
 
   if (productsLoading || groupLoading) {
@@ -67,9 +64,35 @@ export const GroupPage = ({ params }: Props) => {
   }
 
   const handleSelectFilter = (filter: string) => {
+    switch (filter) {
+      case 'Menos costosos':
+        setFilterParams({ filter: 'price', order: 'ASC', page: 1, limit: 12 });
+        break;
+      case 'Más costosos':
+        setFilterParams({ filter: 'price', order: 'DESC', page: 1, limit: 12 });
+        break;
+      case 'Mejor votados':
+        setFilterParams({ filter: 'rating', order: 'DESC', page: 1, limit: 12 });
+        break;
+      case 'Peor votados':
+        setFilterParams({ filter: 'rating', order: 'ASC', page: 1, limit: 12 });
+        break;
+      case 'Más vendidos':
+        setFilterParams({ filter: 'sold_units', order: 'DESC', page: 1, limit: 12 });
+        break;
+      case 'Menos vendidos':
+        setFilterParams({ filter: 'sold_units', order: 'ASC', page: 1, limit: 12 });
+        break;
+      default:
+        setFilterParams({ filter: 'sold_units', order: 'DESC', page: 1, limit: 12 });
+        break;
+    }
     setSelectedFilter(filter);
-    console.log('Selected Filter:', filter);
-};
+  };
+
+  const handlePageChange = (event: React.ChangeEvent<unknown>, value: number) => {
+    setFilterParams((prevParams) => ({ ...prevParams, page: value }));
+  };
 
   return (
     <Box>
@@ -81,6 +104,14 @@ export const GroupPage = ({ params }: Props) => {
       <CategorySwiper categories={categories} />
       <Filters onSelectFilter={handleSelectFilter} />
       <ProductGrid products={objects} />
+      <Box sx={{ display: 'flex', justifyContent: 'center', my: 4 }}>
+        <Pagination
+          count={Math.ceil(count / filterParams.limit)}
+          page={filterParams.page}
+          onChange={handlePageChange}
+          color="primary"
+        />
+      </Box>
     </Box>
   );
 };

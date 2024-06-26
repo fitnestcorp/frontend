@@ -8,7 +8,7 @@ interface FiltersProps {
 
 const Filters: React.FC<FiltersProps> = ({ onSelectFilter }) => {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
-  const [selectedFilter, setSelectedFilter] = useState('MEJOR VOTADOS');
+  const [selectedFilter, setSelectedFilter] = useState('Mejor votados');
 
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     setAnchorEl(event.currentTarget);
@@ -19,9 +19,8 @@ const Filters: React.FC<FiltersProps> = ({ onSelectFilter }) => {
   };
 
   const handleMenuItemClick = (option: string) => {
-    const upperCaseOption = option.toUpperCase();
-    setSelectedFilter(upperCaseOption);
-    onSelectFilter(upperCaseOption);
+    setSelectedFilter(option);
+    onSelectFilter(option);
     handleClose();
   };
 
@@ -42,7 +41,7 @@ const Filters: React.FC<FiltersProps> = ({ onSelectFilter }) => {
         <MenuItem onClick={() => handleMenuItemClick('Más costosos')}>Más costosos</MenuItem>
         <MenuItem onClick={() => handleMenuItemClick('Mejor votados')}>Mejor votados</MenuItem>
         <MenuItem onClick={() => handleMenuItemClick('Peor votados')}>Peor votados</MenuItem>
-        <MenuItem onClick={() => handleMenuItemClick('Más vendidos')}>Más vendidoss</MenuItem>
+        <MenuItem onClick={() => handleMenuItemClick('Más vendidos')}>Más vendidos</MenuItem>
         <MenuItem onClick={() => handleMenuItemClick('Menos vendidos')}>Menos vendidos</MenuItem>
       </Menu>
     </Box>

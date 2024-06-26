@@ -1,5 +1,5 @@
 'use client';
-import { Box, Typography } from '@mui/material';
+import { Box, Pagination, Typography } from '@mui/material';
 import { useEffect, useState } from 'react';
 
 import { Product } from '@/interfaces';
@@ -10,13 +10,13 @@ import { useGetProductsQuery } from '@/store/services/productApi';
 
 export const AllProducts = () => {
 	const [page, setPage] = useState(1);
-	const [limit, setLimit] = useState(10);
+	const [limit, setLimit] = useState(16);
 	const [products, setProducts] = useState<Product[]>([]);
 	const [countProducts, setCountProducts] = useState(0);
 	const [selectedFilter, setSelectedFilter] = useState('MÁS VENDIDOS');
-	const [filterParams, setFilterParams] = useState({ filter: '', order: 'DESC' as 'ASC' | 'DESC' });
+	const [filterParams, setFilterParams] = useState({ filter: 'rating', order: 'DESC' as 'ASC' | 'DESC' , page: 1, limit: 16});
 
-	const { data: productsData, error: productsError, isLoading: productsLoading } = useGetProductsQuery({ ...filterParams, page, limit });
+	const { data: productsData, error: productsError, isLoading: productsLoading } = useGetProductsQuery({ ...filterParams });
 
 	useEffect(() => {
 		if (productsData && Array.isArray(productsData) && productsData.length === 2) {
@@ -32,43 +32,55 @@ export const AllProducts = () => {
 
 	const handleSelectFilter = (filter: string) => {
 		switch (filter) {
-			case 'MENOR A MAYOR PRECIO':
-				setFilterParams({ filter: 'price', order: 'ASC' });
+			case 'Menos costosos':
+				setFilterParams({ filter: 'price', order: 'ASC', page: 1, limit: 16});
 				break;
-			case 'MAYOR A MENOR PRECIO':
-				setFilterParams({ filter: 'price', order: 'DESC' });
+			case 'Más costosos':
+				setFilterParams({ filter: 'price', order: 'DESC', page: 1, limit: 16 });
 				break;
-			case 'MEJOR VOTADOS':
-				setFilterParams({ filter: 'rating', order: 'DESC' });
+			case 'Mejor votados':
+				setFilterParams({ filter: 'rating', order: 'DESC', page: 1, limit: 16 });
 				break;
-			case 'PEOR VOTADOS':
-				setFilterParams({ filter: 'rating', order: 'ASC' });
+			case 'Peor votados':
+				setFilterParams({ filter: 'rating', order: 'ASC', page: 1, limit: 16 });
 				break;
-			case 'MÁS VENDIDOS':
-				setFilterParams({ filter: 'sold_units', order: 'DESC' });
+			case 'Más vendidos':
+				setFilterParams({ filter: 'sold_units', order: 'DESC', page: 1, limit: 16 });
 				break;
-			case 'MENOS VENDIDOS':
-				setFilterParams({ filter: 'sold_units', order: 'ASC' });
+			case 'Menos vendidos':
+				setFilterParams({ filter: 'sold_units', order: 'ASC', page: 1, limit: 16 });
 				break;
 			default:
-				setFilterParams({ filter: '', order: 'DESC' });
+				setFilterParams({ filter: '', order: 'DESC' , page: 1, limit: 16});
 				break;
 		}
 		setSelectedFilter(filter);
 	};
+	const handlePageChange = (event: React.ChangeEvent<unknown>, value: number) => {
+		setPage(value);
+	};
 
-	// Mostrar el loader mientras los productos están cargando
 	if (productsLoading) {
 		return <LogoLoader />;
 	}
 
 	return (
 		<Box>
-			<Typography variant="h3" sx={{ fontWeight: 'bold', my: 2 }}>
-				{'TODOS NUESTROS PRODUCTOS'}
-			</Typography>
+			<Box sx={{ display: 'flex', justifyContent: 'center', textAlign: 'center', my: 6 }}>
+				<Typography variant="h3" sx={{ fontWeight: 'bold' }}>
+					{'Todos Nuestros Productos'}
+				</Typography>
+			</Box>
 			<Filters onSelectFilter={handleSelectFilter} />
 			<ProductGrid products={products} />
+			<Box sx={{ display: 'flex', justifyContent: 'center', my: 4 }}>
+				<Pagination
+					count={Math.ceil(countProducts / limit)}
+					page={page}
+					onChange={handlePageChange}
+					color="primary"
+				/>
+			</Box>
 		</Box>
 	);
 };

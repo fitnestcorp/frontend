@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react';
 
 import { Banner, GroupSwiper } from '@/components';
 import { Group, Product } from '@/interfaces';
-import { useGetAllGroupsQuery, useGetAllProductsQuery } from '@/store';
+import { useGetAllGroupsQuery, useGetProductsSortedByRatingQuery } from '@/store';
 import ProductGrid from '@/components/products/ProductGrid';
 import LogoLoader from '@/components/logo/LogoLoader';
 import SeeMore from '@/components/products/SeeMore';
@@ -13,7 +13,7 @@ export const Home = () => {
 	const [page1, setPage1] = useState(1);
 	const [limit1, setLimit1] = useState(10);
 	const [page2, setPage2] = useState(1);
-	const [limit2, setLimit2] = useState(10);
+	const [limit2, setLimit2] = useState(8);
 	const [objects, setObjects] = useState<Group[]>([]);
 	const [countGroup, setCountGroup] = useState(0);
 	const { data, error, isLoading } = useGetAllGroupsQuery({ page: page1, limit : limit1 });
@@ -26,7 +26,7 @@ export const Home = () => {
 		data: productsData,
 		error: productsError,
 		isLoading: productsLoading,
-	} = useGetAllProductsQuery({ page: page2, limit : limit2  });
+	} = useGetProductsSortedByRatingQuery({ order:'DESC', page: page2, limit : limit2  });
 
 	useEffect(() => {
 		console.log('Fetching products data...', {
@@ -78,3 +78,7 @@ export const Home = () => {
 };
 
 export default Home;
+function getProductsSortedByRating(arg0: { order: string; page: number; limit: number; }): { data: any; error: any; isLoading: any; } {
+	throw new Error('Function not implemented.');
+}
+
