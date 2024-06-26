@@ -15,14 +15,14 @@ export const SeeMore = () => {
 			<Typography variant="h4" sx={{ fontWeight: '700' }}>
 				MÁS RELEVANTES
 			</Typography>
-			<Link href="/todos" passHref>
-				<MuiLink
-					underline="hover"
-					sx={{ fontSize: '1rem', fontWeight: 'bold' }}
-				>
-					VER TODOS
-				</MuiLink>
-			</Link>
+			<MuiLink
+				href="/todos"
+				component={Link}
+				underline="hover"
+				sx={{ fontSize: '1rem', fontWeight: 'bold' }}
+			>
+				VER TODOS
+			</MuiLink>
 		</Box>
 	);
 };
