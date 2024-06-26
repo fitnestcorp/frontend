@@ -12,7 +12,7 @@ export const Banner = ({ image, title }: Prop) => {
 			sx={{
 				position: 'relative',
 				width: '100%',
-				height: { xs: '350px', sm: '450px', md: '650px' },
+				height: { xs: '350px', sm: '450px', md: '600px' },
 				overflow: 'hidden',
 				display: 'flex',
 				alignItems: 'center',
@@ -34,7 +34,7 @@ export const Banner = ({ image, title }: Prop) => {
 					position: 'absolute',
 					color: 'text.secondary',
 					fontWeight: 'bold',
-					textShadow: '2px 2px 4px rgba(0, 0, 0, 0.6)',
+					textShadow: '2px 2px 6px rgba(0, 0, 0, 0.6)',
 					textAlign: 'center',
 					fontSize: { xs: '2rem', sm: '3rem' },
 					mx: 2,

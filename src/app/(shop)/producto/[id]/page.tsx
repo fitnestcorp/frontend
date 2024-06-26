@@ -62,21 +62,21 @@ export const ProductPage = ({ params }: Props) => {
 					sx={{
 						
 						py: 6,
-						px: 10,
+						px: { xs: 2, md: 4, lg: 8 },
 						display: 'flex',
 						flexDirection: 'column',
 						justifyContent: 'center',
 					}}
 				>
 					<Grid container spacing={4}>
-						<Grid item xs={12} md={6}>
+						<Grid item xs={12} md={7}>
 							<ProductImagesSwiper
 								images={product.image_urls}
 								name={product.name}
 							/>
 						</Grid>
 
-						<Grid item xs={12} md={6}>
+						<Grid item xs={12} md={5}>
 							<ProductDetails
 								product={product}
 								isLoading={isLoading}

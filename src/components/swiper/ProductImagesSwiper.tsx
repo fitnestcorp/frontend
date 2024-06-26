@@ -21,11 +21,11 @@ export const ProductImagesSwiper = ({ images, name }: Props) => {
 			<Grid
 				item
 				xs={12}
-				md={2}
+				lg={2}
 				sx={{
-					display: 'flex',
-					flexDirection: { xs: 'row', md: 'column' },
-					overflowX: { xs: 'scroll', md: 'hidden' },
+					display: { xs: 'none', lg: 'flex' },
+					flexDirection: 'column',
+					overflowX: 'hidden',
 					gap: 2,
 					mb: { xs: 2, md: 0 },
 				}}
@@ -47,7 +47,7 @@ export const ProductImagesSwiper = ({ images, name }: Props) => {
 					<Box
 						sx={{
 							display: 'flex',
-							flexDirection: { xs: 'row', md: 'column' },
+							flexDirection: 'column',
 							gap: 2,
 						}}
 					>
@@ -58,8 +58,8 @@ export const ProductImagesSwiper = ({ images, name }: Props) => {
 									display: 'flex',
 									alignItems: 'center',
 									justifyContent: 'center',
-									width: { xs: 60, md: 100 },
-									height: { xs: 60, md: 100 },
+									width: 100,
+									height: 100,
 									cursor: 'pointer',
 									border:
 										selectedImage === image
@@ -81,7 +81,7 @@ export const ProductImagesSwiper = ({ images, name }: Props) => {
 					</Box>
 				)}
 			</Grid>
-			<Grid item xs={12} md={10}>
+			<Grid item xs={12} lg={10}>
 				<Card
 					sx={{
 						display: 'flex',
@@ -114,6 +114,45 @@ export const ProductImagesSwiper = ({ images, name }: Props) => {
 						<AddPhotoAlternateOutlined />
 					)}
 				</Card>
+
+				{/* Show in small screens */}
+				<Box
+					sx={{
+						display: { xs: 'flex', lg: 'none' },
+						flexDirection: 'row',
+						overflowX: 'scroll',
+						mt: 2,
+						gap: 2,
+					}}
+				>
+					{images.map((image, index) => (
+						<Card
+							key={index}
+							sx={{
+								display: 'flex',
+								alignItems: 'center',
+								justifyContent: 'center',
+								width: 100,
+								height: 100,
+								cursor: 'pointer',
+								border:
+									selectedImage === image
+										? '2px solid #000'
+										: 'none',
+							}}
+							onClick={() => handleImageClick(image)}
+						>
+							<Image
+								priority
+								src={image}
+								alt={`${name}-${index}`}
+								width={60}
+								height={60}
+								style={{ objectFit: 'cover' }}
+							/>
+						</Card>
+					))}
+				</Box>
 			</Grid>
 		</Grid>
 	);
