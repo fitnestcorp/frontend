@@ -17,15 +17,14 @@ interface Props {
 }
 
 export const CategoryPage = ({ params }: Props) => {
-
-  const { group, category } = params;
-  const [objects, setObjects] = useState<Product[]>([]);
-  const [categories, setCategories] = useState<Category[]>([]);
-  const [count, setCount] = useState(0);
-  const [filePath, setFilePath] = useState<string>("");
-  const [image, setImage] = useState<string>("");
-  const [name, setName] = useState<string>("");
-  const [selectedFilter, setSelectedFilter] = useState('');
+	const { group, category } = params;
+	const [objects, setObjects] = useState<Product[]>([]);
+	const [categories, setCategories] = useState<Category[]>([]);
+	const [count, setCount] = useState(0);
+	const [filePath, setFilePath] = useState<string>('');
+	const [image, setImage] = useState<string>('');
+	const [name, setName] = useState<string>('');
+	const [selectedFilter, setSelectedFilter] = useState('');
 
 	const {
 		data: productsData,
@@ -57,16 +56,16 @@ export const CategoryPage = ({ params }: Props) => {
 		}
 	}, [productsData, productsError]);
 
-  useEffect(() => {
-    const fetchImage = async () => {
-      if (categoryData && categoryData.image_url) {
-        setName(categoryData.name)
-        setImage(categoryData.image_url)
-      }
-      if (categoryError) {
-        console.error('Error fetching groups:', categoryError);
-      }
-    };
+	useEffect(() => {
+		const fetchImage = async () => {
+			if (categoryData && categoryData.image_url) {
+				setName(categoryData.name);
+				setImage(categoryData.image_url);
+			}
+			if (categoryError) {
+				console.error('Error fetching groups:', categoryError);
+			}
+		};
 
 		fetchImage();
 	}, [categoryData, categoryError]);
@@ -84,21 +83,18 @@ export const CategoryPage = ({ params }: Props) => {
 	}
 
 	const handleSelectFilter = (filter: string) => {
-        setSelectedFilter(filter);
-        console.log('Selected Filter:', filter);
-    };
+		setSelectedFilter(filter);
+		console.log('Selected Filter:', filter);
+	};
 
-  return (
-    <Box>
-      <Banner
-        image={image}
-        title={name}
-      />
-      <Breadcrumb />
-	  <Filters onSelectFilter={handleSelectFilter} />
-      <ProductGrid products={objects} />
-    </Box>
-  );
+	return (
+		<Box sx={{ flex: 1, px: { xs: 2, sm: 3, md: 4, lg: 5 } }}>
+			<Banner image={image} title={name} />
+			<Breadcrumb />
+			<Filters onSelectFilter={handleSelectFilter} />
+			<ProductGrid products={objects} />
+		</Box>
+	);
 };
 
 export default CategoryPage;

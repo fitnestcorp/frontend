@@ -23,5 +23,3 @@ export const isAdmin = (Component: React.ComponentType) => {
 		return <Component {...props} />;
 	};
 };
-
-export default isAdmin;

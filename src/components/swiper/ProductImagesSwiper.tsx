@@ -118,5 +118,3 @@ export const ProductImagesSwiper = ({ images, name }: Props) => {
 		</Grid>
 	);
 };
-
-export default ProductImagesSwiper;

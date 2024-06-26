@@ -6,10 +6,14 @@ interface ProductCardProps {
 	product: Product;
 }
 
-const ProductCard = ({ product }: ProductCardProps) => {
-	const averageRating =
+export const ProductCard = ({ product }: ProductCardProps) => {
+	let averageRating =
 		product.reviews.reduce((sum, review) => sum + review.score, 0) /
 		product.reviews.length;
+
+	if (isNaN(averageRating)) {
+		averageRating = 0;
+	}
 
 	const formatCurrency = (value: number) => {
 		const formattedValue = new Intl.NumberFormat('es-CO', {
@@ -62,5 +66,3 @@ const ProductCard = ({ product }: ProductCardProps) => {
 		</div>
 	);
 };
-
-export default ProductCard;

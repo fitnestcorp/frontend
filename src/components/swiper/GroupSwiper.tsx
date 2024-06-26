@@ -16,9 +16,9 @@ interface Props {
 }
 
 export const GroupSwiper = ({ groups }: Props) => {
-	
 	return (
-		<Box sx={{ maxWidth: '100%', my: 4, mx: 5 }}>
+		// <Box sx={{ maxWidth: '100%', my: 4, mx: 5 }}>
+		<Box sx={{ maxWidth: '100%' }}>
 			<Typography
 				variant="h4"
 				align="center"
@@ -54,7 +54,7 @@ export const GroupSwiper = ({ groups }: Props) => {
 			>
 				{groups.map((group, index) => (
 					<SwiperSlide key={index}>
-						<Link href={`/grupo/${group.id}`}>
+						<Link href={`/grupo/${group.name.toLowerCase()}`}>
 							<Card
 								sx={{
 									position: 'relative',
@@ -71,9 +71,9 @@ export const GroupSwiper = ({ groups }: Props) => {
 									image={group.image_url}
 									alt={group.name}
 									sx={{
-										height: '250px', // Altura fija
-										width: '100%',  // Ancho fijo
-										objectFit: 'cover' // Asegura que la imagen cubra todo el área
+										height: '250px',
+										width: '100%',
+										objectFit: 'cover',
 									}}
 								/>
 								<CardContent
@@ -91,11 +91,13 @@ export const GroupSwiper = ({ groups }: Props) => {
 										sx={{
 											color: 'white',
 											fontWeight: 'bold',
-											textShadow: '2px 2px 4px rgba(0,0,0,0.6)',
+											textShadow:
+												'2px 2px 4px rgba(0,0,0,0.6)',
 											textAlign: 'center',
 										}}
 									>
-										{group.name[0].toUpperCase() + group.name.slice(1)}
+										{group.name[0].toUpperCase() +
+											group.name.slice(1)}
 									</Typography>
 								</CardContent>
 							</Card>
