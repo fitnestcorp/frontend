@@ -13,12 +13,13 @@ import {
 	IconButton,
 	Tooltip,
 } from '@mui/material';
-import { PersonOutlineOutlined } from '@mui/icons-material';
+import { ExpandMore, PersonOutlineOutlined } from '@mui/icons-material';
 
 import {
 	AdminButton,
 	Cart,
 	LogoutButton,
+	MenuNavbar,
 	Search,
 	Sidemenu,
 } from '@/components';
@@ -26,7 +27,16 @@ import { RootState } from '@/store';
 
 export const Navbar = () => {
 	const [searchTerm, setSearchTerm] = useState('');
+	const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
 	const user = useSelector((state: RootState) => state.user.user);
+
+	const handleClick = (event: React.MouseEvent<HTMLElement>) => {
+		setAnchorEl(event.currentTarget);
+	};
+
+	const handleClose = () => {
+		setAnchorEl(null);
+	};
 
 	return (
 		<AppBar
@@ -68,35 +78,16 @@ export const Navbar = () => {
 						}}
 					>
 						<Button
-							component={NextLink}
-							href="/categoria/entrenamiento"
-							sx={{
-								color: 'text.secondary',
-								mx: 1,
-								borderRadius: '0.5rem',
-								'&:hover': {
-									backgroundColor: 'secondary.main',
-									color: 'text.primary',
-								},
-							}}
+							onClick={handleClick}
+							endIcon={<ExpandMore />}
+							sx={{ color: 'white', mx: 2 }}
 						>
 							Entrenamiento
 						</Button>
-						<Button
-							component={NextLink}
-							href="/categoria/equipamiento"
-							sx={{
-								color: 'text.secondary',
-								mx: 1,
-								borderRadius: '0.5rem',
-								'&:hover': {
-									backgroundColor: 'secondary.main',
-									color: 'text.primary',
-								},
-							}}
-						>
-							Equipamiento
-						</Button>
+						<MenuNavbar
+							anchorEl={anchorEl}
+							handleClose={handleClose}
+						/>
 						<Button
 							component={NextLink}
 							href="/categoria/servicios"
@@ -116,11 +107,7 @@ export const Navbar = () => {
 
 					{/* Search, Cart, Login */}
 					<Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
-						<Box
-							sx={{
-								display: { xs: 'none', md: 'block' },
-							}}
-						>
+						<Box sx={{ display: { xs: 'none', md: 'block' } }}>
 							<Search
 								onSearch={(value) => setSearchTerm(value)}
 							/>
@@ -147,35 +134,36 @@ export const Navbar = () => {
 
 								{/* Show if user is not authenticated */}
 								{user ? (
-									
-									<><Tooltip title="Perfil" arrow>
-										<IconButton
-											component={NextLink}
-											href="/perfil"
-											color="inherit"
-											sx={{
-												position: 'relative',
-												display: 'flex',
-												alignItems: 'center',
-												justifyContent: 'center',
-												width: '40px',
-												height: '40px',
-												borderRadius: '0.5rem',
-												color: 'text.secondary',
-												backgroundColor: 'primary.main',
-												'&:hover': {
-													backgroundColor: 'secondary.main',
-													color: 'text.primary',
-													border: '1px solid black',
-												},
-											}}
-										>
-											<PersonOutlineOutlined />
-										</IconButton>
-									</Tooltip>
-									<LogoutButton />
+									<>
+										<Tooltip title="Perfil" arrow>
+											<IconButton
+												component={NextLink}
+												href="/perfil"
+												color="inherit"
+												sx={{
+													position: 'relative',
+													display: 'flex',
+													alignItems: 'center',
+													justifyContent: 'center',
+													width: '40px',
+													height: '40px',
+													borderRadius: '0.5rem',
+													color: 'text.secondary',
+													backgroundColor:
+														'primary.main',
+													'&:hover': {
+														backgroundColor:
+															'secondary.main',
+														color: 'text.primary',
+														border: '1px solid black',
+													},
+												}}
+											>
+												<PersonOutlineOutlined />
+											</IconButton>
+										</Tooltip>
+										<LogoutButton />
 									</>
-									
 								) : (
 									<Tooltip title="Iniciar Sesión" arrow>
 										<IconButton
@@ -208,11 +196,7 @@ export const Navbar = () => {
 						</Box>
 
 						{/* Show when screen is small */}
-						<Box
-							sx={{
-								display: { xs: 'block', md: 'none' },
-							}}
-						>
+						<Box sx={{ display: { xs: 'block', md: 'none' } }}>
 							<Sidemenu />
 						</Box>
 					</Box>

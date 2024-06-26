@@ -20,7 +20,9 @@ interface Props {
 }
 
 export const GroupPage = ({ params }: Props) => {
-	const grupo = params.grupo[0].toUpperCase() + params.grupo.slice(1);
+	let group = params.grupo[0].toUpperCase() + params.grupo.slice(1);
+	group = group.replace(/-/g, ' ');
+
 	const [objects, setObjects] = useState<Product[]>([]);
 	const [categories, setCategories] = useState<Category[]>([]);
 	const [count, setCount] = useState(0);
@@ -33,12 +35,12 @@ export const GroupPage = ({ params }: Props) => {
 		data: productsData,
 		error: productsError,
 		isLoading: productsLoading,
-	} = useGetProductsByGroupQuery({ page: 1, limit: 10, group: grupo });
+	} = useGetProductsByGroupQuery({ page: 1, limit: 10, group: group });
 	const {
 		data: groupsData,
 		error: groupsError,
 		isLoading: groupLoading,
-	} = useGetGroupByNameQuery(grupo);
+	} = useGetGroupByNameQuery(group);
 
 	useEffect(() => {
 		if (productsData) {
@@ -78,7 +80,7 @@ export const GroupPage = ({ params }: Props) => {
 		console.log('groupsData:', groupsData);
 		console.log('groupsError:', groupsError);
 
-		return <Typography>El grupo &quot;{grupo}&quot; no existe.</Typography>;
+		return <Typography>El grupo &quot;{group}&quot; no existe.</Typography>;
 	}
 
 	const handleSelectFilter = (filter: string) => {

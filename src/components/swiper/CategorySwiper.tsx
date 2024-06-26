@@ -56,7 +56,9 @@ export const CategorySwiper = ({ categories }: Props) => {
 				{categories.map((category, index) => (
 					<SwiperSlide key={index}>
 						<Link
-							href={`/categoria/${category.name.toLowerCase()}`}
+							href={`/categoria/${category.name
+								.toLowerCase()
+								.replace(/\s+/g, '-')}`}
 						>
 							<Card
 								sx={{
