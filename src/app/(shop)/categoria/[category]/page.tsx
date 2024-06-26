@@ -1,13 +1,12 @@
 'use client';
 import { Box, Pagination, Typography } from '@mui/material';
-import { Banner, Breadcrumb } from '@/components';
-import ProductGrid from '@/components/products/ProductGrid';
+import { Banner, Breadcrumb, LogoLoader, ProductGrid, Filters } from '@/components';
+
 import { Category, Product } from '@/interfaces';
 import { useEffect, useState } from 'react';
 import { useGetProductsByCategoryFilterQuery } from '@/store/services/productApi';
 import { useGetCategoryByNameQuery } from '@/store/services/categoryApi';
-import LogoLoader from '@/components/logo/LogoLoader';
-import Filters from '@/components/products/Filters';
+
 
 interface Props {
   params: {
@@ -17,15 +16,18 @@ interface Props {
 }
 
 export const CategoryPage = ({ params }: Props) => {
-  const { group, category } = params;
+  let category = params.category[0].toUpperCase() + params.category.slice(1);
+	category = category.replace(/-/g, ' ');
+
   const [objects, setObjects] = useState<Product[]>([]);
   const [count, setCount] = useState(0);
   const [image, setImage] = useState<string>("");
   const [name, setName] = useState<string>("");
+  const [categoryId, setCategoryId] = useState<string>("");
   const [selectedFilter, setSelectedFilter] = useState('Más vendidos');
   const [filterParams, setFilterParams] = useState({ filter: 'rating', order: 'DESC' as 'ASC' | 'DESC', page: 1, limit: 12 });
 
-  const { data: productsData, error: productsError, isLoading: productsLoading } = useGetProductsByCategoryFilterQuery({ categoryId: category, ...filterParams });
+  const { data: productsData, error: productsError, isLoading: productsLoading } = useGetProductsByCategoryFilterQuery({ categoryId: categoryId, ...filterParams });
   const { data: categoryData, error: categoryError, isLoading: categoryLoading } = useGetCategoryByNameQuery(category);
 
   useEffect(() => {
@@ -44,6 +46,7 @@ export const CategoryPage = ({ params }: Props) => {
     if (categoryData && categoryData.image_url) {
       setName(categoryData.name);
       setImage(categoryData.image_url);
+      setCategoryId(categoryData.id)
     }
     if (categoryError) {
       console.error('Error fetching category:', categoryError);
@@ -92,7 +95,7 @@ export const CategoryPage = ({ params }: Props) => {
   return (
     <Box>
       <Banner image={image} title={name} />
-      <Breadcrumb name={categoryData.name} />
+      <Breadcrumb />
       <Filters onSelectFilter={handleSelectFilter} />
       <ProductGrid products={objects} />
       <Box sx={{ display: 'flex', justifyContent: 'center', my: 4 }}>

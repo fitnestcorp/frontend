@@ -7,7 +7,7 @@ interface FiltersProps {
 	onSelectFilter: (filter: string) => void;
 }
 
-const Filters: React.FC<FiltersProps> = ({ onSelectFilter }) => {
+export const Filters: React.FC<FiltersProps> = ({ onSelectFilter }) => {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const [selectedFilter, setSelectedFilter] = useState('Mejor votados');
 

@@ -4,9 +4,8 @@ import { Box } from '@mui/material';
 
 import { Group, Product } from '@/interfaces';
 import { useGetAllGroupsQuery, useGetProductsSortedByRatingQuery } from '@/store';
-import ProductGrid from '@/components/products/ProductGrid';
-import LogoLoader from '@/components/logo/LogoLoader';
-import SeeMore from '@/components/products/SeeMore';
+
+import { Banner, GroupSwiper, LogoLoader, ProductGrid, SeeMore } from '@/components';
 
 export const Home = () => {
 	const [page1, setPage1] = useState(1);

@@ -1,18 +1,14 @@
 'use client';
 import { Box, Pagination, Typography } from '@mui/material';
-import { Banner, Breadcrumb, CategorySwiper } from '@/components';
-import ProductGrid from '@/components/products/ProductGrid';
+import { Banner, Breadcrumb, CategorySwiper, LogoLoader, ProductGrid, Filters } from '@/components';
+
 import { Category, Product } from '@/interfaces';
 import { useEffect, useState } from 'react';
 import { 
   useGetProductsByGroupFilterQuery,
-	useGetProductsSortedByPriceForGroupQuery, 
-	useGetProductsSortedByRatingForGroupQuery, 
-	useGetProductsSortedBySoldUnitsForGroupQuery 
 } from '@/store/services/productApi';
 import { useGetGroupByNameQuery } from '@/store/services/groupApi';
-import LogoLoader from '@/components/logo/LogoLoader';
-import Filters from '@/components/products/Filters';
+
 
 interface Props {
 	params: {
@@ -21,17 +17,20 @@ interface Props {
 }
 
 export const GroupPage = ({ params }: Props) => {
-  const { grupo } = params;
+  let group = params.grupo[0].toUpperCase() + params.grupo.slice(1);
+	group = group.replace(/-/g, ' ');
+
   const [objects, setObjects] = useState<Product[]>([]);
   const [categories, setCategories] = useState<Category[]>([]);
   const [count, setCount] = useState(0);
   const [image, setImage] = useState<string>("");
   const [name, setName] = useState<string>("");
+  const [groupId, setGroupId] = useState<string>("");
   const [selectedFilter, setSelectedFilter] = useState('Más vendidos');
   const [filterParams, setFilterParams] = useState({ filter: 'rating', order: 'DESC' as 'ASC' | 'DESC', page: 1, limit: 12 });
 
-  const { data: groupsData, error: groupsError, isLoading: groupLoading } = useGetGroupByNameQuery(grupo);
-  const { data: productsData, error: productsError, isLoading: productsLoading } = useGetProductsByGroupFilterQuery({ groupId: grupo, ...filterParams });
+  const { data: groupsData, error: groupsError, isLoading: groupLoading } = useGetGroupByNameQuery(group);
+  const { data: productsData, error: productsError, isLoading: productsLoading } = useGetProductsByGroupFilterQuery({ groupId: groupId, ...filterParams });
 
   useEffect(() => {
     if (productsData) {
@@ -50,6 +49,7 @@ export const GroupPage = ({ params }: Props) => {
       setCategories(groupsData.categories);
       setName(groupsData.name);
       setImage(groupsData.image_url);
+      setGroupId(groupsData.id)
     } else if (groupsError) {
       console.error('Error fetching group:', groupsError);
     }
@@ -63,7 +63,7 @@ export const GroupPage = ({ params }: Props) => {
 		console.log('groupsData:', groupsData);
 		console.log('groupsError:', groupsError);
 
-		return <Typography>El grupo &quot;{grupo}&quot; no existe.</Typography>;
+		return <Typography>El grupo &quot;{group}&quot; no existe.</Typography>;
 	}
 
   const handleSelectFilter = (filter: string) => {
@@ -103,7 +103,7 @@ export const GroupPage = ({ params }: Props) => {
         image={image}
         title={name}
       />
-      <Breadcrumb name={groupsData.name} />
+      <Breadcrumb  />
       <CategorySwiper categories={categories} />
       <Filters onSelectFilter={handleSelectFilter} />
       <ProductGrid products={objects} />

@@ -11,7 +11,7 @@ export const AllProducts = () => {
 	const [limit, setLimit] = useState(16);
 	const [products, setProducts] = useState<Product[]>([]);
 	const [countProducts, setCountProducts] = useState(0);
-	const [selectedFilter, setSelectedFilter] = useState('MÁS VENDIDOS');
+	const [selectedFilter, setSelectedFilter] = useState('Mejor votados');
 	const [filterParams, setFilterParams] = useState({ filter: 'rating', order: 'DESC' as 'ASC' | 'DESC' , page: 1, limit: 16});
 
 	const { data: productsData, error: productsError, isLoading: productsLoading } = useGetProductsQuery({ ...filterParams });
