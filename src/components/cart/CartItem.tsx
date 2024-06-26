@@ -1,6 +1,7 @@
 'use client'
 import { useState } from 'react';
 import Image from 'next/image';
+import Link from 'next/link';
 import { IconButton, Box, Typography, Paper } from '@mui/material';
 import {
 	Remove as RemoveIcon,
@@ -42,6 +43,7 @@ export const CartItem = ({ cartItem }: Props) => {
 			}}
 		>
 			<Box sx={{ display: 'flex', alignItems: 'center', width: '100%' }}>
+			<Link href={`/producto/${cartItem.product.id}`} passHref>
 				<Image
 					src={product.image_urls[0]}
 					alt={product.name}
@@ -49,6 +51,7 @@ export const CartItem = ({ cartItem }: Props) => {
 					height={100}
 					style={{ borderRadius: '8px' }}
 				/>
+				</Link>
 				<Box sx={{ flexGrow: 1, ml: 2 }}>
 					<Typography
 						variant="h6"
@@ -57,7 +60,7 @@ export const CartItem = ({ cartItem }: Props) => {
 						{product.name}
 					</Typography>
 					<Typography variant="body2" color="text.primary">
-						{product.description}
+						{product.type}
 					</Typography>
 					<Box
 						sx={{

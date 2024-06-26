@@ -1,7 +1,7 @@
 'use client';
 import NextLink from 'next/link';
 import { useEffect, useRef, useState } from 'react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import {
 	Drawer,
 	IconButton,
@@ -13,6 +13,7 @@ import {
 	ListItem,
 	Divider,
 	Tooltip,
+	Modal,
 } from '@mui/material';
 import {
 	ShoppingCartOutlined as ShoppingCartIcon,
@@ -20,12 +21,15 @@ import {
 } from '@mui/icons-material';
 
 import { RootState, useGetShoppingCartByUserIdQuery } from '@/store';
+import { clearUser } from '@/store/slices/userSlice'; // Importa la acción de clearUser
 import { CartItem } from '@/components';
 
 export const Cart = () => {
 	const [isDrawerOpen, setIsDrawerOpen] = useState<boolean>(false);
+	const [isInvalidUserModalOpen, setIsInvalidUserModalOpen] = useState<boolean>(false);
 	const drawerRef = useRef<HTMLDivElement>(null);
 
+	const dispatch = useDispatch();
 	const user = useSelector((state: RootState) => state.user.user);
 	const { data: dataCart } = useGetShoppingCartByUserIdQuery(user?.id || '', {
 		skip: !user,
@@ -60,9 +64,21 @@ export const Cart = () => {
 		};
 	}, [isDrawerOpen]);
 
+	useEffect(() => {
+		if (isDrawerOpen && !cart) {
+			setIsInvalidUserModalOpen(true);
+			toggleDrawer();
+		}
+	}, [isDrawerOpen, cart]);
+
+	const handleModalClose = () => {
+		setIsInvalidUserModalOpen(false);
+		dispatch(clearUser());
+	};
+
 	return (
 		<>
-			{/* <Tooltip title="Carrito" arrow>
+			<Tooltip title="Carrito" arrow>
 				<IconButton
 					onClick={toggleDrawer}
 					color="inherit"
@@ -132,7 +148,7 @@ export const Cart = () => {
 
 					<Box sx={{ flexGrow: 1, overflowY: 'auto' }}>
 						<List>
-							{cart?.cartItems.map((item) => (
+							{cart?.items.map((item) => (
 								<ListItem key={item.id}>
 									<CartItem cartItem={item} />
 								</ListItem>
@@ -162,7 +178,7 @@ export const Cart = () => {
 								fontWeight="bold"
 								color="text.primary"
 							>
-								$200.000
+								${cart?.sub_total}
 							</Typography>
 						</Box>
 						<Button
@@ -182,7 +198,36 @@ export const Cart = () => {
 						</Button>
 					</Box>
 				</Box>
-			</Drawer>*/}
+			</Drawer>
+
+			<Modal
+				open={isInvalidUserModalOpen}
+				onClose={handleModalClose}
+				aria-labelledby="invalid-user-modal-title"
+				aria-describedby="invalid-user-modal-description"
+			>
+				<Box
+					sx={{
+						position: 'absolute',
+						top: '50%',
+						left: '50%',
+						transform: 'translate(-50%, -50%)',
+						width: 400,
+						bgcolor: 'background.paper',
+						border: '2px solid #000',
+						boxShadow: 24,
+						p: 4,
+					}}
+				>
+					<Typography id="invalid-user-modal-title" variant="h6" component="h2">
+						Usuario inválido
+					</Typography>
+					<Typography id="invalid-user-modal-description" sx={{ mt: 2 }}>
+						Tu sesión ha expirado o el usuario no es válido. Por favor, inicia sesión nuevamente.
+					</Typography>
+					<Button onClick={handleModalClose}>Cerrar</Button>
+				</Box>
+			</Modal>
 		</> 
 	);
 };

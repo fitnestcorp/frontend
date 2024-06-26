@@ -60,7 +60,8 @@ export const ProductPage = ({ params }: Props) => {
 			) : (
 				<Box
 					sx={{
-						py: 4,
+						
+						py: 6,
 						px: 10,
 						display: 'flex',
 						flexDirection: 'column',

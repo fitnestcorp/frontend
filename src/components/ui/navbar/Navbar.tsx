@@ -113,8 +113,7 @@ export const Navbar = () => {
 							/>
 						</Box>
 
-						{/* Shopping Cart */}
-						<Cart />
+						
 
 						<Box sx={{ display: { xs: 'none', md: 'block' } }}>
 							<Box sx={{ display: 'flex', gap: 2 }}>
@@ -135,6 +134,7 @@ export const Navbar = () => {
 								{/* Show if user is not authenticated */}
 								{user ? (
 									<>
+										<Cart />
 										<Tooltip title="Perfil" arrow>
 											<IconButton
 												component={NextLink}
