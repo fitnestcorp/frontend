@@ -3,10 +3,8 @@ import { Box, Pagination, Typography } from '@mui/material';
 import { useEffect, useState } from 'react';
 
 import { Product } from '@/interfaces';
-import ProductGrid from '@/components/products/ProductGrid';
-import LogoLoader from '@/components/logo/LogoLoader';
-import Filters from '@/components/products/Filters';
-import { useGetProductsQuery } from '@/store/services/productApi';
+import { Filters, LogoLoader, ProductGrid } from '@/components';
+import { useGetProductsQuery } from '@/store';
 
 export const AllProducts = () => {
 	const [page, setPage] = useState(1);
@@ -19,7 +17,11 @@ export const AllProducts = () => {
 	const { data: productsData, error: productsError, isLoading: productsLoading } = useGetProductsQuery({ ...filterParams });
 
 	useEffect(() => {
-		if (productsData && Array.isArray(productsData) && productsData.length === 2) {
+		if (
+			productsData &&
+			Array.isArray(productsData) &&
+			productsData.length === 2
+		) {
 			const [objectsList, totalCount] = productsData;
 			if (Array.isArray(objectsList)) {
 				setProducts(objectsList);

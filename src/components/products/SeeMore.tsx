@@ -1,20 +1,28 @@
-import React from 'react';
-import { Box, Typography, Link as MuiLink } from '@mui/material';
 import Link from 'next/link';
+import { Box, Typography, Link as MuiLink } from '@mui/material';
 
-const SeeMore: React.FC = () => {
-  return (
-    <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 2, pl:4,pr:4, pt:4  }}>
-      <Typography variant="h4" sx={{ fontWeight: '700', }}>
-        MÁS RELEVANTES
-      </Typography>
-      <Link href="/todos" passHref>
-        <MuiLink underline="hover" sx={{ fontSize: '1rem', fontWeight: 'bold' }}>
-          VER TODOS
-        </MuiLink>
-      </Link>
-    </Box>
-  );
+export const SeeMore = () => {
+	return (
+		<Box
+			sx={{
+				display: 'flex',
+				justifyContent: 'space-between',
+				alignItems: 'center',
+				mb: 2,
+				pt: 6,
+			}}
+		>
+			<Typography variant="h5" sx={{ fontWeight: '700' }}>
+				MÁS RELEVANTES
+			</Typography>
+			<MuiLink
+				href="/todos"
+				component={Link}
+				underline="hover"
+				sx={{ fontSize: '1rem', fontWeight: 'bold' }}
+			>
+				VER TODOS
+			</MuiLink>
+		</Box>
+	);
 };
-
-export default SeeMore;

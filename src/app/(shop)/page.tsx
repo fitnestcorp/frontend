@@ -1,8 +1,7 @@
 'use client';
-import { Box } from '@mui/material';
 import { useEffect, useState } from 'react';
+import { Box } from '@mui/material';
 
-import { Banner, GroupSwiper } from '@/components';
 import { Group, Product } from '@/interfaces';
 import { useGetAllGroupsQuery, useGetProductsSortedByRatingQuery } from '@/store';
 import ProductGrid from '@/components/products/ProductGrid';
@@ -16,7 +15,10 @@ export const Home = () => {
 	const [limit2, setLimit2] = useState(8);
 	const [objects, setObjects] = useState<Group[]>([]);
 	const [countGroup, setCountGroup] = useState(0);
-	const { data, error, isLoading } = useGetAllGroupsQuery({ page: page1, limit : limit1 });
+	const { data, error, isLoading } = useGetAllGroupsQuery({
+		page: page1,
+		limit: limit1,
+	});
 
 	const [products, setProducts] = useState<Product[]>([]);
 	const [countProducts, setCountProducts] = useState(0);
@@ -29,12 +31,6 @@ export const Home = () => {
 	} = useGetProductsSortedByRatingQuery({ order:'DESC', page: page2, limit : limit2  });
 
 	useEffect(() => {
-		console.log('Fetching products data...', {
-			productsData,
-			productsError,
-			productsLoading,
-		});
-
 		if (
 			productsData &&
 			Array.isArray(productsData) &&
@@ -44,7 +40,6 @@ export const Home = () => {
 			if (Array.isArray(objectsList)) {
 				setProducts(objectsList);
 				setCountProducts(totalCount);
-				console.log('Fetched products:', objectsList);
 			}
 		} else if (productsError) {
 			console.error('Error fetching products:', productsError);
@@ -68,12 +63,14 @@ export const Home = () => {
 	}
 
 	return (
-		<Box>
+		<>
 			<Banner image={'/banners/Yoga.png'} title={''} />
-			<GroupSwiper groups={objects} />
-			<SeeMore />
-			<ProductGrid products={products} />
-		</Box>
+			<Box sx={{ flex: 1, px: { xs: 2, sm: 3, md: 4, lg: 5 } }}>
+				<GroupSwiper groups={objects} />
+				<SeeMore />
+				<ProductGrid products={products} />
+			</Box>
+		</>
 	);
 };
 

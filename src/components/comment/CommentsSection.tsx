@@ -53,5 +53,3 @@ export const CommentsSection = ({ comments }: Props) => {
 		</Box>
 	);
 };
-
-export default CommentsSection;

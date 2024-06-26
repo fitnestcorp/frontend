@@ -130,5 +130,3 @@ export const ProductDetails = ({ product, isLoading }: Props) => {
 		</Box>
 	);
 };
-
-export default ProductDetails;

@@ -34,8 +34,16 @@ export * from './product/AddProductModal';
 export * from './product/DeleteProductButton';
 export * from './product/ProductDetails';
 
+export * from './products/Filters';
+export * from './products/ProductCard';
+export * from './products/ProductGrid';
+export * from './products/ProductImage';
+export * from './products/SeeMore';
+
 export * from './hoc/isAdmin';
 export * from './hoc/isAuth';
+
+export * from './logo/LogoLoader';
 
 export * from './sidemenu/Sidemenu';
 

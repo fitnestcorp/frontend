@@ -15,9 +15,9 @@ import LogoLoader from '@/components/logo/LogoLoader';
 import Filters from '@/components/products/Filters';
 
 interface Props {
-  params: {
-    grupo: string;
-  };
+	params: {
+		grupo: string;
+	};
 }
 
 export const GroupPage = ({ params }: Props) => {
@@ -55,13 +55,16 @@ export const GroupPage = ({ params }: Props) => {
     }
   }, [groupsData, groupsError]);
 
-  if (productsLoading || groupLoading) {
-    return <LogoLoader />;
-  }
+	if (productsLoading || groupLoading) {
+		return <LogoLoader />;
+	}
 
-  if (!groupsData || groupsError) {
-    return <Typography>El grupo &quot;{grupo}&quot; no existe.</Typography>;
-  }
+	if (!groupsData || groupsError) {
+		console.log('groupsData:', groupsData);
+		console.log('groupsError:', groupsError);
+
+		return <Typography>El grupo &quot;{grupo}&quot; no existe.</Typography>;
+	}
 
   const handleSelectFilter = (filter: string) => {
     switch (filter) {

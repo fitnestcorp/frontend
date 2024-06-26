@@ -4,11 +4,11 @@ import { Alert, Box, Grid, Snackbar } from '@mui/material';
 
 import {
 	CommentsSection,
+	LogoLoader,
 	ProductDetails,
 	ProductImagesSwiper,
 } from '@/components';
 import { useGetProductByIdQuery, useGetProductReviewsQuery } from '@/store';
-import LogoLoader from '@/components/logo/LogoLoader';
 
 interface Props {
 	params: {

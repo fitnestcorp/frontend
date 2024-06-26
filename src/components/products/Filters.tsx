@@ -1,22 +1,23 @@
-import React, { useState } from 'react';
+'use client';
+import { useState } from 'react';
 import { Box, Typography, IconButton, Menu, MenuItem } from '@mui/material';
 import FilterListIcon from '@mui/icons-material/FilterList';
 
 interface FiltersProps {
-  onSelectFilter: (filter: string) => void;
+	onSelectFilter: (filter: string) => void;
 }
 
 const Filters: React.FC<FiltersProps> = ({ onSelectFilter }) => {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const [selectedFilter, setSelectedFilter] = useState('Mejor votados');
 
-  const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
-    setAnchorEl(event.currentTarget);
-  };
+	const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+		setAnchorEl(event.currentTarget);
+	};
 
-  const handleClose = () => {
-    setAnchorEl(null);
-  };
+	const handleClose = () => {
+		setAnchorEl(null);
+	};
 
   const handleMenuItemClick = (option: string) => {
     setSelectedFilter(option);
@@ -47,5 +48,3 @@ const Filters: React.FC<FiltersProps> = ({ onSelectFilter }) => {
     </Box>
   );
 };
-
-export default Filters;
