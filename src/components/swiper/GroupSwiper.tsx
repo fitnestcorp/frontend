@@ -17,7 +17,6 @@ interface Props {
 
 export const GroupSwiper = ({ groups }: Props) => {
 	return (
-		// <Box sx={{ maxWidth: '100%', my: 4, mx: 5 }}>
 		<Box sx={{ maxWidth: '100%' }}>
 			<Typography
 				variant="h4"
@@ -96,7 +95,7 @@ export const GroupSwiper = ({ groups }: Props) => {
 											color: 'white',
 											fontWeight: 'bold',
 											textShadow:
-												'2px 2px 4px rgba(0,0,0,0.6)',
+												'2px 2px 6px rgba(0,0,0,0.6)',
 											textAlign: 'center',
 										}}
 									>

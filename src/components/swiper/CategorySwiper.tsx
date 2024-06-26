@@ -1,6 +1,5 @@
 'use client';
 import Link from 'next/link';
-
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Autoplay, Navigation, Pagination } from 'swiper/modules';
 import { Card, CardMedia, CardContent, Typography, Box } from '@mui/material';
@@ -17,8 +16,25 @@ interface Props {
 }
 
 export const CategorySwiper = ({ categories }: Props) => {
+	const calculateSpaceBetween = (numCategories: number) => {
+		if (numCategories <= 1) return 0;
+		if (numCategories <= 3) return 25;
+		if (numCategories <= 5) return 15;
+		return 20;
+	};
+
+	const calculateSlidesPerView = (numCategories: number) => {
+		if (numCategories === 1) return 1;
+		if (numCategories === 2) return 2;
+		if (numCategories === 3) return 3;
+		if (numCategories <= 5) return 4;
+		return 5;
+	};
+
+	const spaceBetween = calculateSpaceBetween(categories.length);
+	const slidesPerView = calculateSlidesPerView(categories.length);
+
 	return (
-		// <Box sx={{ maxWidth: '100%', py: 2, mx: 5 }}>
 		<Box sx={{ maxWidth: '100%' }}>
 			<Typography
 				variant="h4"
@@ -36,15 +52,16 @@ export const CategorySwiper = ({ categories }: Props) => {
 				CATEGORIAS
 			</Typography>
 			<Swiper
-				spaceBetween={25}
-				slidesPerView={'auto'}
+				spaceBetween={spaceBetween}
 				navigation
+				pagination={{ clickable: true }}
 				autoplay={{ delay: 3000 }}
 				modules={[Navigation, Pagination, Autoplay]}
 				breakpoints={{
-					640: { slidesPerView: 1 },
-					768: { slidesPerView: 2 },
-					1024: { slidesPerView: 5 },
+					640: { slidesPerView: Math.min(slidesPerView, 1) },
+					768: { slidesPerView: Math.min(slidesPerView, 2) },
+					1024: { slidesPerView: Math.min(slidesPerView, 3) },
+					1280: { slidesPerView: slidesPerView },
 				}}
 				style={
 					{
@@ -59,6 +76,7 @@ export const CategorySwiper = ({ categories }: Props) => {
 							href={`/categoria/${category.name
 								.toLowerCase()
 								.replace(/\s+/g, '-')}`}
+							style={{ textDecoration: 'none' }}
 						>
 							<Card
 								sx={{
@@ -97,7 +115,7 @@ export const CategorySwiper = ({ categories }: Props) => {
 											color: 'white',
 											fontWeight: 'bold',
 											textShadow:
-												'2px 2px 4px rgba(0,0,0,0.6)',
+												'2px 2px 6px rgba(0,0,0,0.6)',
 											textAlign: 'center',
 										}}
 									>
