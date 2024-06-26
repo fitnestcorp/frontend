@@ -63,7 +63,7 @@ export const Cart = () => {
 
 	return (
 		<>
-			<Tooltip title="Carrito" arrow>
+			{/* <Tooltip title="Carrito" arrow>
 				<IconButton
 					onClick={toggleDrawer}
 					color="inherit"
@@ -183,7 +183,7 @@ export const Cart = () => {
 						</Button>
 					</Box>
 				</Box>
-			</Drawer>
-		</>
+			</Drawer>*/}
+		</> 
 	);
 };
