@@ -36,7 +36,11 @@ const VisuallyHiddenInput = styled('input')({
 	width: 1,
 });
 
-export const AddGroupForm = () => {
+interface Props {
+	refetch: () => void;
+}
+
+export const AddGroupForm = ({ refetch }: Props) => {
 	const [uploadedImage, setUploadedImage] = useState<string>('');
 	const [openSnackbar, setOpenSnackbar] = useState(false);
 	const [snackbarMessage, setSnackbarMessage] = useState('');
@@ -70,6 +74,7 @@ export const AddGroupForm = () => {
 			setSnackbarMessage('Grupo creado exitosamente');
 			setSnackbarSeverity('success');
 			setOpenSnackbar(true);
+			refetch();
 		} catch (error) {
 			setSnackbarMessage('Ocurrió un error al crear el grupo');
 			setSnackbarSeverity('error');

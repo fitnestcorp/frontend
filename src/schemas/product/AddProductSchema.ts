@@ -1,5 +1,20 @@
 import { z } from 'zod';
 
+const imageFileSchema = z
+	.instanceof(File)
+	.refine((file) => file.size > 0, {
+		message: 'El archivo no debe estar vacío',
+	})
+	.refine(
+		(file) => ['image/jpg', 'image/jpeg', 'image/png'].includes(file.type),
+		{
+			message: 'El archivo debe ser de tipo JPG, JPEG o PNG',
+		}
+	)
+	.refine((file) => file.size <= 5 * 1024 * 1024, {
+		message: 'El archivo no debe ser mayor a 5MB',
+	});
+
 export const AddProductSchema = z.object({
 	name: z.string().min(3, {
 		message: 'El nombre debe tener al menos 3 caracteres',
@@ -26,8 +41,8 @@ export const AddProductSchema = z.object({
 	category: z.string().min(1, {
 		message: 'Debes seleccionar una categoría',
 	}),
-	image_url: z
-		.array(z.string())
+	product_images: z
+		.array(imageFileSchema)
 		.min(1, {
 			message: 'Debes agregar al menos una imagen',
 		})

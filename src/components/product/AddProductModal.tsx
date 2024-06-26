@@ -11,7 +11,11 @@ import { Close } from '@mui/icons-material';
 
 import { AddProductForm } from '@/components';
 
-export const AddProductModal = () => {
+interface Props {
+	refetch: () => void;
+}
+
+export const AddProductModal = ({ refetch }: Props) => {
 	const [open, setOpen] = useState(false);
 
 	const handleClickOpen = () => {
@@ -59,7 +63,7 @@ export const AddProductModal = () => {
 					</IconButton>
 				</DialogTitle>
 				<DialogContent>
-					<AddProductForm />
+					<AddProductForm refetch={refetch} />
 				</DialogContent>
 			</Dialog>
 		</>

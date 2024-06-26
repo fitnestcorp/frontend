@@ -43,9 +43,13 @@ const VisuallyHiddenInput = styled('input')({
 	width: 1,
 });
 
-export const AddProductForm = () => {
+interface Props {
+	refetch: () => void;
+}
+
+export const AddProductForm = ({ refetch }: Props) => {
 	const theme = useTheme();
-	const [uploadedImages, setUploadedImages] = useState<string[]>([]);
+	const [uploadedImages, setUploadedImages] = useState<File[]>([]);
 	const [imageError, setImageError] = useState<string | null>(null);
 	const { data } = useGetAllCategoriesQuery({ page: 1, limit: 10 });
 	const categories = data?.[0] || [];
@@ -75,14 +79,26 @@ export const AddProductForm = () => {
 			stock: 0,
 			description: '',
 			category: '',
-			image_url: [],
+			product_images: [],
 			type: '',
 		},
 	});
 
 	async function onSubmit(data: z.infer<typeof AddProductSchema>) {
+		const formData = new FormData();
+
+		formData.append('name', data.name);
+		formData.append('price', data.price.toString());
+		formData.append('stock', data.stock.toString());
+		formData.append('description', data.description);
+		formData.append('category', data.category);
+		formData.append('type', data.type ?? '');
+		uploadedImages.forEach((file) => {
+			formData.append('product_images', file);
+		});
+
 		let errorOccurred = false;
-		await createProduct(data)
+		await createProduct(formData)
 			.unwrap()
 			.catch((error) => {
 				setSnackbarMessage('Ocurrió un error al crear el producto');
@@ -95,6 +111,7 @@ export const AddProductForm = () => {
 			setSnackbarMessage('Producto creado exitosamente');
 			setSnackbarSeverity('success');
 			setOpenSnackbar(true);
+			refetch();
 		}
 	}
 
@@ -106,9 +123,8 @@ export const AddProductForm = () => {
 				return;
 			}
 			setImageError(null);
-			const fileURLs = files.map((file) => URL.createObjectURL(file));
-			setUploadedImages((prevImages) => [...prevImages, ...fileURLs]);
-			setValue('image_url', [...uploadedImages, ...fileURLs], {
+			setUploadedImages((prevImages) => [...prevImages, ...files]);
+			setValue('product_images', [...uploadedImages, ...files], {
 				shouldValidate: true,
 			});
 		}
@@ -117,7 +133,7 @@ export const AddProductForm = () => {
 	const handleDeleteImage = (index: number) => {
 		const updatedImages = uploadedImages.filter((_, i) => i !== index);
 		setUploadedImages(updatedImages);
-		setValue('image_url', updatedImages, { shouldValidate: true });
+		setValue('product_images', updatedImages, { shouldValidate: true });
 	};
 
 	return (
@@ -391,7 +407,9 @@ export const AddProductForm = () => {
 												}}
 											>
 												<Image
-													src={image}
+													src={URL.createObjectURL(
+														image
+													)}
 													alt="Product"
 													width={100}
 													height={100}
@@ -403,7 +421,9 @@ export const AddProductForm = () => {
 								<Card sx={{ borderRadius: '8px' }}>
 									{uploadedImages.length > 0 && (
 										<Image
-											src={uploadedImages[0]}
+											src={URL.createObjectURL(
+												uploadedImages[0]
+											)}
 											alt="Product"
 											width={200}
 											height={200}
@@ -478,7 +498,7 @@ export const AddProductForm = () => {
 									{imageError}
 								</Typography>
 							)}
-							{errors.image_url && (
+							{errors.product_images && (
 								<Typography
 									sx={{
 										display: 'flex',
@@ -489,7 +509,7 @@ export const AddProductForm = () => {
 										pl: 2,
 									}}
 								>
-									{errors.image_url.message}
+									{errors.product_images.message}
 								</Typography>
 							)}
 						</Box>

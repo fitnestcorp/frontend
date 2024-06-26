@@ -21,3 +21,13 @@ export interface Product {
 	rate: number;
 	reviews: Review[];
 }
+
+export interface CreateProduct {
+	name: string;
+	type: string;
+	description: string;
+	price: number;
+	category: string;
+	stock: number;
+	product_images: File[];
+}

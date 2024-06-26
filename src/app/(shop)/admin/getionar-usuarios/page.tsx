@@ -46,9 +46,13 @@ const columns = [
 ];
 
 export const ManageUsersPage = () => {
-	const { data: usersData, isLoading } = useGetAllUsersQuery({
+	const {
+		data: usersData,
+		isLoading,
+		refetch,
+	} = useGetAllUsersQuery({
 		page: 1,
-		limit: 10,
+		limit: 100,
 	});
 
 	const users = usersData || [];
@@ -168,7 +172,7 @@ export const ManageUsersPage = () => {
 							border
 							onSearch={(value: string) => setSearchTerm(value)}
 						/>
-						<AddUserModal />
+						<AddUserModal refetch={refetch} />
 						<SortButton onSort={handleSort} />
 						<FilterButton onFilter={handleFilter} />
 					</Grid>
@@ -181,6 +185,7 @@ export const ManageUsersPage = () => {
 					rows={sortedUserRows}
 					isLoading={isLoading}
 					type="usuarios"
+					refetch={refetch}
 				/>
 			</Grid>
 		</Grid>

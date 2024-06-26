@@ -47,14 +47,24 @@ const columns = [
 		minWidth: 100,
 		align: 'center' as const,
 	},
+	{ id: 'id', label: 'ID', minWidth: 170, align: 'center' as const },
+	{
+		id: 'actions',
+		label: 'Acciones',
+		minWidth: 120,
+		align: 'center' as const,
+	},
 ];
 
 export const ManageGroupsPage = () => {
-	const { data: dataGroups, isLoading: isLoadingGroups } =
-		useGetAllGroupsQuery({
-			page: 1,
-			limit: 10,
-		});
+	const {
+		data: dataGroups,
+		isLoading: isLoadingGroups,
+		refetch,
+	} = useGetAllGroupsQuery({
+		page: 1,
+		limit: 100,
+	});
 
 	const groups = dataGroups?.[0] || [];
 
@@ -67,8 +77,9 @@ export const ManageGroupsPage = () => {
 
 	const groupRows = groups.map((group) => ({
 		name: group.name,
-		image: group.image_url[0],
+		image: group.image_url,
 		description: group.description,
+		id: group.id,
 		categories: group.categories
 			.map((category) => category.name)
 			.join(', '),
@@ -101,7 +112,7 @@ export const ManageGroupsPage = () => {
 		>
 			<Grid item xs={12}>
 				<Grid container spacing={2} alignItems="center">
-					<Grid item xs={12} md={8}>
+					<Grid item xs={12} md={6}>
 						<Box sx={{ display: 'flex', gap: 5 }}>
 							<Typography
 								sx={{
@@ -117,7 +128,7 @@ export const ManageGroupsPage = () => {
 					<Grid
 						item
 						xs={12}
-						md={4}
+						md={6}
 						sx={{
 							display: 'flex',
 							justifyContent: { xs: 'center', md: 'flex-end' },
@@ -129,7 +140,7 @@ export const ManageGroupsPage = () => {
 							border
 							onSearch={(value) => setSearchTerm(value)}
 						/>
-						<AddGroupModal />
+						<AddGroupModal refetch={refetch} />
 						<SortButton onSort={handleSort} />
 						<FilterButton onFilter={handleFilter} />
 					</Grid>
@@ -142,6 +153,7 @@ export const ManageGroupsPage = () => {
 					rows={filteredGroupRows}
 					isLoading={isLoadingGroups}
 					type="grupos"
+					refetch={refetch}
 				/>
 			</Grid>
 		</Grid>

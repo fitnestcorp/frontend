@@ -21,9 +21,10 @@ import { setUser, useRegisterUserMutation } from '@/store';
 
 interface Props {
 	showRegisterButton?: boolean;
+	refetch?: () => void;
 }
 
-export const RegisterForm = ({ showRegisterButton = true }: Props) => {
+export const RegisterForm = ({ showRegisterButton = true, refetch }: Props) => {
 	const {
 		handleSubmit,
 		control,
@@ -37,7 +38,7 @@ export const RegisterForm = ({ showRegisterButton = true }: Props) => {
 			email: '',
 			password: '',
 			confirmPassword: '',
-			role: 'CLIENT'
+			role: 'CLIENT',
 		},
 	});
 
@@ -58,6 +59,8 @@ export const RegisterForm = ({ showRegisterButton = true }: Props) => {
 			dispatch(setUser({ user: response.user }));
 			setErrorMap('');
 			setSuccessfully('Usuario registrado correctamente');
+			refetch && refetch();
+
 			router.push('/');
 		} catch (error) {
 			setErrorMap('Ocurrió un error al registrar el usuario');

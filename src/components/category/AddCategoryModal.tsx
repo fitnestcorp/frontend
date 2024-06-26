@@ -11,7 +11,11 @@ import { Close } from '@mui/icons-material';
 
 import { AddCategoryForm } from '@/components';
 
-export const AddCategoryModal = () => {
+interface Props {
+	refetch: () => void;
+}
+
+export const AddCategoryModal = ({ refetch }: Props) => {
 	const [open, setOpen] = useState(false);
 
 	const handleClickOpen = () => {
@@ -59,7 +63,7 @@ export const AddCategoryModal = () => {
 					</IconButton>
 				</DialogTitle>
 				<DialogContent>
-					<AddCategoryForm />
+					<AddCategoryForm refetch={refetch} />
 				</DialogContent>
 			</Dialog>
 		</>

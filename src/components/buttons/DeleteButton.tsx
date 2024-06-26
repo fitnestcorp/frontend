@@ -13,14 +13,14 @@ import {
 	Tooltip,
 } from '@mui/material';
 
-import { useDeleteProductMutation } from '@/store';
-
 interface Props {
 	id: string;
+	item: string;
+	refetch: () => void;
+	deleteMutation: any;
 }
 
-export const DeleteProductButton = ({ id }: Props) => {
-	const [deleteProduct] = useDeleteProductMutation();
+export const DeleteButton = ({ id, item, refetch, deleteMutation }: Props) => {
 	const [open, setOpen] = useState(false);
 	const [openSnackbar, setOpenSnackbar] = useState(false);
 	const [snackbarMessage, setSnackbarMessage] = useState('');
@@ -37,21 +37,23 @@ export const DeleteProductButton = ({ id }: Props) => {
 	};
 
 	const handleDelete = async () => {
-		let erroroccurred = false;
-		await deleteProduct(id)
+		let errorOccurred = false;
+		await deleteMutation(id)
 			.unwrap()
-			.catch((error) => {
-				erroroccurred = true;
+			.catch((error: any) => {
+				errorOccurred = true;
 				setSnackbarSeverity('error');
-				setSnackbarMessage('Ocurrió un error al eliminar el producto');
+				// setSnackbarMessage(`Ocurrió un error al eliminar ${item}`);
+				setSnackbarMessage(error?.data?.message);
 				setOpenSnackbar(true);
 			});
 
-		if (!erroroccurred) {
+		if (!errorOccurred) {
 			setSnackbarSeverity('success');
-			setSnackbarMessage('Producto eliminado exitosamente');
+			setSnackbarMessage(`${item} eliminado exitosamente`);
 			setOpenSnackbar(true);
 			handleClose();
+			refetch();
 		}
 	};
 
@@ -61,7 +63,7 @@ export const DeleteProductButton = ({ id }: Props) => {
 
 	return (
 		<>
-			<Tooltip title="Eliminar" arrow>
+			<Tooltip title={`Eliminar`} arrow>
 				<IconButton
 					onClick={handleClickOpen}
 					sx={{
@@ -84,7 +86,7 @@ export const DeleteProductButton = ({ id }: Props) => {
 				}}
 			>
 				<DialogTitle variant="h6" fontWeight={'bold'}>
-					Eliminar Producto
+					Eliminar {item}
 					<IconButton
 						onClick={handleClose}
 						sx={{
@@ -98,7 +100,7 @@ export const DeleteProductButton = ({ id }: Props) => {
 					</IconButton>
 				</DialogTitle>
 				<DialogContent>
-					¿Estás seguro que deseas eliminar este producto?
+					¿Estás seguro que deseas eliminar {item}?
 				</DialogContent>
 				<DialogActions
 					sx={{

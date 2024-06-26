@@ -40,7 +40,11 @@ const VisuallyHiddenInput = styled('input')({
 	width: 1,
 });
 
-export const AddCategoryForm = () => {
+interface Props {
+	refetch: () => void;
+}
+
+export const AddCategoryForm = ({ refetch }: Props) => {
 	const [uploadedImage, setUploadedImage] = useState<string>('');
 	const [openSnackbar, setOpenSnackbar] = useState(false);
 	const [snackbarMessage, setSnackbarMessage] = useState('');
@@ -80,6 +84,7 @@ export const AddCategoryForm = () => {
 			setSnackbarMessage('Categoria creada exitosamente');
 			setSnackbarSeverity('success');
 			setOpenSnackbar(true);
+			refetch();
 		} catch (error) {
 			setSnackbarMessage('Ocurrió un error al crear la categoria');
 			setSnackbarSeverity('error');

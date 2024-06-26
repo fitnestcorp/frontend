@@ -14,7 +14,11 @@ import { Close } from '@mui/icons-material';
 
 import { RegisterForm } from '../forms/RegisterForm';
 
-export const AddUserModal = () => {
+interface Props {
+	refetch: () => void;
+}
+
+export const AddUserModal = ({ refetch }: Props) => {
 	const [open, setOpen] = useState(false);
 	const theme = useTheme();
 
@@ -71,7 +75,7 @@ export const AddUserModal = () => {
 							pt: 2,
 						}}
 					>
-						<RegisterForm showRegisterButton={false} />
+						<RegisterForm refetch={refetch} showRegisterButton={false} />
 					</Box>
 				</DialogContent>
 			</Dialog>

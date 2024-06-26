@@ -11,7 +11,11 @@ import { Close } from '@mui/icons-material';
 
 import { AddGroupForm } from '@/components';
 
-export const AddGroupModal = () => {
+interface Props {
+	refetch: () => void;
+}
+
+export const AddGroupModal = ({ refetch }: Props) => {
 	const [open, setOpen] = useState(false);
 
 	const handleClickOpen = () => {
@@ -59,7 +63,7 @@ export const AddGroupModal = () => {
 					</IconButton>
 				</DialogTitle>
 				<DialogContent>
-					<AddGroupForm />
+					<AddGroupForm refetch={refetch} />
 				</DialogContent>
 			</Dialog>
 		</>

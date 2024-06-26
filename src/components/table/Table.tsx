@@ -16,7 +16,13 @@ import {
 	Skeleton,
 } from '@mui/material';
 import { EditOutlined } from '@mui/icons-material';
-import { DeleteProductButton } from '../product/DeleteProductButton';
+
+import { DeleteButton } from '@/components';
+import {
+	useDeleteCategoryMutation,
+	useDeleteGroupMutation,
+	useDeleteProductMutation,
+} from '@/store';
 
 interface Column {
 	id: string;
@@ -31,11 +37,16 @@ interface Props {
 	rows: any[];
 	isLoading: boolean;
 	type: string;
+	refetch: () => void;
 }
 
-export const Table = ({ columns, rows, isLoading, type }: Props) => {
+export const Table = ({ columns, rows, isLoading, type, refetch }: Props) => {
 	const [page, setPage] = useState(0);
 	const [rowsPerPage, setRowsPerPage] = useState(20);
+
+	const [deleteProduct] = useDeleteProductMutation();
+	const [deleteCategory] = useDeleteCategoryMutation();
+	const [deleteGroup] = useDeleteGroupMutation();
 
 	const handleChangePage = (event: unknown, newPage: number) => {
 		setPage(newPage);
@@ -46,6 +57,12 @@ export const Table = ({ columns, rows, isLoading, type }: Props) => {
 	) => {
 		setRowsPerPage(+event.target.value);
 		setPage(0);
+	};
+
+	const getDeleteMutation = () => {
+		if (type === 'productos') return deleteProduct;
+		if (type === 'categorías') return deleteCategory;
+		return deleteGroup;
 	};
 
 	return (
@@ -131,8 +148,13 @@ export const Table = ({ columns, rows, isLoading, type }: Props) => {
 																</IconButton>
 															</Tooltip>
 
-															<DeleteProductButton
+															<DeleteButton
 																id={row.id}
+																item={row.name}
+																deleteMutation={getDeleteMutation()}
+																refetch={
+																	refetch
+																}
 															/>
 														</TableCell>
 													);
@@ -147,11 +169,6 @@ export const Table = ({ columns, rows, isLoading, type }: Props) => {
 																	? column.align
 																	: 'center'
 															}
-															sx={{
-																display: 'flex',
-																justifyContent:
-																	'center',
-															}}
 														>
 															<Box
 																style={{

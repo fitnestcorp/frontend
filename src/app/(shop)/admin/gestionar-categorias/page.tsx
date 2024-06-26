@@ -36,18 +36,23 @@ const columns = [
 		minWidth: 100,
 		align: 'center' as const,
 	},
+	{ id: 'id', label: 'ID', minWidth: 170, align: 'center' as const },
 	{
-		id: 'group',
-		label: 'Grupo',
-		minWidth: 100,
+		id: 'actions',
+		label: 'Acciones',
+		minWidth: 120,
 		align: 'center' as const,
 	},
 ];
 
 export const ManageCategoriesPage = () => {
-	const { data: dataCategories, isLoading } = useGetAllCategoriesQuery({
+	const {
+		data: dataCategories,
+		isLoading,
+		refetch,
+	} = useGetAllCategoriesQuery({
 		page: 1,
-		limit: 10,
+		limit: 100,
 	});
 
 	const categories = dataCategories?.[0] || [];
@@ -61,8 +66,9 @@ export const ManageCategoriesPage = () => {
 
 	const categoryRows = categories.map((category) => ({
 		name: category.name,
-		image: category.image_url[0],
+		image: category.image_url,
 		description: category.description,
+		id: category.id,
 	}));
 
 	const filteredCategoryRows = categoryRows.filter((row) =>
@@ -92,7 +98,7 @@ export const ManageCategoriesPage = () => {
 		>
 			<Grid item xs={12}>
 				<Grid container spacing={2} alignItems="center">
-					<Grid item xs={12} md={8}>
+					<Grid item xs={12} md={6}>
 						<Box sx={{ display: 'flex', gap: 5 }}>
 							<Typography
 								sx={{
@@ -108,7 +114,7 @@ export const ManageCategoriesPage = () => {
 					<Grid
 						item
 						xs={12}
-						md={4}
+						md={6}
 						sx={{
 							display: 'flex',
 							justifyContent: { xs: 'center', md: 'flex-end' },
@@ -120,7 +126,7 @@ export const ManageCategoriesPage = () => {
 							border
 							onSearch={(value) => setSearchTerm(value)}
 						/>
-						<AddCategoryModal />
+						<AddCategoryModal refetch={refetch} />
 						<SortButton onSort={handleSort} />
 						<FilterButton onFilter={handleFilter} />
 					</Grid>
@@ -133,6 +139,7 @@ export const ManageCategoriesPage = () => {
 					rows={filteredCategoryRows}
 					isLoading={isLoading}
 					type="categorías"
+					refetch={refetch}
 				/>
 			</Grid>
 		</Grid>
