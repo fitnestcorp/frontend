@@ -1,12 +1,10 @@
 'use client';
-import { Box, Typography } from '@mui/material';
 import { useEffect, useState } from 'react';
+import { Box, Typography } from '@mui/material';
 
 import { Product } from '@/interfaces';
-import ProductGrid from '@/components/products/ProductGrid';
-import LogoLoader from '@/components/logo/LogoLoader';
-import Filters from '@/components/products/Filters';
-import { useGetProductsQuery } from '@/store/services/productApi';
+import { Filters, LogoLoader, ProductGrid } from '@/components';
+import { useGetProductsQuery } from '@/store';
 
 export const AllProducts = () => {
 	const [page, setPage] = useState(1);
@@ -14,12 +12,23 @@ export const AllProducts = () => {
 	const [products, setProducts] = useState<Product[]>([]);
 	const [countProducts, setCountProducts] = useState(0);
 	const [selectedFilter, setSelectedFilter] = useState('MÁS VENDIDOS');
-	const [filterParams, setFilterParams] = useState({ filter: '', order: 'DESC' as 'ASC' | 'DESC' });
+	const [filterParams, setFilterParams] = useState({
+		filter: '',
+		order: 'DESC' as 'ASC' | 'DESC',
+	});
 
-	const { data: productsData, error: productsError, isLoading: productsLoading } = useGetProductsQuery({ ...filterParams, page, limit });
+	const {
+		data: productsData,
+		error: productsError,
+		isLoading: productsLoading,
+	} = useGetProductsQuery({ ...filterParams, page, limit });
 
 	useEffect(() => {
-		if (productsData && Array.isArray(productsData) && productsData.length === 2) {
+		if (
+			productsData &&
+			Array.isArray(productsData) &&
+			productsData.length === 2
+		) {
 			const [objectsList, totalCount] = productsData;
 			if (Array.isArray(objectsList)) {
 				setProducts(objectsList);
@@ -57,7 +66,6 @@ export const AllProducts = () => {
 		setSelectedFilter(filter);
 	};
 
-	// Mostrar el loader mientras los productos están cargando
 	if (productsLoading) {
 		return <LogoLoader />;
 	}

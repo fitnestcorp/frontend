@@ -20,6 +20,7 @@ export const LogoLoader = () => {
 			}}
 		>
 			<Image
+				priority
 				src={logo}
 				width={200}
 				height={200}

@@ -12,7 +12,7 @@ export const SeeMore = () => {
 				pt: 6,
 			}}
 		>
-			<Typography variant="h4" sx={{ fontWeight: '700' }}>
+			<Typography variant="h5" sx={{ fontWeight: '700' }}>
 				MÁS RELEVANTES
 			</Typography>
 			<MuiLink

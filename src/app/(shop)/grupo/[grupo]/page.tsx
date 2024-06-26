@@ -20,7 +20,7 @@ interface Props {
 }
 
 export const GroupPage = ({ params }: Props) => {
-	const { grupo } = params;
+	const grupo = params.grupo[0].toUpperCase() + params.grupo.slice(1);
 	const [objects, setObjects] = useState<Product[]>([]);
 	const [categories, setCategories] = useState<Category[]>([]);
 	const [count, setCount] = useState(0);
@@ -55,26 +55,29 @@ export const GroupPage = ({ params }: Props) => {
 		}
 	}, [productsData, productsError]);
 
-	// useEffect(() => {
-	// 	const fetchImage = async () => {
-	// 		if (groupsData && groupsData.image_url) {
-	// 			setCategories(groupsData.categories);
-	// 			setName(groupsData.name);
-	// 			setImage(groupsData.image_url);
-	// 		}
-	// 		if (groupsError) {
-	// 			console.error('Error fetching groups:', groupsError);
-	// 		}
-	// 	};
+	useEffect(() => {
+		const fetchImage = async () => {
+			if (groupsData && groupsData.image_url) {
+				setCategories(groupsData.categories);
+				setName(groupsData.name);
+				setImage(groupsData.image_url);
+			}
+			if (groupsError) {
+				console.error('Error fetching groups:', groupsError);
+			}
+		};
 
-	// 	fetchImage();
-	// }, [groupsData, groupsError]);
+		fetchImage();
+	}, [groupsData, groupsError]);
 
 	if (productsLoading || groupLoading) {
 		return <LogoLoader />;
 	}
 
 	if (!groupsData || groupsError) {
+		console.log('groupsData:', groupsData);
+		console.log('groupsError:', groupsError);
+
 		return <Typography>El grupo &quot;{grupo}&quot; no existe.</Typography>;
 	}
 
@@ -86,7 +89,7 @@ export const GroupPage = ({ params }: Props) => {
 		<>
 			<Banner image={image} title={name} />
 			<Box sx={{ flex: 1, px: { xs: 2, sm: 3, md: 4, lg: 5 } }}>
-				<Breadcrumb name={groupsData.name} />
+				<Breadcrumb />
 				<CategorySwiper categories={categories} />
 				<Filters onSelectFilter={handleSelectFilter} />
 				<ProductGrid products={objects} />

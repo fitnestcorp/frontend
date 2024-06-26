@@ -33,11 +33,10 @@ export const Filters = ({ onSelectFilter }: FiltersProps) => {
 				justifyContent: 'space-between',
 				alignItems: 'center',
 				mb: 2,
-				pl: 4,
-				pr: 4,
+				pt: 6,
 			}}
 		>
-			<Typography variant="h4" sx={{ fontWeight: 'bold' }}>
+			<Typography variant="h5" sx={{ fontWeight: 'bold' }}>
 				{selectedFilter}
 			</Typography>
 			<IconButton onClick={handleClick}>

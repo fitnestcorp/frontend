@@ -1,23 +1,30 @@
 'use client';
-import { Box, Typography } from '@mui/material';
-import { Banner, Breadcrumb, CategorySwiper } from '@/components';
-import ProductGrid from '@/components/products/ProductGrid';
-import { Category, Product } from '@/interfaces';
 import { useEffect, useState } from 'react';
-import { useGetProductsByCategoryQuery } from '@/store/services/productApi';
-import { useGetCategoryByNameQuery } from '@/store/services/categoryApi';
-import LogoLoader from '@/components/logo/LogoLoader';
-import Filters from '@/components/products/Filters';
+import { Box, Typography } from '@mui/material';
+
+import {
+	Banner,
+	Breadcrumb,
+	Filters,
+	LogoLoader,
+	ProductGrid,
+} from '@/components';
+import { Category, Product } from '@/interfaces';
+import {
+	useGetCategoryByNameQuery,
+	useGetProductsByCategoryQuery,
+} from '@/store';
 
 interface Props {
 	params: {
 		category: string;
-		group: string;
 	};
 }
 
 export const CategoryPage = ({ params }: Props) => {
-	const { group, category } = params;
+	let category = params.category[0].toUpperCase() + params.category.slice(1);
+	category = category.replace(/-/g, ' ');
+
 	const [objects, setObjects] = useState<Product[]>([]);
 	const [categories, setCategories] = useState<Category[]>([]);
 	const [count, setCount] = useState(0);
@@ -88,12 +95,14 @@ export const CategoryPage = ({ params }: Props) => {
 	};
 
 	return (
-		<Box sx={{ flex: 1, px: { xs: 2, sm: 3, md: 4, lg: 5 } }}>
+		<>
 			<Banner image={image} title={name} />
-			<Breadcrumb />
-			<Filters onSelectFilter={handleSelectFilter} />
-			<ProductGrid products={objects} />
-		</Box>
+			<Box sx={{ flex: 1, px: { xs: 2, sm: 3, md: 4, lg: 5 } }}>
+				<Breadcrumb />
+				<Filters onSelectFilter={handleSelectFilter} />
+				<ProductGrid products={objects} />
+			</Box>
+		</>
 	);
 };
 

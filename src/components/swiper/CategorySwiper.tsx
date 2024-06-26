@@ -1,5 +1,6 @@
 'use client';
 import Link from 'next/link';
+
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Autoplay, Navigation, Pagination } from 'swiper/modules';
 import { Card, CardMedia, CardContent, Typography, Box } from '@mui/material';
@@ -10,7 +11,6 @@ import 'swiper/css/pagination';
 import 'swiper/css/autoplay';
 
 import { Category } from '@/interfaces';
-import { useEffect, useState } from 'react';
 
 interface Props {
 	categories: Category[];
@@ -55,7 +55,9 @@ export const CategorySwiper = ({ categories }: Props) => {
 			>
 				{categories.map((category, index) => (
 					<SwiperSlide key={index}>
-						<Link href={`/categoria/${category.id}`}>
+						<Link
+							href={`/categoria/${category.name.toLowerCase()}`}
+						>
 							<Card
 								sx={{
 									position: 'relative',
@@ -72,9 +74,9 @@ export const CategorySwiper = ({ categories }: Props) => {
 									image={category.image_url}
 									alt={category.name}
 									sx={{
-										height: '250px', // Altura fija
-										width: '100%', // Ancho fijo
-										objectFit: 'cover', // Asegura que la imagen cubra todo el área
+										height: '250px',
+										width: '100%',
+										objectFit: 'cover',
 									}}
 								/>
 								<CardContent
