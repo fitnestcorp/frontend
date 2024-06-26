@@ -55,11 +55,16 @@ export const ProductCard = ({ product }: ProductCardProps) => {
 							<span className="text-gray-600 ml-2">
 								({product.reviews.length} reseñas)
 							</span>
+
+							
 						</div>
 
 						<div className="mt-2 text-lg font-semibold text-gray-800">
 							{formatCurrency(product.price)}
 						</div>
+						<span className="text-gray-400 ml-2">
+							({product.stock.unities_sold} vendidos)
+						</span>
 					</div>
 				</div>
 			</Link>

@@ -144,7 +144,6 @@ export const productApi = createApi({
 		getProducts: builder.query<ProductWithNumber, { filter?: string; order?: 'ASC' | 'DESC'; page: number; limit: number }>({
 			query: ({ filter, order, page, limit }) => {
 				let url = `product?page=${page}&limit=${limit}`;
-				console.log("sapo",filter)
 				if (filter) {
 					switch (filter) {
 						case 'price':
@@ -166,6 +165,57 @@ export const productApi = createApi({
 				};
 			},
 		}),
+
+        GetProductsByGroupFilter: builder.query<ProductWithNumber, { groupId: string; filter: string; order: 'ASC' | 'DESC'; page: number; limit: number  }>({
+			query: ({ groupId,filter, order, page, limit }) => {
+				let url = `product?page=${page}&limit=${limit}`;
+				if (filter) {
+					switch (filter) {
+						case 'price':
+							url = `product/filter/price/${order}/group/${groupId}?page=${page}&limit=${limit}`;
+							break;
+						case 'rating':
+							url = `product/filter/rating/${order}/group/${groupId}?page=${page}&limit=${limit}`;
+							break;
+						case 'sold_units':
+							url = `product/filter/sold_units/${order}/group/${groupId}?page=${page}&limit=${limit}`;
+							break;
+						default:
+							break;
+					}
+				}
+				return {
+					url,
+					method: 'GET',
+				};
+			},
+		}),
+
+        GetProductsByCategoryFilter: builder.query<ProductWithNumber, { categoryId: string; filter: string; order: 'ASC' | 'DESC'; page: number; limit: number  }>({
+			query: ({ categoryId,filter, order, page, limit }) => {
+				let url = `product?page=${page}&limit=${limit}`;
+				if (filter) {
+					switch (filter) {
+						case 'price':
+							url = `product/filter/price/${order}/category/${categoryId}?page=${page}&limit=${limit}`;
+							break;
+						case 'rating':
+							url = `product/filter/rating/${order}/category/${categoryId}?page=${page}&limit=${limit}`;
+							break;
+						case 'sold_units':
+							url = `product/filter/sold_units/${order}/category/${categoryId}?page=${page}&limit=${limit}`;
+							break;
+						default:
+							break;
+					}
+				}
+				return {
+					url,
+					method: 'GET',
+				};
+			},
+		}),
+
     }),
 });
 
@@ -189,4 +239,6 @@ export const {
     useGetProductsSortedByRatingForGroupQuery,
     useGetProductsSortedBySoldUnitsForGroupQuery,
 	useGetProductsQuery,
+    useGetProductsByGroupFilterQuery,
+    useGetProductsByCategoryFilterQuery
 } = productApi;
