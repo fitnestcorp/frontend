@@ -1,4 +1,3 @@
-export * from './Cart';
 export * from './Group';
 export * from './Product';
 export * from './Review';

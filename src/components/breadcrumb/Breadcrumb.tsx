@@ -10,9 +10,10 @@ export const Breadcrumb = () => {
 
 	const breadcrumbLinks = pathSegments.map((segment, index) => {
 		const href = '/' + pathSegments.slice(0, index + 1).join('/');
-		const label = decodeURIComponent(
+		let label = decodeURIComponent(
 			segment.charAt(0).toUpperCase() + segment.slice(1)
 		);
+		label = label.replace(/-/g, ' ');
 		return { href, label };
 	});
 

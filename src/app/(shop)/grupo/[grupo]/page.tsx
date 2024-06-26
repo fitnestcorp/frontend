@@ -64,6 +64,7 @@ export const GroupPage = ({ params }: Props) => {
 		console.log('groupsError:', groupsError);
 
 		return <Typography>El grupo &quot;{group}&quot; no existe.</Typography>;
+		return <Typography>El grupo &quot;{group}&quot; no existe.</Typography>;
 	}
 
   const handleSelectFilter = (filter: string) => {

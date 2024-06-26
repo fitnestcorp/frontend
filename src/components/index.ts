@@ -50,6 +50,7 @@ export * from './sidemenu/Sidemenu';
 export * from './table/Table';
 
 export * from './ui/footer/Footer';
+export * from './ui/navbar/MenuNavbar';
 export * from './ui/navbar/Navbar';
 export * from './ui/search/Search';
 
