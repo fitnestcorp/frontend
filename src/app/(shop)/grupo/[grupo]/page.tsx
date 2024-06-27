@@ -1,5 +1,8 @@
 'use client';
-import { Box, Pagination, Typography } from '@mui/material';
+import { useEffect, useState } from 'react';
+import { Box, Pagination } from '@mui/material';
+
+import { Category, Product } from '@/interfaces';
 import {
 	Banner,
 	Breadcrumb,
@@ -8,11 +11,11 @@ import {
 	ProductGrid,
 	Filters,
 } from '@/components';
-
-import { Category, Product } from '@/interfaces';
-import { useEffect, useState } from 'react';
-import { useGetProductsByGroupFilterQuery } from '@/store/services/productApi';
-import { useGetGroupByNameQuery } from '@/store/services/groupApi';
+import {
+	useGetGroupByNameQuery,
+	useGetProductsByGroupFilterQuery,
+} from '@/store';
+import NotFoundPage from '../not-found';
 
 interface Props {
 	params: {
@@ -77,11 +80,7 @@ export const GroupPage = ({ params }: Props) => {
 	}
 
 	if (!groupsData || groupsError) {
-		console.log('groupsData:', groupsData);
-		console.log('groupsError:', groupsError);
-
-		return <Typography>El grupo &quot;{group}&quot; no existe.</Typography>;
-		return <Typography>El grupo &quot;{group}&quot; no existe.</Typography>;
+		return <NotFoundPage />;
 	}
 
 	const handleSelectFilter = (filter: string) => {

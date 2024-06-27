@@ -12,6 +12,7 @@ import { Category, Product } from '@/interfaces';
 import { useEffect, useState } from 'react';
 import { useGetProductsByCategoryFilterQuery } from '@/store/services/productApi';
 import { useGetCategoryByNameQuery } from '@/store/services/categoryApi';
+import NotFoundPage from '../not-found';
 
 interface Props {
 	params: {
@@ -79,11 +80,7 @@ export const CategoryPage = ({ params }: Props) => {
 	}
 
 	if (!categoryData || categoryError) {
-		return (
-			<Typography>
-				La categoría &quot;{category}&quot; no existe.
-			</Typography>
-		);
+		return <NotFoundPage />;
 	}
 
 	const handleSelectFilter = (filter: string) => {

@@ -10,6 +10,7 @@ import {
 	ProductImagesSwiper,
 } from '@/components';
 import { useGetProductByIdQuery, useGetProductReviewsQuery } from '@/store';
+import NotFoundPage from '../not-found';
 
 interface Props {
 	params: {
@@ -20,6 +21,7 @@ interface Props {
 export const ProductPage = ({ params }: Props) => {
 	const { id } = params;
 	const { data: product, error, isLoading } = useGetProductByIdQuery(id);
+
 	const {
 		data: dataReviews,
 		isLoading: isLoadingReviews,
@@ -41,6 +43,10 @@ export const ProductPage = ({ params }: Props) => {
 
 	if (isLoading) {
 		return <LogoLoader />;
+	}
+
+	if (!product) {
+		return <NotFoundPage />;
 	}
 
 	return (
