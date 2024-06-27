@@ -1,11 +1,10 @@
 'use client';
 import { useEffect, useState } from 'react';
 import { Box, Button, Link } from '@mui/material';
-
 import { Group, Product } from '@/interfaces';
 import { useGetAllGroupsQuery, useGetProductsSortedByRatingQuery } from '@/store';
-
 import { Banner, GroupSwiper, LogoLoader, ProductGrid, SeeMore } from '@/components';
+import "./page.css";
 
 export const Home = () => {
 	const [page1, setPage1] = useState(1);
@@ -65,15 +64,15 @@ export const Home = () => {
 		<>
 			<div style={{position: 'relative'}}>
 				<Banner image={'/banners/Yoga.png'} title={''} />
-				<div style={{
+				<div className="banner-title" style={{
 					position: 'absolute',
 					top: '50%',
-					left: '25%',
+					left: '30%',
 					transform: 'translate(-50%, -50%)',
-					color: 'rgba(255, 255, 255, 0.9)', 
-					fontSize: '45px',
+					color: 'rgba(255, 255, 255, 0.9)',
+					fontSize: '50px',
 					textAlign: 'left',
-					padding: '10px', // Optional: adds padding around the text
+					padding: '10px',
 					lineHeight: '1.2'
 					}}>
          		 Potencia tu <b>cuerpo</b>,
@@ -81,7 +80,7 @@ export const Home = () => {
 				 Transforma tu <b>vida</b>
 				 <br/>
 				 <Link href={`/todos`} >
-					<Button variant="contained" color="primary"  sx={{ textTransform: 'none' }}>
+					<Button variant="contained" color="primary"  sx={{ textTransform: 'none' }} className="button-text">
 						Conoce nuestros productos
 					</Button>
 				</Link>
