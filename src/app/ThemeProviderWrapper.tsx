@@ -1,7 +1,7 @@
 'use client';
 import React from 'react';
 import { ThemeProvider, CssBaseline } from '@mui/material';
-import theme from './theme';
+import {theme} from './theme';
 
 const ThemeProviderWrapper = ({ children }: { children: React.ReactNode }) => {
 	return (

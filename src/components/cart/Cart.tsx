@@ -1,6 +1,7 @@
 'use client';
-import { useEffect, useRef, useState } from 'react';
 import NextLink from 'next/link';
+import { useEffect, useRef, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import {
 	Drawer,
 	IconButton,
@@ -12,17 +13,45 @@ import {
 	ListItem,
 	Divider,
 	Tooltip,
+	Modal,
 } from '@mui/material';
 import {
 	ShoppingCartOutlined as ShoppingCartIcon,
 	Close as CloseIcon,
 } from '@mui/icons-material';
 
-import { CartItem } from './CartItem';
+import { RootState, useGetAddressesByUserIdQuery, useGetAllCitiesQuery, useGetAllDepartmentsQuery, useGetShoppingCartByUserIdQuery } from '@/store';
+import { clearUser } from '@/store/slices/userSlice';
+import { AddressForm, CartItem } from '@/components';
 
 export const Cart = () => {
 	const [isDrawerOpen, setIsDrawerOpen] = useState<boolean>(false);
+	const [isInvalidUserModalOpen, setIsInvalidUserModalOpen] = useState<boolean>(false);
 	const drawerRef = useRef<HTMLDivElement>(null);
+
+	const dispatch = useDispatch();
+	const user = useSelector((state: RootState) => state.user.user);
+	const cartItems = useSelector((state: RootState) => state.cart.items);
+	const { data: dataCart } = useGetShoppingCartByUserIdQuery(user?.id || '', {
+		skip: !user,
+	});
+  const [isAddressModalOpen, setIsAddressModalOpen] = useState<boolean>(false);
+  const { data: cities } = useGetAllCitiesQuery();
+  const { data: departments } = useGetAllDepartmentsQuery();
+  const { data: addresses } = useGetAddressesByUserIdQuery(user?.id || '', {
+    skip: !user,
+  });
+	const cart = dataCart;
+
+  const handleAddressSubmit = (addressForm: {
+    phone_number: string;
+    address: string;
+    zip_code: string;
+    city_name: string;
+  }) => {
+    // Aquí debes añadir la lógica para manejar la creación de la dirección
+    console.log('Address Form Submitted:', addressForm);
+  };
 
 	const toggleDrawer = () => {
 		setIsDrawerOpen(!isDrawerOpen);
@@ -52,6 +81,22 @@ export const Cart = () => {
 		};
 	}, [isDrawerOpen]);
 
+	useEffect(() => {
+		if (isDrawerOpen && !cart) {
+			setIsInvalidUserModalOpen(true);
+			toggleDrawer();
+		}
+	}, [isDrawerOpen, cart]);
+
+	const handleModalClose = () => {
+		setIsInvalidUserModalOpen(false);
+		dispatch(clearUser());
+	};
+
+	const calculateSubtotal = () => {
+		return cartItems.reduce((acc, item) => acc + item.price * item.quantity, 0);
+	};
+
 	return (
 		<>
 			<Tooltip title="Carrito" arrow>
@@ -75,7 +120,7 @@ export const Cart = () => {
 						},
 					}}
 				>
-					<Badge badgeContent={3} color="error">
+					<Badge badgeContent={cartItems.length} color="error">
 						<ShoppingCartIcon />
 					</Badge>
 				</IconButton>
@@ -124,9 +169,9 @@ export const Cart = () => {
 
 					<Box sx={{ flexGrow: 1, overflowY: 'auto' }}>
 						<List>
-							{[...Array(20)].map((_, index) => (
-								<ListItem key={index}>
-									<CartItem />
+							{cartItems.map((item) => (
+								<ListItem key={item.id}>
+									<CartItem cartItem={item} />
 								</ListItem>
 							))}
 						</List>
@@ -154,7 +199,7 @@ export const Cart = () => {
 								fontWeight="bold"
 								color="text.primary"
 							>
-								$200.000
+								${calculateSubtotal()}
 							</Typography>
 						</Box>
 						<Button
@@ -167,6 +212,7 @@ export const Cart = () => {
 								paddingY: '0.5rem',
 								'&:hover': { backgroundColor: '#333' },
 							}}
+              onClick={() => setIsAddressModalOpen(true)}
 							component={NextLink}
 							href="#"
 						>
@@ -175,6 +221,44 @@ export const Cart = () => {
 					</Box>
 				</Box>
 			</Drawer>
+
+			<Modal
+				open={isInvalidUserModalOpen}
+				onClose={handleModalClose}
+				aria-labelledby="invalid-user-modal-title"
+				aria-describedby="invalid-user-modal-description"
+			>
+				<Box
+					sx={{
+						position: 'absolute',
+						top: '50%',
+						left: '50%',
+						transform: 'translate(-50%, -50%)',
+						width: 400,
+						bgcolor: 'background.paper',
+						border: '2px solid #000',
+						boxShadow: 24,
+						p: 4,
+					}}
+				>
+					<Typography id="invalid-user-modal-title" variant="h6" component="h2">
+						Usuario inválido
+					</Typography>
+					<Typography id="invalid-user-modal-description" sx={{ mt: 2 }}>
+						Tu sesión ha expirado o el usuario no es válido. Por favor, inicia sesión nuevamente.
+					</Typography>
+					<Button onClick={handleModalClose}>Cerrar</Button>
+				</Box>
+			</Modal>
+      
+      <AddressForm
+        isOpen={isAddressModalOpen}
+        onClose={() => setIsAddressModalOpen(false)}
+        onSubmit={handleAddressSubmit}
+        registeredAddresses={addresses}
+        cities={cities}
+        departments={departments}
+      />
 		</>
 	);
 };

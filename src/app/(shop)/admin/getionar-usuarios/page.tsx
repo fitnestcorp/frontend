@@ -1,15 +1,22 @@
 'use client';
-import { Box, Button, Grid, Typography } from '@mui/material';
+import { useState } from 'react';
+import { Box, Grid, Typography } from '@mui/material';
 
-import { FilterButton, Search, SortButton, Table } from '@/components';
+import { AddUserModal, Search, SortButton, Table, isAdmin } from '@/components';
+import { useGetAllUsersQuery } from '@/store';
+
+interface SortConfig {
+	key: string;
+	direction: 'asc' | 'desc';
+}
 
 const columns = [
-	{ id: 'image', label: '', minWidth: 50 },
+	{ id: 'id', label: 'ID', minWidth: 50, align: 'center' as const },
 	{
 		id: 'name',
 		label: 'Nombre completo',
 		minWidth: 100,
-		align: 'left' as const,
+		align: 'center' as const,
 	},
 	{
 		id: 'birthDate',
@@ -18,67 +25,68 @@ const columns = [
 		align: 'center' as const,
 	},
 	{ id: 'email', label: 'Email', minWidth: 170, align: 'center' as const },
-	{
-		id: 'orders',
-		label: 'Ordenes',
-		minWidth: 100,
-		align: 'center' as const,
-		format: (value: number) => value.toLocaleString('en-US'),
-	},
-	{
-		id: 'actions',
-		label: 'Acciones',
-		minWidth: 100,
-		align: 'center' as const,
-	},
-];
-
-const rows = [
-	{
-		image: '/path/to/image.jpg',
-		name: 'Ana Sofia Londoño Fernandez',
-		birthDate: '01/08/2004',
-		email: 'anasofia.a024@gmail.com',
-		orders: 3,
-	},
-	{
-		image: '/path/to/image.jpg',
-		name: 'Ana Sofia Londoño Fernandez',
-		birthDate: '01/08/2004',
-		email: 'anasofia.a024@gmail.com',
-		orders: 3,
-	},
-	{
-		image: '/path/to/image.jpg',
-		name: 'Ana Sofia Londoño Fernandez',
-		birthDate: '01/08/2004',
-		email: 'anasofia.a024@gmail.com',
-		orders: 3,
-	},
-	{
-		image: '/path/to/image.jpg',
-		name: 'Ana Sofia Londoño Fernandez',
-		birthDate: '01/08/2004',
-		email: 'anasofia.a024@gmail.com',
-		orders: 3,
-	},
-	{
-		image: '/path/to/image.jpg',
-		name: 'Ana Sofia Londoño Fernandez',
-		birthDate: '01/08/2004',
-		email: 'anasofia.a024@gmail.com',
-		orders: 3,
-	},
-	{
-		image: '/path/to/image.jpg',
-		name: 'Ana Sofia Londoño Fernandez',
-		birthDate: '01/08/2004',
-		email: 'anasofia.a024@gmail.com',
-		orders: 3,
-	},
 ];
 
 export const ManageUsersPage = () => {
+	const {
+		data: usersData,
+		isLoading,
+		refetch,
+	} = useGetAllUsersQuery({
+		page: 1,
+		limit: 100,
+	});
+
+	const users = usersData || [];
+
+	const [searchTerm, setSearchTerm] = useState<string>('');
+	const [sortConfig, setSortConfig] = useState<SortConfig>({
+		key: '',
+		direction: 'asc',
+	});
+
+	const formatDate = (dateString: string) => {
+		const date = new Date(dateString);
+		return date.toLocaleDateString('es-CO', {
+			day: '2-digit',
+			month: '2-digit',
+			year: 'numeric',
+		});
+	};
+
+	const usersRows = users?.map((user) => ({
+		name: user.first_name + ' ' + user.last_name,
+		id: user.id,
+		birthDate: formatDate(user.birth_date),
+		email: user.email,
+	}));
+
+	const filteredUserRows = usersRows.filter((row) =>
+		row.name.toLowerCase().includes(searchTerm.toLowerCase())
+	);
+
+	const sortedUserRows = [...filteredUserRows].sort((a, b) => {
+		if (sortConfig.key) {
+			const aValue: any = a[sortConfig.key as keyof typeof a];
+			const bValue: any = b[sortConfig.key as keyof typeof b];
+			if (aValue < bValue) {
+				return sortConfig.direction === 'asc' ? -1 : 1;
+			}
+			if (aValue > bValue) {
+				return sortConfig.direction === 'asc' ? 1 : -1;
+			}
+		}
+		return 0;
+	});
+
+	const handleSort = (key: string) => {
+		let direction: 'asc' | 'desc' = 'asc';
+		if (sortConfig.key === key && sortConfig.direction === 'asc') {
+			direction = 'desc';
+		}
+		setSortConfig({ key, direction });
+	};
+
 	return (
 		<Grid
 			container
@@ -89,23 +97,18 @@ export const ManageUsersPage = () => {
 			}}
 		>
 			<Grid item xs={12}>
-				<Typography
-					variant="h4"
-					sx={{
-						fontWeight: 'bold',
-						color: 'text.primary',
-						textAlign: { xs: 'center', md: 'left' },
-					}}
-				>
-					Gestionar Usuarios
-				</Typography>
-			</Grid>
-
-			{/* Users */}
-			<Grid item xs={12}>
 				<Grid container spacing={2} alignItems="center">
-					<Grid item xs={12} md={8}>
-						<Box sx={{ display: 'flex', gap: 5 }}>
+					<Grid item xs={12} md={6}>
+						<Box
+							sx={{
+								display: 'flex',
+								gap: 5,
+								justifyContent: {
+									xs: 'center',
+									md: 'flex-start',
+								},
+							}}
+						>
 							<Typography
 								sx={{
 									color: 'text.primary',
@@ -113,41 +116,43 @@ export const ManageUsersPage = () => {
 									fontSize: '1.8rem',
 								}}
 							>
-								Usuarios
+								Gestionar Usuarios
 							</Typography>
 						</Box>
 					</Grid>
 					<Grid
 						item
 						xs={12}
-						md={4}
+						md={6}
 						sx={{
 							display: 'flex',
 							justifyContent: { xs: 'center', md: 'flex-end' },
+							alignItems: 'center',
 							gap: 2,
 							flexWrap: 'wrap',
 						}}
 					>
-						<Search border />
-						<Button
-							variant="contained"
-							sx={{
-								borderRadius: '0.5rem',
-							}}
-						>
-							Añadir Usuario
-						</Button>
-						<SortButton />
-						<FilterButton />
+						<Search
+							border
+							onSearch={(value: string) => setSearchTerm(value)}
+						/>
+						<AddUserModal refetch={refetch} />
+						<SortButton onSort={handleSort} type="usuarios" />
 					</Grid>
 				</Grid>
 			</Grid>
 
 			<Grid item xs={12} mb={10}>
-				<Table columns={columns} rows={rows} />
+				<Table
+					columns={columns}
+					rows={sortedUserRows}
+					isLoading={isLoading}
+					type="productos"
+					refetch={refetch}
+				/>
 			</Grid>
 		</Grid>
 	);
 };
 
-export default ManageUsersPage;
+export default isAdmin(ManageUsersPage);

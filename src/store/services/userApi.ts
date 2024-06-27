@@ -1,65 +1,106 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 
+import { User } from '@/interfaces';
 
 const baseQuery = fetchBaseQuery({
-    baseUrl: process.env.BACKEND_URL || 'http://localhost:3000', //Va a fallar el env porque no tenemos el redux persist 
-	//pero lo voy a dejar asi xd hay que recordar cambiarlo
-    prepareHeaders: (headers, { getState }) => {
-        return headers;
-    },
+	baseUrl: process.env.BACKEND_URL || 'http://localhost:3000',
+	prepareHeaders: (headers, { getState }) => {
+		return headers;
+	},
 });
+
 export const userApi = createApi({
-    reducerPath: 'userApi',
-    baseQuery: baseQuery,
-    endpoints: (builder) => ({
-        loginUser: builder.mutation({
-            query: (credentials) => ({
-                url: 'auth/client/login',
-                method: 'POST',
-                body: credentials,
-            }),
-            onQueryStarted: async (arg, { queryFulfilled }) => {
-                try {
-                    const { data } = await queryFulfilled;
-                    localStorage.setItem('token', data.token);  
-                } catch (error) {
-                    console.error('Error storing token', error);
-                }
-            },
-        }),
-        registerUser: builder.mutation({
-            query: (credentials) => ({
-                url: 'auth/client/register',
-                method: 'POST',
-                body: credentials,
-            }),
-            onQueryStarted: async (arg, { queryFulfilled }) => {
-                try {
-                    const { data } = await queryFulfilled;
-                    localStorage.setItem('token', data.token); 
-                } catch (error) {
-                    console.error('Error storing token', error);
-                }
-            },
-        }),
-        findByEmail: builder.query({
-            query: (email) => ({
-                url: `users/${email}`,
-                method: 'GET',
-            }),
-        }),
-        getAllProducts: builder.query({
-            query: ({page, limit}) => ({
-                url: `product?page=${page}&limit=${limit}`,
-                method: 'GET',
-            }),
-        }),
-    }),
+	reducerPath: 'userApi',
+	baseQuery: baseQuery,
+	endpoints: (builder) => ({
+		loginUser: builder.mutation({
+			query: (credentials) => ({
+				url: 'user/login',
+				method: 'POST',
+				body: credentials,
+			}),
+			onQueryStarted: async (arg, { queryFulfilled }) => {
+				try {
+					const { data } = await queryFulfilled;
+					localStorage.setItem('token', data.token);
+				} catch (error) {
+					console.error('Error storing token', error);
+				}
+			},
+		}),
+
+		registerUser: builder.mutation({
+			query: (credentials) => ({
+				url: 'user/register',
+				method: 'POST',
+				body: credentials,
+			}),
+			onQueryStarted: async (arg, { queryFulfilled }) => {
+				try {
+					const { data } = await queryFulfilled;
+					localStorage.setItem('token', data.token);
+				} catch (error) {
+					console.error('Error storing token', error);
+				}
+			},
+		}),
+
+		recoverPassword: builder.mutation({
+			query: (email) => ({
+				url: 'user/password-recovery',
+				method: 'POST',
+				body: { email },
+			}),
+		}),
+
+		getAllUsers: builder.query<User[], { page: number; limit: number }>({
+			query: ({ page, limit }) => ({
+				url: `user/?page=${page}&limit=${limit}`,
+				method: 'GET',
+				headers: {
+					Authorization: `Bearer ${localStorage.getItem('token')}`,
+				},
+			}),
+		}),
+
+		getUserByEmail: builder.query<User, string>({
+			query: (email) => ({
+				url: `user/${email}`,
+				method: 'GET',
+			}),
+		}),
+
+		verifyToken: builder.query({
+			query: (token) => ({
+				url: 'user/verify_token',
+				method: 'GET',
+				headers: {
+					Authorization: `Bearer ${token}`,
+				},
+			}),
+		}),
+
+		hasBoughtProduct: builder.query<
+			{ hasProduct: boolean },
+			{ userId: string; productId: string }
+		>({
+			query: ({ userId, productId }) => ({
+				url: `user/${userId}/${productId}`,
+				method: 'GET',
+				headers: {
+					Authorization: `Bearer ${localStorage.getItem('token')}`,
+				},
+			}),
+		}),
+	}),
 });
 
 export const {
-    useLoginUserMutation,
-    useRegisterUserMutation,
-    useFindByEmailQuery,
-    useGetAllProductsQuery
+	useLoginUserMutation,
+	useRegisterUserMutation,
+	useRecoverPasswordMutation,
+	useGetAllUsersQuery,
+	useGetUserByEmailQuery,
+	useVerifyTokenQuery,
+	useHasBoughtProductQuery,
 } = userApi;

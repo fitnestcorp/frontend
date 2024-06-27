@@ -1,5 +1,7 @@
 'use client';
+import { useState } from 'react';
 import NextLink from 'next/link';
+import { useSelector } from 'react-redux';
 import {
 	AppBar,
 	Toolbar,
@@ -11,13 +13,38 @@ import {
 	IconButton,
 	Tooltip,
 } from '@mui/material';
-import { LogoutOutlined, PersonOutlineOutlined } from '@mui/icons-material';
+import { ExpandMore, PersonOutlineOutlined } from '@mui/icons-material';
 
-import { AdminButton, Cart, Search, Sidemenu } from '@/components';
+import {
+	AdminButton,
+	Cart,
+	LogoutButton,
+	MenuNavbar,
+	Search,
+	Sidemenu,
+} from '@/components';
+import { RootState } from '@/store';
 
 export const Navbar = () => {
+	const [searchTerm, setSearchTerm] = useState('');
+	const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+	const user = useSelector((state: RootState) => state.user.user);
+
+	const handleClick = (event: React.MouseEvent<HTMLElement>) => {
+		setAnchorEl(event.currentTarget);
+	};
+
+	const handleClose = () => {
+		setAnchorEl(null);
+	};
+
 	return (
-		<AppBar position="static" sx={{ backgroundColor: 'black' }}>
+		<AppBar
+			position="sticky"
+			sx={{
+				backgroundColor: 'primary.main',
+			}}
+		>
 			<Container maxWidth="xl">
 				<Toolbar
 					disableGutters
@@ -51,35 +78,16 @@ export const Navbar = () => {
 						}}
 					>
 						<Button
-							component={NextLink}
-							href="/categoria/entrenamiento"
-							sx={{
-								color: 'text.secondary',
-								mx: 1,
-								borderRadius: '0.5rem',
-								'&:hover': {
-									backgroundColor: 'secondary.main',
-									color: 'text.primary',
-								},
-							}}
+							onClick={handleClick}
+							endIcon={<ExpandMore />}
+							sx={{ color: 'white', mx: 2 }}
 						>
 							Entrenamiento
 						</Button>
-						<Button
-							component={NextLink}
-							href="/categoria/equipamiento"
-							sx={{
-								color: 'text.secondary',
-								mx: 1,
-								borderRadius: '0.5rem',
-								'&:hover': {
-									backgroundColor: 'secondary.main',
-									color: 'text.primary',
-								},
-							}}
-						>
-							Equipamiento
-						</Button>
+						<MenuNavbar
+							anchorEl={anchorEl}
+							handleClose={handleClose}
+						/>
 						<Button
 							component={NextLink}
 							href="/categoria/servicios"
@@ -99,92 +107,96 @@ export const Navbar = () => {
 
 					{/* Search, Cart, Login */}
 					<Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
-						<Box
-							sx={{
-								display: { xs: 'none', md: 'block' },
-							}}
-						>
-							<Search />
+						<Box sx={{ display: { xs: 'none', md: 'block' } }}>
+							<Search
+								onSearch={(value) => setSearchTerm(value)}
+							/>
 						</Box>
 
-						{/* Shopping Cart */}
-						<Cart />
-					
 						<Box sx={{ display: { xs: 'none', md: 'block' } }}>
 							<Box sx={{ display: 'flex', gap: 2 }}>
-								{/* Show if user is not authenticated */}
-								<Tooltip title="Iniciar Sesión" arrow>
-									<IconButton
-										component={NextLink}
-										href="/iniciar-sesion"
-										color="inherit"
-										sx={{
-											position: 'relative',
-											display: 'flex',
-											alignItems: 'center',
-											justifyContent: 'center',
-											width: '40px',
-											height: '40px',
-											borderRadius: '0.5rem',
-											color: 'text.secondary',
-											backgroundColor: 'primary.main',
-											'&:hover': {
-												backgroundColor:
-													'secondary.main',
-												color: 'text.primary',
-												border: '1px solid black',
-											},
-										}}
-									>
-										<PersonOutlineOutlined />
-									</IconButton>
-								</Tooltip>
 								{/* Show if user is admin */}
-								<Box
-									sx={{
-										display: { xs: 'none', md: 'block' },
-									}}
-								>
-									<AdminButton />
-								</Box>
-
-								{/* Show if user is autehnticated */}
-								<Tooltip title="Cerrar Sesión" arrow>
-									<IconButton
-										component={NextLink}
-										onClick={() => {}}
-										href="/"
-										color="inherit"
+								{user?.role === 'ADMIN' && (
+									<Box
 										sx={{
-											position: 'relative',
-											display: 'flex',
-											alignItems: 'center',
-											justifyContent: 'center',
-											width: '40px',
-											height: '40px',
-											borderRadius: '0.5rem',
-											color: 'text.secondary',
-											backgroundColor: 'primary.main',
-											'&:hover': {
-												backgroundColor:
-													'secondary.main',
-												color: 'text.primary',
-												border: '1px solid black',
+											display: {
+												xs: 'none',
+												md: 'block',
 											},
 										}}
 									>
-										<LogoutOutlined />
-									</IconButton>
-								</Tooltip>
+										<AdminButton />
+									</Box>
+								)}
+
+								{user ? (
+									<>
+										<Cart />
+										<Tooltip title="Perfil" arrow>
+											<IconButton
+												component={NextLink}
+												href="/perfil"
+												color="inherit"
+												sx={{
+													position: 'relative',
+													display: 'flex',
+													alignItems: 'center',
+													justifyContent: 'center',
+													width: '40px',
+													height: '40px',
+													borderRadius: '0.5rem',
+													color: 'text.secondary',
+													backgroundColor:
+														'primary.main',
+													'&:hover': {
+														backgroundColor:
+															'secondary.main',
+														color: 'text.primary',
+														border: '1px solid black',
+													},
+												}}
+											>
+												<PersonOutlineOutlined />
+											</IconButton>
+										</Tooltip>
+										<LogoutButton />
+									</>
+								) : (
+									<Tooltip title="Iniciar Sesión" arrow>
+										<IconButton
+											component={NextLink}
+											href="/iniciar-sesion"
+											color="inherit"
+											sx={{
+												position: 'relative',
+												display: 'flex',
+												alignItems: 'center',
+												justifyContent: 'center',
+												width: '40px',
+												height: '40px',
+												borderRadius: '0.5rem',
+												color: 'text.secondary',
+												backgroundColor: 'primary.main',
+												'&:hover': {
+													backgroundColor:
+														'secondary.main',
+													color: 'text.primary',
+													border: '1px solid black',
+												},
+											}}
+										>
+											<PersonOutlineOutlined />
+										</IconButton>
+									</Tooltip>
+								)}
 							</Box>
 						</Box>
 
 						{/* Show when screen is small */}
 						<Box
-							sx={{
-								display: { xs: 'block', md: 'none' },
-							}}
+							sx={{ display: { xs: 'flex', md: 'none' }, gap: 2 }}
 						>
+							<Cart />
 							<Sidemenu />
 						</Box>
 					</Box>

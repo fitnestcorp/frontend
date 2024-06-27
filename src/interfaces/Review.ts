@@ -1,8 +1,8 @@
-import { User } from './User';
-
 export interface Review {
 	id: string;
-	comment: string;
+	title: string;
 	score: number;
-	user: User;
+	comment: string;
+	user: string;
+	publication_date: string;
 }
