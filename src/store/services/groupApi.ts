@@ -23,10 +23,10 @@ export const groupApi = createApi({
 		}),
 
 		updateGroup: builder.mutation({
-			query: ({ group, id }) => ({
+			query: ({ formData, id }) => ({
 				url: `group/${id}`,
-				method: 'PUT',
-				body: group,
+				method: 'PATCH',
+				body: formData,
 			}),
 		}),
 
@@ -56,7 +56,7 @@ export const groupApi = createApi({
 
 		getGroupById: builder.query<Group, string>({
 			query: (id) => ({
-				url: `group/${id}`,
+				url: `group/id/${id}`,
 				method: 'GET',
 			}),
 		}),

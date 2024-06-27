@@ -24,10 +24,10 @@ export const categoryApi = createApi({
 		}),
 
 		updateCategory: builder.mutation({
-			query: ({ category, id }) => ({
+			query: ({ formData, id }) => ({
 				url: `category/${id}`,
-				method: 'PUT',
-				body: category,
+				method: 'PATCH',
+				body: formData,
 			}),
 		}),
 
@@ -57,7 +57,7 @@ export const categoryApi = createApi({
 
 		getCategoryById: builder.query<Category, string>({
 			query: (id) => ({
-				url: `category/${id}`,
+				url: `category/id/${id}`,
 				method: 'GET',
 			}),
 		}),

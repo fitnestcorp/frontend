@@ -10,18 +10,18 @@ import {
 } from '@mui/material';
 import { Close, EditOutlined } from '@mui/icons-material';
 
-import { ProductForm } from '@/components';
-import { useGetProductByIdQuery } from '@/store';
+import { CategoryForm } from '@/components';
+import { useGetCategoryByIdQuery } from '@/store';
 
 interface Props {
 	refetch: () => void;
-	productId?: string;
+	categoryId?: string;
 }
 
-export const ProductModal = ({ refetch, productId }: Props) => {
+export const CategoryModal = ({ refetch, categoryId }: Props) => {
 	const [open, setOpen] = useState(false);
 
-	const { data: product } = useGetProductByIdQuery(productId ?? '');
+	const { data: category } = useGetCategoryByIdQuery(categoryId ?? '');
 
 	const handleClickOpen = () => {
 		setOpen(true);
@@ -33,7 +33,7 @@ export const ProductModal = ({ refetch, productId }: Props) => {
 
 	return (
 		<>
-			{productId ? (
+			{categoryId ? (
 				<Tooltip title="Editar" arrow>
 					<IconButton
 						onClick={handleClickOpen}
@@ -52,7 +52,7 @@ export const ProductModal = ({ refetch, productId }: Props) => {
 						borderRadius: '0.5rem',
 					}}
 				>
-					Crear Producto
+					Crear Categoría
 				</Button>
 			)}
 
@@ -81,10 +81,10 @@ export const ProductModal = ({ refetch, productId }: Props) => {
 					</IconButton>
 				</DialogTitle>
 				<DialogContent>
-					{product ? (
-						<ProductForm refetch={refetch} product={product} />
+					{category ? (
+						<CategoryForm refetch={refetch} category={category} />
 					) : (
-						<ProductForm refetch={refetch} />
+						<CategoryForm refetch={refetch} />
 					)}
 				</DialogContent>
 			</Dialog>

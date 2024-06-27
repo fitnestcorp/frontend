@@ -1,5 +1,5 @@
 'use client';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Image from 'next/image';
 import {
 	Button,
@@ -15,14 +15,23 @@ import {
 	Typography,
 	Snackbar,
 	Alert,
+	FormControl,
+	InputLabel,
+	Select,
+	MenuItem,
 } from '@mui/material';
 import { AddPhotoAlternateOutlined, DeleteOutline } from '@mui/icons-material';
 import { Controller, useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
 
-import { useCreateGroupMutation } from '@/store';
-import { AddGroupSchema } from '@/schemas';
+import {
+	useCreateCategoryMutation,
+	useUpdateCategoryMutation,
+	useGetAllGroupsQuery,
+} from '@/store';
+import { AddCategorySchema } from '@/schemas';
+import { Category } from '@/interfaces';
 
 const VisuallyHiddenInput = styled('input')({
 	clip: 'rect(0 0 0 0)',
@@ -38,18 +47,26 @@ const VisuallyHiddenInput = styled('input')({
 
 interface Props {
 	refetch: () => void;
+	category?: Category;
 }
 
-export const AddGroupForm = ({ refetch }: Props) => {
-	const [uploadedImage, setUploadedImage] = useState<File | null>(null);
-	const [imageError, setImageError] = useState<string | null>(null);
+export const CategoryForm = ({ refetch, category }: Props) => {
+	const [uploadedImage, setUploadedImage] = useState<File | string | null>(
+		null
+	);
 	const [openSnackbar, setOpenSnackbar] = useState(false);
 	const [snackbarMessage, setSnackbarMessage] = useState('');
 	const [snackbarSeverity, setSnackbarSeverity] = useState<
 		'error' | 'success'
 	>('success');
 
-	const [createGroup] = useCreateGroupMutation();
+	const [createCategory] = useCreateCategoryMutation();
+	const [updateCategory] = useUpdateCategoryMutation();
+	const { data: dataGroups } = useGetAllGroupsQuery({
+		page: 1,
+		limit: 10,
+	});
+	const groups = dataGroups?.[0] || [];
 
 	const handleCloseSnackbar = () => {
 		setOpenSnackbar(false);
@@ -60,34 +77,86 @@ export const AddGroupForm = ({ refetch }: Props) => {
 		control,
 		setValue,
 		formState: { errors, isSubmitting, isDirty },
-	} = useForm<z.infer<typeof AddGroupSchema>>({
-		resolver: zodResolver(AddGroupSchema),
-		defaultValues: {
-			name: '',
-			description: '',
-			url: '',
-		},
+	} = useForm<z.infer<typeof AddCategorySchema>>({
+		resolver: zodResolver(AddCategorySchema),
+		defaultValues: category
+			? {
+					name: category.name,
+					description: category.description,
+					url: category.image_url,
+					groupName: category.group.name,
+			  }
+			: {
+					name: '',
+					description: '',
+					url: '',
+					groupName: '',
+			  },
 	});
 
-	async function onSubmit(data: z.infer<typeof AddGroupSchema>) {
-		const formData = new FormData();
+	useEffect(() => {
+		if (category) {
+			setValue('name', category.name);
+			setValue('description', category.description);
+			setValue('url', category.image_url);
+			setValue('groupName', category.group.name);
+			setUploadedImage(category.image_url);
+		}
+	}, [category, setValue]);
 
+	async function onSubmit(data: z.infer<typeof AddCategorySchema>) {
+		const formData = new FormData();
 		formData.append('name', data.name);
 		formData.append('description', data.description);
-		if (uploadedImage) {
-			formData.append('group_image', uploadedImage);
+		formData.append('groupName', data.groupName);
+
+		if (typeof uploadedImage === 'string') {
+			formData.append('existing_image', uploadedImage);
+		} else if (uploadedImage) {
+			formData.append('category_image', uploadedImage);
 		}
 
-		try {
-			await createGroup(formData).unwrap();
-			setSnackbarMessage('Grupo creado exitosamente');
-			setSnackbarSeverity('success');
-			setOpenSnackbar(true);
-			refetch();
-		} catch (error) {
-			setSnackbarMessage('Ocurrió un error al crear el grupo');
-			setSnackbarSeverity('error');
-			setOpenSnackbar(true);
+		let errorOccurred = false;
+
+		if (category) {
+			await updateCategory({
+				formData,
+				id: category?.id,
+			})
+				.unwrap()
+				.catch((error) => {
+					setSnackbarMessage(
+						'Ocurrió un error al actualizar la categoría'
+					);
+					setSnackbarSeverity('error');
+					setOpenSnackbar(true);
+					errorOccurred = true;
+				});
+
+			if (!errorOccurred && data) {
+				setSnackbarMessage('Categoría actualizada exitosamente');
+				setSnackbarSeverity('success');
+				setOpenSnackbar(true);
+				refetch();
+			}
+		} else {
+			await createCategory(formData)
+				.unwrap()
+				.catch((error) => {
+					setSnackbarMessage(
+						'Ocurrió un error al crear la categoría'
+					);
+					setSnackbarSeverity('error');
+					setOpenSnackbar(true);
+					errorOccurred = true;
+				});
+
+			if (!errorOccurred && data) {
+				setSnackbarMessage('Categoría creada exitosamente');
+				setSnackbarSeverity('success');
+				setOpenSnackbar(true);
+				refetch();
+			}
 		}
 	}
 
@@ -96,7 +165,9 @@ export const AddGroupForm = ({ refetch }: Props) => {
 			const file = event.target.files[0];
 			setUploadedImage(file);
 			const fileURL = URL.createObjectURL(file);
-			setValue('url', fileURL, { shouldValidate: true });
+			setValue('url', fileURL, {
+				shouldValidate: true,
+			});
 		}
 	};
 
@@ -122,10 +193,15 @@ export const AddGroupForm = ({ refetch }: Props) => {
 								<Card sx={{ borderRadius: '8px' }}>
 									{uploadedImage ? (
 										<Image
-											src={URL.createObjectURL(
-												uploadedImage
-											)}
-											alt="Group"
+											src={
+												typeof uploadedImage ===
+												'string'
+													? uploadedImage
+													: URL.createObjectURL(
+															uploadedImage
+													  )
+											}
+											alt="Category"
 											width={400}
 											height={200}
 											style={{
@@ -211,6 +287,7 @@ export const AddGroupForm = ({ refetch }: Props) => {
 											fontSize: '0.75rem',
 											pt: 0.5,
 											pl: 2,
+											textAlign: 'center',
 										}}
 									>
 										{errors.url.message}
@@ -273,6 +350,65 @@ export const AddGroupForm = ({ refetch }: Props) => {
 							)}
 						/>
 					</Grid>
+					<Grid item xs={12}>
+						<Controller
+							name="groupName"
+							control={control}
+							render={({ field }) => (
+								<FormControl
+									fullWidth
+									sx={{
+										'& label': {
+											color: 'text.primary',
+										},
+										'& .MuiOutlinedInput-root': {
+											'& fieldset': {
+												borderColor: 'gray',
+											},
+										},
+									}}
+								>
+									<InputLabel id="group-select-label">
+										Grupo
+									</InputLabel>
+									<Select
+										{...field}
+										labelId="group-select-label"
+										label="Grupo"
+										error={!!errors.groupName}
+									>
+										{groups?.length ?? 0 > 0 ? (
+											groups?.map((group) => (
+												<MenuItem
+													key={group.name}
+													value={group.name}
+												>
+													{group.name}
+												</MenuItem>
+											))
+										) : (
+											<MenuItem value="" disabled>
+												No hay grupos
+											</MenuItem>
+										)}
+									</Select>
+									{errors.groupName && (
+										<Box
+											component="span"
+											sx={{
+												color: 'error.main',
+												fontSize: '0.75rem',
+												pt: 0.5,
+												pl: 2,
+											}}
+										>
+											{errors.groupName.message}
+										</Box>
+									)}
+								</FormControl>
+							)}
+						/>
+					</Grid>
 				</Grid>
 				<DialogActions
 					sx={{
@@ -293,7 +429,7 @@ export const AddGroupForm = ({ refetch }: Props) => {
 						disabled={isSubmitting || !isDirty}
 						endIcon={isSubmitting && <CircularProgress size={20} />}
 					>
-						Añadir grupo
+						{category ? 'Actualizar categoría' : 'Añadir categoría'}
 					</Button>
 				</DialogActions>
 			</form>

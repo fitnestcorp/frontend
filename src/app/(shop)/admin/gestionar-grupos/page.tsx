@@ -1,15 +1,8 @@
 'use client';
 import { useState } from 'react';
-import { Box, Button, Grid, Typography } from '@mui/material';
+import { Box, Grid, Typography } from '@mui/material';
 
-import {
-	AddGroupModal,
-	FilterButton,
-	Search,
-	SortButton,
-	Table,
-	isAdmin,
-} from '@/components';
+import { GroupModal, Search, SortButton, Table, isAdmin } from '@/components';
 import { useGetAllGroupsQuery } from '@/store';
 
 interface SortConfig {
@@ -140,7 +133,7 @@ export const ManageGroupsPage = () => {
 							border
 							onSearch={(value) => setSearchTerm(value)}
 						/>
-						<AddGroupModal refetch={refetch} />
+						<GroupModal refetch={refetch} />
 						<SortButton onSort={handleSort} />
 					</Grid>
 				</Grid>

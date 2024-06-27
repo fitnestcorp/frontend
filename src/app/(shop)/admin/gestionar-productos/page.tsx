@@ -2,13 +2,7 @@
 import { useState } from 'react';
 import { Box, Grid, Typography } from '@mui/material';
 
-import {
-	ProductModal,
-	Search,
-	SortButton,
-	Table,
-	isAdmin,
-} from '@/components';
+import { ProductModal, Search, SortButton, Table, isAdmin } from '@/components';
 import { useGetAllProductsQuery } from '@/store';
 import { Product } from '@/interfaces';
 
@@ -107,8 +101,6 @@ export const ManageInventoryPage = () => {
 		});
 	};
 
-	console.log('products', products);
-
 	const productRows = products.map((product) => ({
 		id: product.id,
 		name: product.name,
@@ -118,7 +110,7 @@ export const ManageInventoryPage = () => {
 		image: product.image_urls[0],
 		category: product.category.name,
 		status: product.status,
-		// stock: product.stock.stock,
+		stock: product.stock.stock,
 	}));
 
 	const filteredProductRows = productRows

@@ -6,17 +6,22 @@ import {
 	DialogContent,
 	DialogTitle,
 	IconButton,
+	Tooltip,
 } from '@mui/material';
-import { Close } from '@mui/icons-material';
+import { Close, EditOutlined } from '@mui/icons-material';
 
-import { AddGroupForm } from '@/components';
+import { GroupForm } from '@/components';
+import { useGetGroupByIdQuery } from '@/store';
 
 interface Props {
 	refetch: () => void;
+	groupId?: string;
 }
 
-export const AddGroupModal = ({ refetch }: Props) => {
+export const GroupModal = ({ refetch, groupId }: Props) => {
 	const [open, setOpen] = useState(false);
+
+	const { data: group } = useGetGroupByIdQuery(groupId ?? '');
 
 	const handleClickOpen = () => {
 		setOpen(true);
@@ -28,16 +33,28 @@ export const AddGroupModal = ({ refetch }: Props) => {
 
 	return (
 		<>
-			<Button
-				onClick={handleClickOpen}
-				variant="contained"
-				sx={{
-					borderRadius: '0.5rem',
-				}}
-			>
-				Crear Grupo
-			</Button>
-
+			{groupId ? (
+				<Tooltip title="Editar" arrow>
+					<IconButton
+						onClick={handleClickOpen}
+						sx={{
+							color: '#1565c0',
+						}}
+					>
+						<EditOutlined />
+					</IconButton>
+				</Tooltip>
+			) : (
+				<Button
+					onClick={handleClickOpen}
+					variant="contained"
+					sx={{
+						borderRadius: '0.5rem',
+					}}
+				>
+					Crear Grupo
+				</Button>
+			)}
 			<Dialog
 				open={open}
 				onClose={handleClose}
@@ -63,7 +80,11 @@ export const AddGroupModal = ({ refetch }: Props) => {
 					</IconButton>
 				</DialogTitle>
 				<DialogContent>
-					<AddGroupForm refetch={refetch} />
+					{group ? (
+						<GroupForm refetch={refetch} group={group} />
+					) : (
+						<GroupForm refetch={refetch} />
+					)}
 				</DialogContent>
 			</Dialog>
 		</>

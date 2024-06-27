@@ -3,8 +3,7 @@ import { useState } from 'react';
 import { Box, Grid, Typography } from '@mui/material';
 
 import {
-	AddCategoryModal,
-	FilterButton,
+	CategoryModal,
 	Search,
 	SortButton,
 	Table,
@@ -126,7 +125,7 @@ export const ManageCategoriesPage = () => {
 							border
 							onSearch={(value) => setSearchTerm(value)}
 						/>
-						<AddCategoryModal refetch={refetch} />
+						<CategoryModal refetch={refetch} />
 						<SortButton onSort={handleSort} />
 					</Grid>
 				</Grid>

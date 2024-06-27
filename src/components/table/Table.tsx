@@ -14,7 +14,12 @@ import {
 	Skeleton,
 } from '@mui/material';
 
-import { DeleteButton, ProductModal } from '@/components';
+import {
+	CategoryModal,
+	DeleteButton,
+	GroupModal,
+	ProductModal,
+} from '@/components';
 import {
 	useDeleteCategoryMutation,
 	useDeleteGroupMutation,
@@ -132,14 +137,37 @@ export const Table = ({ columns, rows, isLoading, type, refetch }: Props) => {
 															key={column.id}
 															align={column.align}
 														>
-															<ProductModal
-																refetch={
-																	refetch
-																}
-																productId={
-																	row.id
-																}
-															/>
+															{type ===
+															'productos' ? (
+																<ProductModal
+																	refetch={
+																		refetch
+																	}
+																	productId={
+																		row.id
+																	}
+																/>
+															) : type ===
+															  'grupos' ? (
+																<GroupModal
+																	refetch={
+																		refetch
+																	}
+																	groupId={
+																		row.id
+																	}
+																/>
+															) : type ===
+															  'categorías' ? (
+																<CategoryModal
+																	refetch={
+																		refetch
+																	}
+																	categoryId={
+																		row.id
+																	}
+																/>
+															) : null}
 
 															<DeleteButton
 																id={row.id}
