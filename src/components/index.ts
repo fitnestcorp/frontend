@@ -33,6 +33,9 @@ export * from './group/GroupModal';
 export * from './options/FilterButton';
 export * from './options/SortButton';
 
+export * from './pie-chart/PieChart';
+export * from './pie-chart/PieChartUsage';
+
 export * from './product/ProductModal';
 export * from './product/ProductDetails';
 

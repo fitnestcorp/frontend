@@ -4,6 +4,7 @@ import { Box, Grid, Typography } from '@mui/material';
 
 import {
 	CategoryModal,
+	PieChartUsage,
 	Search,
 	SortButton,
 	Table,
@@ -56,6 +57,15 @@ export const ManageCategoriesPage = () => {
 		key: '',
 		direction: 'asc',
 	});
+
+	const labels = categories.map((category) => category.name);
+	const soldByCategory = categories.map((category) =>
+		category.products.reduce(
+			(acc, product) => acc + (product.stock?.unities_sold ?? 0),
+			0
+		)
+	);
+	const title = 'Categorías más vendidas';
 
 	const categoryRows = categories.map((category) => ({
 		name: category.name,
@@ -142,6 +152,14 @@ export const ManageCategoriesPage = () => {
 					isLoading={isLoading}
 					type="categorías"
 					refetch={refetch}
+				/>
+			</Grid>
+
+			<Grid item xs={12} mb={10}>
+				<PieChartUsage
+					labels={labels}
+					values={soldByCategory}
+					title={title}
 				/>
 			</Grid>
 		</Grid>

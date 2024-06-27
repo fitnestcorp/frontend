@@ -1,4 +1,5 @@
 import { Group } from './Group';
+import { Product } from './Product';
 
 export interface Category {
 	id: string;
@@ -6,4 +7,5 @@ export interface Category {
 	description: string;
 	image_url: string;
 	group: Group;
+	products: Product[];
 }

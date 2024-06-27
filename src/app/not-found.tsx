@@ -29,7 +29,6 @@ const NotFoundPage = () => {
 					alignItems: 'center',
 					minHeight: '100vh',
 					textAlign: 'center',
-					// backgroundColor: '#f5f5f5',
 					padding: 4,
 				}}
 			>

@@ -40,6 +40,13 @@ const columns = [
 		format: (value: number) => value.toLocaleString('en-US'),
 	},
 	{
+		id: 'unities_sold',
+		label: 'Unidades Vendidas',
+		minWidth: 100,
+		align: 'center' as const,
+		format: (value: number) => value.toLocaleString('en-US'),
+	},
+	{
 		id: 'stock',
 		label: 'Stock',
 		minWidth: 80,
@@ -105,6 +112,7 @@ export const ManageInventoryPage = () => {
 		category: product.category.name,
 		status: product.status,
 		stock: product.stock.stock,
+		unities_sold: product.stock.unities_sold,
 	}));
 
 	const filteredProductRows = productRows.filter((row) =>

@@ -2,7 +2,14 @@
 import { useState } from 'react';
 import { Box, Grid, Typography } from '@mui/material';
 
-import { GroupModal, Search, SortButton, Table, isAdmin } from '@/components';
+import {
+	GroupModal,
+	PieChartUsage,
+	Search,
+	SortButton,
+	Table,
+	isAdmin,
+} from '@/components';
 import { useGetAllGroupsQuery } from '@/store';
 
 interface SortConfig {
@@ -61,6 +68,20 @@ export const ManageGroupsPage = () => {
 		key: '',
 		direction: 'asc',
 	});
+
+	const labels = groups.map((group) => group.name);
+	const soldByGroup = groups.map((group) =>
+		group.categories.reduce(
+			(acc, category) =>
+				acc +
+				category.products.reduce(
+					(acc, product) => acc + (product.stock?.unities_sold ?? 0),
+					0
+				),
+			0
+		)
+	);
+	const title = 'Grupos más vendidos';
 
 	const groupRows = groups.map((group) => ({
 		name: group.name,
@@ -150,6 +171,14 @@ export const ManageGroupsPage = () => {
 					isLoading={isLoadingGroups}
 					type="grupos"
 					refetch={refetch}
+				/>
+			</Grid>
+
+			<Grid item xs={12} mb={10}>
+				<PieChartUsage
+					labels={labels}
+					values={soldByGroup}
+					title={title}
 				/>
 			</Grid>
 		</Grid>
