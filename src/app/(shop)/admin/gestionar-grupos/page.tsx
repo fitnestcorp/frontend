@@ -10,11 +10,6 @@ interface SortConfig {
 	direction: 'asc' | 'desc';
 }
 
-interface FilterConfig {
-	key: string;
-	value: string;
-}
-
 const columns = [
 	{
 		id: 'image',
@@ -66,7 +61,6 @@ export const ManageGroupsPage = () => {
 		key: '',
 		direction: 'asc',
 	});
-	const [filter, setFilter] = useState<FilterConfig>({ key: '', value: '' });
 
 	const groupRows = groups.map((group) => ({
 		name: group.name,
@@ -82,16 +76,26 @@ export const ManageGroupsPage = () => {
 		row.name.toLowerCase().includes(searchTerm.toLowerCase())
 	);
 
+	const sortedGroupsRows = [...filteredGroupRows].sort((a, b) => {
+		if (sortConfig.key) {
+			const aValue: any = a[sortConfig.key as keyof typeof a];
+			const bValue: any = b[sortConfig.key as keyof typeof b];
+			if (aValue < bValue) {
+				return sortConfig.direction === 'asc' ? -1 : 1;
+			}
+			if (aValue > bValue) {
+				return sortConfig.direction === 'asc' ? 1 : -1;
+			}
+		}
+		return 0;
+	});
+
 	const handleSort = (key: string) => {
 		let direction: 'asc' | 'desc' = 'asc';
 		if (sortConfig.key === key && sortConfig.direction === 'asc') {
 			direction = 'desc';
 		}
 		setSortConfig({ key, direction });
-	};
-
-	const handleFilter = (key: string, value: string) => {
-		setFilter({ key, value });
 	};
 
 	return (
@@ -134,7 +138,7 @@ export const ManageGroupsPage = () => {
 							onSearch={(value) => setSearchTerm(value)}
 						/>
 						<GroupModal refetch={refetch} />
-						<SortButton onSort={handleSort} />
+						<SortButton onSort={handleSort} type="grupos" />
 					</Grid>
 				</Grid>
 			</Grid>
@@ -142,7 +146,7 @@ export const ManageGroupsPage = () => {
 			<Grid item xs={12} mb={10}>
 				<Table
 					columns={columns}
-					rows={filteredGroupRows}
+					rows={sortedGroupsRows}
 					isLoading={isLoadingGroups}
 					type="grupos"
 					refetch={refetch}

@@ -5,9 +5,10 @@ import { useState, MouseEvent } from 'react';
 
 interface SortButtonProps {
 	onSort: (key: string) => void;
+	type: string;
 }
 
-export const SortButton = ({ onSort }: SortButtonProps) => {
+export const SortButton = ({ onSort, type }: SortButtonProps) => {
 	const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
 
 	const handleClick = (event: MouseEvent<HTMLElement>) => {
@@ -50,8 +51,16 @@ export const SortButton = ({ onSort }: SortButtonProps) => {
 				onClose={() => handleClose(null)}
 			>
 				<MenuItem onClick={() => handleClose('name')}>Nombre</MenuItem>
-				<MenuItem onClick={() => handleClose('price')}>Precio</MenuItem>
-				<MenuItem onClick={() => handleClose('stock')}>Stock</MenuItem>
+				{type === 'productos' && (
+					<>
+						<MenuItem onClick={() => handleClose('price')}>
+							Precio
+						</MenuItem>
+						<MenuItem onClick={() => handleClose('stock')}>
+							Stock
+						</MenuItem>
+					</>
+				)}
 			</Menu>
 		</>
 	);

@@ -11,11 +11,6 @@ interface SortConfig {
 	direction: 'asc' | 'desc';
 }
 
-interface FilterConfig {
-	key: string;
-	value: string;
-}
-
 const columns = [
 	{ id: 'image', label: '', minWidth: 50, align: 'center' as const },
 	{
@@ -47,7 +42,7 @@ const columns = [
 	{
 		id: 'stock',
 		label: 'Stock',
-		minWidth: 100,
+		minWidth: 80,
 		align: 'center' as const,
 		format: (value: number) => value.toLocaleString('en-US'),
 	},
@@ -55,7 +50,7 @@ const columns = [
 	{
 		id: 'creation_date',
 		label: 'Fecha de Creación',
-		minWidth: 100,
+		minWidth: 80,
 		align: 'center' as const,
 	},
 	{
@@ -79,7 +74,6 @@ export const ManageInventoryPage = () => {
 		key: '',
 		direction: 'asc',
 	});
-	const [filter, setFilter] = useState<FilterConfig>({ key: '', value: '' });
 
 	const formatCurrency = (value: number) => {
 		const formattedValue = new Intl.NumberFormat('es-CO', {
@@ -113,17 +107,9 @@ export const ManageInventoryPage = () => {
 		stock: product.stock.stock,
 	}));
 
-	const filteredProductRows = productRows
-		.filter((row) =>
-			row.name.toLowerCase().includes(searchTerm.toLowerCase())
-		)
-		.filter((row) =>
-			filter.key
-				? (row[filter.key as keyof typeof row] as string)
-						?.toString()
-						.includes(filter.value)
-				: true
-		);
+	const filteredProductRows = productRows.filter((row) =>
+		row.name.toLowerCase().includes(searchTerm.toLowerCase())
+	);
 
 	const sortedProductRows = [...filteredProductRows].sort((a, b) => {
 		if (sortConfig.key) {
@@ -145,10 +131,6 @@ export const ManageInventoryPage = () => {
 			direction = 'desc';
 		}
 		setSortConfig({ key, direction });
-	};
-
-	const handleFilter = (key: string, value: string) => {
-		setFilter({ key, value });
 	};
 
 	return (
@@ -201,7 +183,7 @@ export const ManageInventoryPage = () => {
 							onSearch={(value: string) => setSearchTerm(value)}
 						/>
 						<ProductModal refetch={refetch} />
-						<SortButton onSort={handleSort} />
+						<SortButton onSort={handleSort} type="productos" />
 					</Grid>
 				</Grid>
 			</Grid>

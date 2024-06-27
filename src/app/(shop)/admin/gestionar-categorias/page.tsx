@@ -16,11 +16,6 @@ interface SortConfig {
 	direction: 'asc' | 'desc';
 }
 
-interface FilterConfig {
-	key: string;
-	value: string;
-}
-
 const columns = [
 	{ id: 'image', label: '', minWidth: 50, align: 'center' as const },
 	{
@@ -61,7 +56,6 @@ export const ManageCategoriesPage = () => {
 		key: '',
 		direction: 'asc',
 	});
-	const [filter, setFilter] = useState<FilterConfig>({ key: '', value: '' });
 
 	const categoryRows = categories.map((category) => ({
 		name: category.name,
@@ -74,16 +68,26 @@ export const ManageCategoriesPage = () => {
 		row.name.toLowerCase().includes(searchTerm.toLowerCase())
 	);
 
+	const sortedCategoryRows = [...filteredCategoryRows].sort((a, b) => {
+		if (sortConfig.key) {
+			const aValue: any = a[sortConfig.key as keyof typeof a];
+			const bValue: any = b[sortConfig.key as keyof typeof b];
+			if (aValue < bValue) {
+				return sortConfig.direction === 'asc' ? -1 : 1;
+			}
+			if (aValue > bValue) {
+				return sortConfig.direction === 'asc' ? 1 : -1;
+			}
+		}
+		return 0;
+	});
+
 	const handleSort = (key: string) => {
 		let direction: 'asc' | 'desc' = 'asc';
 		if (sortConfig.key === key && sortConfig.direction === 'asc') {
 			direction = 'desc';
 		}
 		setSortConfig({ key, direction });
-	};
-
-	const handleFilter = (key: string, value: string) => {
-		setFilter({ key, value });
 	};
 
 	return (
@@ -126,7 +130,7 @@ export const ManageCategoriesPage = () => {
 							onSearch={(value) => setSearchTerm(value)}
 						/>
 						<CategoryModal refetch={refetch} />
-						<SortButton onSort={handleSort} />
+						<SortButton onSort={handleSort} type="categorías" />
 					</Grid>
 				</Grid>
 			</Grid>
@@ -134,7 +138,7 @@ export const ManageCategoriesPage = () => {
 			<Grid item xs={12} mb={10}>
 				<Table
 					columns={columns}
-					rows={filteredCategoryRows}
+					rows={sortedCategoryRows}
 					isLoading={isLoading}
 					type="categorías"
 					refetch={refetch}

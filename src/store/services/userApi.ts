@@ -1,11 +1,9 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 
 import { User } from '@/interfaces';
-import { verify } from 'crypto';
 
 const baseQuery = fetchBaseQuery({
-	baseUrl: process.env.BACKEND_URL || 'http://localhost:3000', //Va a fallar el env porque no tenemos el redux persist
-	//pero lo voy a dejar asi xd hay que recordar cambiarlo
+	baseUrl: process.env.BACKEND_URL || 'http://localhost:3000',
 	prepareHeaders: (headers, { getState }) => {
 		return headers;
 	},
@@ -57,14 +55,17 @@ export const userApi = createApi({
 
 		getAllUsers: builder.query<User[], { page: number; limit: number }>({
 			query: ({ page, limit }) => ({
-				url: `users?page=${page}&limit=${limit}`,
+				url: `user/?page=${page}&limit=${limit}`,
 				method: 'GET',
+				headers: {
+					Authorization: `Bearer ${localStorage.getItem('token')}`,
+				},
 			}),
 		}),
 
 		getUserByEmail: builder.query<User, string>({
 			query: (email) => ({
-				url: `users/${email}`,
+				url: `user/${email}`,
 				method: 'GET',
 			}),
 		}),
