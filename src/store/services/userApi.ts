@@ -79,6 +79,19 @@ export const userApi = createApi({
 				},
 			}),
 		}),
+
+		hasBoughtProduct: builder.query<
+			boolean,
+			{ userId: string; productId: string }
+		>({
+			query: ({ userId, productId }) => ({
+				url: `user/${userId}/${productId}`,
+				method: 'GET',
+				headers: {
+					Authorization: `Bearer ${localStorage.getItem('token')}`,
+				},
+			}),
+		}),
 	}),
 });
 
@@ -89,4 +102,5 @@ export const {
 	useGetAllUsersQuery,
 	useGetUserByEmailQuery,
 	useVerifyTokenQuery,
+	useHasBoughtProductQuery,
 } = userApi;

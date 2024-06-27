@@ -23,7 +23,11 @@ import { useSelector } from 'react-redux';
 import { z } from 'zod';
 
 import { AddCommentSchema } from '@/schemas';
-import { RootState, useAddCommentMutation } from '@/store';
+import {
+	RootState,
+	useAddCommentMutation,
+	useHasBoughtProductQuery,
+} from '@/store';
 
 interface Props {
 	refetch: () => void;
@@ -41,6 +45,10 @@ export const AddComment = ({ refetch, productId }: Props) => {
 	const [addComment] = useAddCommentMutation();
 
 	const user = useSelector((state: RootState) => state.user.user);
+	const { data: hasBoughtProduct } = useHasBoughtProductQuery({
+		userId: user?.id || '',
+		productId,
+	});
 
 	const handleCloseSnackbar = () => {
 		setOpenSnackbar(false);
@@ -49,6 +57,13 @@ export const AddComment = ({ refetch, productId }: Props) => {
 	const handleOpen = () => {
 		if (!user) {
 			setSnackbarMessage('Debes iniciar sesión para dejar un comentario');
+			setSnackbarSeverity('info');
+			setOpenSnackbar(true);
+			return;
+		} else if (!hasBoughtProduct) {
+			setSnackbarMessage(
+				'Debes comprar el producto para dejar un comentario'
+			);
 			setSnackbarSeverity('info');
 			setOpenSnackbar(true);
 			return;
