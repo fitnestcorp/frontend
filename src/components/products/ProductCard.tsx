@@ -1,12 +1,20 @@
+'use client';
 import Link from 'next/link';
 import ProductImage from './ProductImage';
+
 import { Product } from '@/interfaces';
+import { useSelector } from 'react-redux';
+import { RootState } from '@/store';
 
 interface ProductCardProps {
 	product: Product;
 }
 
 export const ProductCard = ({ product }: ProductCardProps) => {
+	const isAdmin = useSelector(
+		(state: RootState) => state.user.user?.role === 'ADMIN'
+	);
+
 	let averageRating =
 		product.reviews.reduce((sum, review) => sum + review.score, 0) /
 		product.reviews.length;
@@ -55,16 +63,17 @@ export const ProductCard = ({ product }: ProductCardProps) => {
 							<span className="text-gray-600 ml-2">
 								({product.reviews.length} reseñas)
 							</span>
-
-							
 						</div>
 
 						<div className="mt-2 text-lg font-semibold text-gray-800">
 							{formatCurrency(product.price)}
 						</div>
-						<span className="text-gray-400 ml-2">
-							({product.stock.unities_sold} vendidos)
-						</span>
+
+						{isAdmin && (
+							<span className="text-gray-400 ml-2">
+								({product.stock.unities_sold} vendidos)
+							</span>
+						)}
 					</div>
 				</div>
 			</Link>
