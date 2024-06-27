@@ -25,6 +25,7 @@ export * from './forms/ProductForm';
 export * from './forms/LoginForm';
 export * from './forms/PasswordRecoveryForm';
 export * from './forms/RegisterForm';
+export * from './forms/AddressForm';
 
 export * from './group/GroupModal';
 

@@ -20,9 +20,9 @@ import {
 	Close as CloseIcon,
 } from '@mui/icons-material';
 
-import { RootState, useGetShoppingCartByUserIdQuery } from '@/store';
+import { RootState, useGetAddressesByUserIdQuery, useGetAllCitiesQuery, useGetAllDepartmentsQuery, useGetShoppingCartByUserIdQuery } from '@/store';
 import { clearUser } from '@/store/slices/userSlice';
-import { CartItem } from '@/components';
+import { AddressForm, CartItem } from '@/components';
 
 export const Cart = () => {
 	const [isDrawerOpen, setIsDrawerOpen] = useState<boolean>(false);
@@ -35,7 +35,23 @@ export const Cart = () => {
 	const { data: dataCart } = useGetShoppingCartByUserIdQuery(user?.id || '', {
 		skip: !user,
 	});
+  const [isAddressModalOpen, setIsAddressModalOpen] = useState<boolean>(false);
+  const { data: cities } = useGetAllCitiesQuery();
+  const { data: departments } = useGetAllDepartmentsQuery();
+  const { data: addresses } = useGetAddressesByUserIdQuery(user?.id || '', {
+    skip: !user,
+  });
 	const cart = dataCart;
+
+  const handleAddressSubmit = (addressForm: {
+    phone_number: string;
+    address: string;
+    zip_code: string;
+    city_name: string;
+  }) => {
+    // Aquí debes añadir la lógica para manejar la creación de la dirección
+    console.log('Address Form Submitted:', addressForm);
+  };
 
 	const toggleDrawer = () => {
 		setIsDrawerOpen(!isDrawerOpen);
@@ -196,6 +212,7 @@ export const Cart = () => {
 								paddingY: '0.5rem',
 								'&:hover': { backgroundColor: '#333' },
 							}}
+              onClick={() => setIsAddressModalOpen(true)}
 							component={NextLink}
 							href="#"
 						>
@@ -233,6 +250,15 @@ export const Cart = () => {
 					<Button onClick={handleModalClose}>Cerrar</Button>
 				</Box>
 			</Modal>
+      
+      <AddressForm
+        isOpen={isAddressModalOpen}
+        onClose={() => setIsAddressModalOpen(false)}
+        onSubmit={handleAddressSubmit}
+        registeredAddresses={addresses}
+        cities={cities}
+        departments={departments}
+      />
 		</>
 	);
 };
