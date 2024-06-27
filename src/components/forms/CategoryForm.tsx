@@ -1,5 +1,5 @@
 'use client';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Image from 'next/image';
 import {
 	Button,
@@ -25,8 +25,13 @@ import { Controller, useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
 
-import { useCreateCategoryMutation, useGetAllGroupsQuery } from '@/store';
+import {
+	useCreateCategoryMutation,
+	useUpdateCategoryMutation,
+	useGetAllGroupsQuery,
+} from '@/store';
 import { AddCategorySchema } from '@/schemas';
+import { Category } from '@/interfaces';
 
 const VisuallyHiddenInput = styled('input')({
 	clip: 'rect(0 0 0 0)',
@@ -40,8 +45,15 @@ const VisuallyHiddenInput = styled('input')({
 	width: 1,
 });
 
-export const AddCategoryForm = () => {
-	const [uploadedImage, setUploadedImage] = useState<string>('');
+interface Props {
+	refetch: () => void;
+	category?: Category;
+}
+
+export const CategoryForm = ({ refetch, category }: Props) => {
+	const [uploadedImage, setUploadedImage] = useState<File | string | null>(
+		null
+	);
 	const [openSnackbar, setOpenSnackbar] = useState(false);
 	const [snackbarMessage, setSnackbarMessage] = useState('');
 	const [snackbarSeverity, setSnackbarSeverity] = useState<
@@ -49,6 +61,7 @@ export const AddCategoryForm = () => {
 	>('success');
 
 	const [createCategory] = useCreateCategoryMutation();
+	const [updateCategory] = useUpdateCategoryMutation();
 	const { data: dataGroups } = useGetAllGroupsQuery({
 		page: 1,
 		limit: 10,
@@ -66,32 +79,92 @@ export const AddCategoryForm = () => {
 		formState: { errors, isSubmitting, isDirty },
 	} = useForm<z.infer<typeof AddCategorySchema>>({
 		resolver: zodResolver(AddCategorySchema),
-		defaultValues: {
-			name: '',
-			description: '',
-			url: '',
-			groupId: '',
-		},
+		defaultValues: category
+			? {
+					name: category.name,
+					description: category.description,
+					url: category.image_url,
+					groupName: category.group.name,
+			  }
+			: {
+					name: '',
+					description: '',
+					url: '',
+					groupName: '',
+			  },
 	});
 
+	useEffect(() => {
+		if (category) {
+			setValue('name', category.name);
+			setValue('description', category.description);
+			setValue('url', category.image_url);
+			setValue('groupName', category.group.name);
+			setUploadedImage(category.image_url);
+		}
+	}, [category, setValue]);
+
 	async function onSubmit(data: z.infer<typeof AddCategorySchema>) {
-		try {
-			await createCategory(data);
-			setSnackbarMessage('Categoria creada exitosamente');
-			setSnackbarSeverity('success');
-			setOpenSnackbar(true);
-		} catch (error) {
-			setSnackbarMessage('Ocurrió un error al crear la categoria');
-			setSnackbarSeverity('error');
-			setOpenSnackbar(true);
+		const formData = new FormData();
+		formData.append('name', data.name);
+		formData.append('description', data.description);
+		formData.append('groupName', data.groupName);
+
+		if (typeof uploadedImage === 'string') {
+			formData.append('existing_image', uploadedImage);
+		} else if (uploadedImage) {
+			formData.append('category_image', uploadedImage);
+		}
+
+		let errorOccurred = false;
+
+		if (category) {
+			await updateCategory({
+				formData,
+				id: category?.id,
+			})
+				.unwrap()
+				.catch((error) => {
+					setSnackbarMessage(
+						'Ocurrió un error al actualizar la categoría'
+					);
+					setSnackbarSeverity('error');
+					setOpenSnackbar(true);
+					errorOccurred = true;
+				});
+
+			if (!errorOccurred && data) {
+				setSnackbarMessage('Categoría actualizada exitosamente');
+				setSnackbarSeverity('success');
+				setOpenSnackbar(true);
+				refetch();
+			}
+		} else {
+			await createCategory(formData)
+				.unwrap()
+				.catch((error) => {
+					setSnackbarMessage(
+						'Ocurrió un error al crear la categoría'
+					);
+					setSnackbarSeverity('error');
+					setOpenSnackbar(true);
+					errorOccurred = true;
+				});
+
+			if (!errorOccurred && data) {
+				setSnackbarMessage('Categoría creada exitosamente');
+				setSnackbarSeverity('success');
+				setOpenSnackbar(true);
+				refetch();
+			}
 		}
 	}
 
 	const handleImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
 		if (event.target.files) {
 			const file = event.target.files[0];
+			setUploadedImage(file);
 			const fileURL = URL.createObjectURL(file);
-			setUploadedImage(fileURL);
 			setValue('url', fileURL, {
 				shouldValidate: true,
 			});
@@ -99,7 +172,7 @@ export const AddCategoryForm = () => {
 	};
 
 	const handleDeleteImage = () => {
-		setUploadedImage('');
+		setUploadedImage(null);
 		setValue('url', '', { shouldValidate: true });
 	};
 
@@ -120,8 +193,15 @@ export const AddCategoryForm = () => {
 								<Card sx={{ borderRadius: '8px' }}>
 									{uploadedImage ? (
 										<Image
-											src={uploadedImage}
-											alt="Group"
+											src={
+												typeof uploadedImage ===
+												'string'
+													? uploadedImage
+													: URL.createObjectURL(
+															uploadedImage
+													  )
+											}
+											alt="Category"
 											width={400}
 											height={200}
 											style={{
@@ -207,6 +287,7 @@ export const AddCategoryForm = () => {
 											fontSize: '0.75rem',
 											pt: 0.5,
 											pl: 2,
+											textAlign: 'center',
 										}}
 									>
 										{errors.url.message}
@@ -271,7 +352,7 @@ export const AddCategoryForm = () => {
 					</Grid>
 					<Grid item xs={12}>
 						<Controller
-							name="groupId"
+							name="groupName"
 							control={control}
 							render={({ field }) => (
 								<FormControl
@@ -294,7 +375,7 @@ export const AddCategoryForm = () => {
 										{...field}
 										labelId="group-select-label"
 										label="Grupo"
-										error={!!errors.groupId}
+										error={!!errors.groupName}
 									>
 										{groups?.length ?? 0 > 0 ? (
 											groups?.map((group) => (
@@ -311,7 +392,7 @@ export const AddCategoryForm = () => {
 											</MenuItem>
 										)}
 									</Select>
-									{errors.groupId && (
+									{errors.groupName && (
 										<Box
 											component="span"
 											sx={{
@@ -321,7 +402,7 @@ export const AddCategoryForm = () => {
 												pl: 2,
 											}}
 										>
-											{errors.groupId.message}
+											{errors.groupName.message}
 										</Box>
 									)}
 								</FormControl>
@@ -348,7 +429,7 @@ export const AddCategoryForm = () => {
 						disabled={isSubmitting || !isDirty}
 						endIcon={isSubmitting && <CircularProgress size={20} />}
 					>
-						Añadir categoría
+						{category ? 'Actualizar categoría' : 'Añadir categoría'}
 					</Button>
 				</DialogActions>
 			</form>

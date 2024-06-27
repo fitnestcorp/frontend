@@ -1,5 +1,5 @@
 'use client';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Image from 'next/image';
 import {
 	Button,
@@ -21,8 +21,9 @@ import { Controller, useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
 
-import { useCreateGroupMutation } from '@/store';
+import { useCreateGroupMutation, useUpdateGroupMutation } from '@/store';
 import { AddGroupSchema } from '@/schemas';
+import { Group } from '@/interfaces';
 
 const VisuallyHiddenInput = styled('input')({
 	clip: 'rect(0 0 0 0)',
@@ -36,8 +37,16 @@ const VisuallyHiddenInput = styled('input')({
 	width: 1,
 });
 
-export const AddGroupForm = () => {
-	const [uploadedImage, setUploadedImage] = useState<string>('');
+interface Props {
+	refetch: () => void;
+	group?: Group;
+}
+
+export const GroupForm = ({ refetch, group }: Props) => {
+	const [uploadedImage, setUploadedImage] = useState<File | string | null>(
+		null
+	);
+	const [imageError, setImageError] = useState<string | null>(null);
 	const [openSnackbar, setOpenSnackbar] = useState(false);
 	const [snackbarMessage, setSnackbarMessage] = useState('');
 	const [snackbarSeverity, setSnackbarSeverity] = useState<
@@ -45,6 +54,7 @@ export const AddGroupForm = () => {
 	>('success');
 
 	const [createGroup] = useCreateGroupMutation();
+	const [updateGroup] = useUpdateGroupMutation();
 
 	const handleCloseSnackbar = () => {
 		setOpenSnackbar(false);
@@ -57,39 +67,93 @@ export const AddGroupForm = () => {
 		formState: { errors, isSubmitting, isDirty },
 	} = useForm<z.infer<typeof AddGroupSchema>>({
 		resolver: zodResolver(AddGroupSchema),
-		defaultValues: {
-			name: '',
-			description: '',
-			url: '',
-		},
+		defaultValues: group
+			? {
+					name: group.name,
+					description: group.description,
+					url: group.image_url,
+			  }
+			: {
+					name: '',
+					description: '',
+					url: '',
+			  },
 	});
 
+	useEffect(() => {
+		if (group) {
+			setValue('name', group.name);
+			setValue('description', group.description);
+			setValue('url', group.image_url);
+			setUploadedImage(group.image_url);
+		}
+	}, [group, setValue]);
+
 	async function onSubmit(data: z.infer<typeof AddGroupSchema>) {
-		try {
-			await createGroup(data);
-			setSnackbarMessage('Grupo creado exitosamente');
-			setSnackbarSeverity('success');
-			setOpenSnackbar(true);
-		} catch (error) {
-			setSnackbarMessage('Ocurrió un error al crear el grupo');
-			setSnackbarSeverity('error');
-			setOpenSnackbar(true);
+		const formData = new FormData();
+
+		formData.append('name', data.name);
+		formData.append('description', data.description);
+
+		if (typeof uploadedImage === 'string') {
+			formData.append('existing_image', uploadedImage);
+		} else if (uploadedImage) {
+			formData.append('group_image', uploadedImage);
+		}
+
+		let errorOccurred = false;
+
+		if (group) {
+			await updateGroup({
+				formData,
+				id: group?.id,
+			})
+				.unwrap()
+				.catch((error) => {
+					setSnackbarMessage(
+						'Ocurrió un error al actualizar el grupo'
+					);
+					setSnackbarSeverity('error');
+					setOpenSnackbar(true);
+					errorOccurred = true;
+				});
+
+			if (!errorOccurred && data) {
+				setSnackbarMessage('Grupo actualizado exitosamente');
+				setSnackbarSeverity('success');
+				setOpenSnackbar(true);
+				refetch();
+			}
+		} else {
+			await createGroup(formData)
+				.unwrap()
+				.catch((error) => {
+					setSnackbarMessage('Ocurrió un error al crear el grupo');
+					setSnackbarSeverity('error');
+					setOpenSnackbar(true);
+					errorOccurred = true;
+				});
+
+			if (!errorOccurred && data) {
+				setSnackbarMessage('Grupo creado exitosamente');
+				setSnackbarSeverity('success');
+				setOpenSnackbar(true);
+				refetch();
+			}
 		}
 	}
 
 	const handleImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
 		if (event.target.files) {
 			const file = event.target.files[0];
+			setUploadedImage(file);
 			const fileURL = URL.createObjectURL(file);
-			setUploadedImage(fileURL);
-			setValue('url', fileURL, {
-				shouldValidate: true,
-			});
+			setValue('url', fileURL, { shouldValidate: true });
 		}
 	};
 
 	const handleDeleteImage = () => {
-		setUploadedImage('');
+		setUploadedImage(null);
 		setValue('url', '', { shouldValidate: true });
 	};
 
@@ -110,7 +174,14 @@ export const AddGroupForm = () => {
 								<Card sx={{ borderRadius: '8px' }}>
 									{uploadedImage ? (
 										<Image
-											src={uploadedImage}
+											src={
+												typeof uploadedImage ===
+												'string'
+													? uploadedImage
+													: URL.createObjectURL(
+															uploadedImage
+													  )
+											}
 											alt="Group"
 											width={400}
 											height={200}
@@ -279,7 +350,7 @@ export const AddGroupForm = () => {
 						disabled={isSubmitting || !isDirty}
 						endIcon={isSubmitting && <CircularProgress size={20} />}
 					>
-						Añadir grupo
+						{group ? 'Actualizar grupo' : 'Añadir grupo'}
 					</Button>
 				</DialogActions>
 			</form>

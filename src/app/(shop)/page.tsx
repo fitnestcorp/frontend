@@ -1,11 +1,10 @@
 'use client';
 import { useEffect, useState } from 'react';
-import { Box } from '@mui/material';
-
+import { Box, Button, Link } from '@mui/material';
 import { Group, Product } from '@/interfaces';
 import { useGetAllGroupsQuery, useGetProductsSortedByRatingQuery } from '@/store';
-
 import { Banner, GroupSwiper, LogoLoader, ProductGrid, SeeMore } from '@/components';
+import "./page.css";
 
 export const Home = () => {
 	const [page1, setPage1] = useState(1);
@@ -63,7 +62,31 @@ export const Home = () => {
 
 	return (
 		<>
-			<Banner image={'/banners/Yoga.png'} title={''} />
+			<div style={{position: 'relative'}}>
+				<Banner image={'/banners/Yoga.png'} title={''} />
+				<div className="banner-title" style={{
+					position: 'absolute',
+					top: '50%',
+					left: '30%',
+					transform: 'translate(-50%, -50%)',
+					color: 'rgba(255, 255, 255, 0.9)',
+					fontSize: '50px',
+					textAlign: 'left',
+					padding: '10px',
+					lineHeight: '1.2'
+					}}>
+         		 Potencia tu <b>cuerpo</b>,
+				 <br/>
+				 Transforma tu <b>vida</b>
+				 <br/>
+				 <Link href={`/todos`} >
+					<Button variant="contained" color="primary"  sx={{ textTransform: 'none' }} className="button-text">
+						Conoce nuestros productos
+					</Button>
+				</Link>
+				 
+        		</div>
+			</div>
 			<Box sx={{ flex: 1, px: { xs: 2, sm: 3, md: 4, lg: 5 } }}>
 				<GroupSwiper groups={objects} />
 				<SeeMore />

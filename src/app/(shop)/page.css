@@ -1,0 +1,24 @@
+.banner-title {
+    font-size: 45px;
+    color: red;
+}
+
+  
+@media (max-width: 768px) {
+    .banner-title {
+        font-size: 35px !important; /* Adjust the font size for small screens */
+    }
+}
+
+@media (max-width: 576px) {
+    .banner-title {
+        font-size: 25px !important; /* Adjust the font size for extra small screens */
+    }
+
+    .button-text {
+        font-size: 12px !important;
+    }
+}
+
+
+

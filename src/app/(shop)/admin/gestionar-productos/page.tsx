@@ -2,14 +2,7 @@
 import { useState } from 'react';
 import { Box, Grid, Typography } from '@mui/material';
 
-import {
-	AddProductModal,
-	FilterButton,
-	Search,
-	SortButton,
-	Table,
-	isAdmin,
-} from '@/components';
+import { ProductModal, Search, SortButton, Table, isAdmin } from '@/components';
 import { useGetAllProductsQuery } from '@/store';
 import { Product } from '@/interfaces';
 
@@ -68,15 +61,15 @@ const columns = [
 	{
 		id: 'actions',
 		label: 'Acciones',
-		minWidth: 100,
+		minWidth: 120,
 		align: 'center' as const,
 	},
 ];
 
 export const ManageInventoryPage = () => {
-	const { data, isLoading } = useGetAllProductsQuery({
+	const { data, isLoading, refetch } = useGetAllProductsQuery({
 		page: 1,
-		limit: 10,
+		limit: 100,
 	});
 
 	const products = (data?.[0] || []) as Product[];
@@ -115,7 +108,7 @@ export const ManageInventoryPage = () => {
 		creation_date: formatDate(product.creation_date),
 		price: formatCurrency(product.price),
 		image: product.image_urls[0],
-		// category: product.category.name,
+		category: product.category.name,
 		status: product.status,
 		stock: product.stock.stock,
 	}));
@@ -169,8 +162,17 @@ export const ManageInventoryPage = () => {
 		>
 			<Grid item xs={12}>
 				<Grid container spacing={2} alignItems="center">
-					<Grid item xs={12} md={8}>
-						<Box sx={{ display: 'flex', gap: 5 }}>
+					<Grid item xs={12} md={6}>
+						<Box
+							sx={{
+								display: 'flex',
+								gap: 5,
+								justifyContent: {
+									xs: 'center',
+									md: 'flex-start',
+								},
+							}}
+						>
 							<Typography
 								sx={{
 									color: 'text.primary',
@@ -185,7 +187,7 @@ export const ManageInventoryPage = () => {
 					<Grid
 						item
 						xs={12}
-						md={4}
+						md={6}
 						sx={{
 							display: 'flex',
 							justifyContent: { xs: 'center', md: 'flex-end' },
@@ -198,9 +200,8 @@ export const ManageInventoryPage = () => {
 							border
 							onSearch={(value: string) => setSearchTerm(value)}
 						/>
-						<AddProductModal />
+						<ProductModal refetch={refetch} />
 						<SortButton onSort={handleSort} />
-						<FilterButton onFilter={handleFilter} />
 					</Grid>
 				</Grid>
 			</Grid>
@@ -211,6 +212,7 @@ export const ManageInventoryPage = () => {
 					rows={sortedProductRows}
 					isLoading={isLoading}
 					type="productos"
+					refetch={refetch}
 				/>
 			</Grid>
 		</Grid>
