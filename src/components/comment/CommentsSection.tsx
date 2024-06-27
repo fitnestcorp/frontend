@@ -1,6 +1,6 @@
 'use client';
 import { useState } from 'react';
-import { Box, Pagination, Skeleton, Typography } from '@mui/material';
+import { Box, Pagination, Typography } from '@mui/material';
 
 import { Comment } from '@/components';
 import { Review } from '@/interfaces';
@@ -27,14 +27,7 @@ export const CommentsSection = ({ comments }: Props) => {
 	);
 
 	return (
-		<Box sx={{ my: 10 }}>
-			<Typography
-				variant="h5"
-				component="div"
-				sx={{ mb: 3, fontWeight: 'bold' }}
-			>
-				COMENTARIOS
-			</Typography>
+		<Box sx={{ my: 4 }}>
 			{displayedComments.length > 0 ? (
 				displayedComments.map((comment, index) => (
 					<Comment key={index} comment={comment} />

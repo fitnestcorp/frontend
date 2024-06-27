@@ -1,8 +1,9 @@
 'use client';
 import { useState, useEffect } from 'react';
-import { Alert, Box, Grid, Snackbar } from '@mui/material';
+import { Alert, Box, Grid, Snackbar, Typography } from '@mui/material';
 
 import {
+	AddComment,
 	CommentsSection,
 	LogoLoader,
 	ProductDetails,
@@ -19,8 +20,11 @@ interface Props {
 export const ProductPage = ({ params }: Props) => {
 	const { id } = params;
 	const { data: product, error, isLoading } = useGetProductByIdQuery(id);
-	const { data: dataReviews, isLoading: isLoadingReviews } =
-		useGetProductReviewsQuery({ page: 1, limit: 5, productId: id });
+	const {
+		data: dataReviews,
+		isLoading: isLoadingReviews,
+		refetch,
+	} = useGetProductReviewsQuery({ page: 1, limit: 5, productId: id });
 	const reviews = dataReviews?.[0] || [];
 
 	const [openSnackbar, setOpenSnackbar] = useState(false);
@@ -60,7 +64,6 @@ export const ProductPage = ({ params }: Props) => {
 			) : (
 				<Box
 					sx={{
-						
 						py: 6,
 						px: { xs: 2, md: 4, lg: 8 },
 						display: 'flex',
@@ -83,7 +86,17 @@ export const ProductPage = ({ params }: Props) => {
 							/>
 						</Grid>
 					</Grid>
-					<CommentsSection comments={reviews} />
+					<Box sx={{ mt: 10 }}>
+						<Typography
+							variant="h5"
+							component="div"
+							sx={{ mb: 3, fontWeight: 'bold' }}
+						>
+							Comentarios
+						</Typography>
+						<AddComment refetch={refetch} productId={id} />
+						<CommentsSection comments={reviews} />
+					</Box>
 				</Box>
 			)}
 		</>

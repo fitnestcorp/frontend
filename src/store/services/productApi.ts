@@ -311,6 +311,14 @@ export const productApi = createApi({
 				};
 			},
 		}),
+
+		addComment: builder.mutation({
+			query: (comment) => ({
+				url: 'review',
+				method: 'POST',
+				body: comment,
+			}),
+		}),
 	}),
 });
 
@@ -336,4 +344,5 @@ export const {
 	useGetProductsQuery,
 	useGetProductsByGroupFilterQuery,
 	useGetProductsByCategoryFilterQuery,
+	useAddCommentMutation,
 } = productApi;

@@ -46,7 +46,7 @@ export const Comment = ({ comment }: Props) => {
 					{title}
 				</Typography>
 			</Box>
-			<Typography variant="body2" component="p" sx={{ mt: 1 }}>
+			<Typography variant="body2" component="p" sx={{ mt: 2 }}>
 				{content}
 			</Typography>
 		</Box>

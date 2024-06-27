@@ -11,6 +11,7 @@ export * from './cart/CartItem';
 
 export * from './category/CategoryModal';
 
+export * from './comment/AddComment';
 export * from './comment/Comment';
 export * from './comment/CommentsSection';
 

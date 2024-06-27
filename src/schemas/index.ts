@@ -1,4 +1,5 @@
 export * from './category/AddCategorySchema';
+export * from './comment/AddCommentSchema';
 export * from './group/AddGroupSchema';
 export * from './product/AddProductSchema';
 export * from './login/LoginSchema';
