@@ -1,6 +1,6 @@
 'use client';
-import { Box, Pagination, Typography } from '@mui/material';
 import { useEffect, useState } from 'react';
+import { Box, Pagination, Typography } from '@mui/material';
 
 import { Product } from '@/interfaces';
 import { Filters, LogoLoader, ProductGrid } from '@/components';
@@ -12,9 +12,18 @@ export const AllProducts = () => {
 	const [products, setProducts] = useState<Product[]>([]);
 	const [countProducts, setCountProducts] = useState(0);
 	const [selectedFilter, setSelectedFilter] = useState('Mejor votados');
-	const [filterParams, setFilterParams] = useState({ filter: 'rating', order: 'DESC' as 'ASC' | 'DESC' , page: 1, limit: 16});
+	const [filterParams, setFilterParams] = useState({
+		filter: 'rating',
+		order: 'DESC' as 'ASC' | 'DESC',
+		page: 1,
+		limit: 16,
+	});
 
-	const { data: productsData, error: productsError, isLoading: productsLoading } = useGetProductsQuery({ ...filterParams });
+	const {
+		data: productsData,
+		error: productsError,
+		isLoading: productsLoading,
+	} = useGetProductsQuery({ ...filterParams });
 
 	useEffect(() => {
 		if (
@@ -35,30 +44,68 @@ export const AllProducts = () => {
 	const handleSelectFilter = (filter: string) => {
 		switch (filter) {
 			case 'Menos costosos':
-				setFilterParams({ filter: 'price', order: 'ASC', page: 1, limit: 16});
+				setFilterParams({
+					filter: 'price',
+					order: 'ASC',
+					page: 1,
+					limit: 16,
+				});
 				break;
 			case 'Más costosos':
-				setFilterParams({ filter: 'price', order: 'DESC', page: 1, limit: 16 });
+				setFilterParams({
+					filter: 'price',
+					order: 'DESC',
+					page: 1,
+					limit: 16,
+				});
 				break;
 			case 'Mejor votados':
-				setFilterParams({ filter: 'rating', order: 'DESC', page: 1, limit: 16 });
+				setFilterParams({
+					filter: 'rating',
+					order: 'DESC',
+					page: 1,
+					limit: 16,
+				});
 				break;
 			case 'Peor votados':
-				setFilterParams({ filter: 'rating', order: 'ASC', page: 1, limit: 16 });
+				setFilterParams({
+					filter: 'rating',
+					order: 'ASC',
+					page: 1,
+					limit: 16,
+				});
 				break;
 			case 'Más vendidos':
-				setFilterParams({ filter: 'sold_units', order: 'DESC', page: 1, limit: 16 });
+				setFilterParams({
+					filter: 'sold_units',
+					order: 'DESC',
+					page: 1,
+					limit: 16,
+				});
 				break;
 			case 'Menos vendidos':
-				setFilterParams({ filter: 'sold_units', order: 'ASC', page: 1, limit: 16 });
+				setFilterParams({
+					filter: 'sold_units',
+					order: 'ASC',
+					page: 1,
+					limit: 16,
+				});
 				break;
 			default:
-				setFilterParams({ filter: '', order: 'DESC' , page: 1, limit: 16});
+				setFilterParams({
+					filter: '',
+					order: 'DESC',
+					page: 1,
+					limit: 16,
+				});
 				break;
 		}
 		setSelectedFilter(filter);
 	};
-	const handlePageChange = (event: React.ChangeEvent<unknown>, value: number) => {
+	const handlePageChange = (
+		event: React.ChangeEvent<unknown>,
+		value: number
+	) => {
 		setPage(value);
 	};
 
@@ -67,9 +114,17 @@ export const AllProducts = () => {
 	}
 
 	return (
-		<Box>
-			<Box sx={{ display: 'flex', justifyContent: 'center', textAlign: 'center', my: 6 }}>
-				<Typography variant="h3" sx={{ fontWeight: 'bold' }}>
+		<Box sx={{ flex: 1, px: { xs: 2, sm: 3, md: 4, lg: 5 } }}>
+			<Box
+				sx={{
+					display: 'flex',
+					justifyContent: 'center',
+					textAlign: 'center',
+					mt: 6,
+					mb: 2,
+				}}
+			>
+				<Typography variant="h4" sx={{ fontWeight: 'bold' }}>
 					{'Todos Nuestros Productos'}
 				</Typography>
 			</Box>
