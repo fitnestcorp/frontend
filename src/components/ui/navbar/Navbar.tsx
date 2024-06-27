@@ -113,8 +113,6 @@ export const Navbar = () => {
 							/>
 						</Box>
 
-						
-
 						<Box sx={{ display: { xs: 'none', md: 'block' } }}>
 							<Box sx={{ display: 'flex', gap: 2 }}>
 								{/* Show if user is admin */}
@@ -131,7 +129,6 @@ export const Navbar = () => {
 									</Box>
 								)}
 
-								{/* Show if user is not authenticated */}
 								{user ? (
 									<>
 										<Cart />
@@ -196,7 +193,10 @@ export const Navbar = () => {
 						</Box>
 
 						{/* Show when screen is small */}
-						<Box sx={{ display: { xs: 'block', md: 'none' } }}>
+						<Box
+							sx={{ display: { xs: 'flex', md: 'none' }, gap: 2 }}
+						>
+							<Cart />
 							<Sidemenu />
 						</Box>
 					</Box>

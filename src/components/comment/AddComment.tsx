@@ -60,7 +60,7 @@ export const AddComment = ({ refetch, productId }: Props) => {
 			setSnackbarSeverity('info');
 			setOpenSnackbar(true);
 			return;
-		} else if (!hasBoughtProduct) {
+		} else if (!hasBoughtProduct?.hasProduct) {
 			setSnackbarMessage(
 				'Debes comprar el producto para dejar un comentario'
 			);

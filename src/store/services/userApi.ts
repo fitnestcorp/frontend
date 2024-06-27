@@ -81,7 +81,7 @@ export const userApi = createApi({
 		}),
 
 		hasBoughtProduct: builder.query<
-			boolean,
+			{ hasProduct: boolean },
 			{ userId: string; productId: string }
 		>({
 			query: ({ userId, productId }) => ({
