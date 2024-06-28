@@ -34,3 +34,10 @@ npm run build
 # start production server
 npm run start
 ```
+
+## ROADMAP
+- [ ] Algoritmo de recomendación a partir de gustos de los usuarios
+- [ ] Gestión y rastreo de ordenes
+- [ ] Chatbot para asistencia a los usuarios
+- [ ] Disponibilidad en varios idiomas
+- [ ] Lista de deseos
