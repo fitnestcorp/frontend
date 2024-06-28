@@ -15,11 +15,13 @@ import {
 	InputAdornment,
 	IconButton,
 	Link,
+	Typography,
+	Divider,
 } from '@mui/material';
 import { Visibility, VisibilityOff } from '@mui/icons-material';
 import GoogleIcon from '@mui/icons-material/Google';
 import { LoginSchema } from '@/schemas';
-import { setUser, useLoginUserMutation} from '@/store';
+import { setUser, useLoginUserMutation } from '@/store';
 
 export const LoginForm = () => {
 	const {
@@ -59,15 +61,12 @@ export const LoginForm = () => {
 		}
 	}
 
-	async function onSubmitGoogleAuth(event: any ){ 
+	async function onSubmitGoogleAuth(event: any) {
 		try {
-
 			event.preventDefault();
 			if (typeof window !== 'undefined') {
 				window.location.href = `http://localhost:3000/auth/google/login`;
 			}
-
-			
 		} catch (error: any) {
 			if (error?.status === 401) {
 				setErrorMap('Email o contraseña incorrectos');
@@ -161,19 +160,6 @@ export const LoginForm = () => {
 				</Grid>
 				<Grid item xs={12}>
 					<Button
-						// type="submit"
-						fullWidth
-						variant="contained"
-						sx={{
-							marginBottom: '1rem'
-						}}
-						onClick={onSubmitGoogleAuth}
-						//disabled={!isDirty || isSubmitting}
-						//endIcon={isSubmitting && <CircularProgress size={20} />}
-					>
-						Conectarse con Google <GoogleIcon sx={{marginLeft: '0.5rem'}}/>
-					</Button>
-					<Button
 						type="submit"
 						fullWidth
 						variant="contained"
@@ -181,6 +167,25 @@ export const LoginForm = () => {
 						endIcon={isSubmitting && <CircularProgress size={20} />}
 					>
 						Iniciar Sesión
+					</Button>
+				</Grid>
+
+				<Grid item xs={12}>
+					<Divider sx={{ mb: 3 }}>O</Divider>
+
+					<Button
+						// type="submit"
+						fullWidth
+						variant="contained"
+						sx={{
+							marginBottom: '1rem',
+						}}
+						onClick={onSubmitGoogleAuth}
+						//disabled={!isDirty || isSubmitting}
+						//endIcon={isSubmitting && <CircularProgress size={20} />}
+					>
+						Conectarse con Google{' '}
+						<GoogleIcon sx={{ marginLeft: '0.5rem' }} />
 					</Button>
 				</Grid>
 			</Grid>
