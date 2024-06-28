@@ -17,7 +17,10 @@ interface SearchProductsProps {
     const searchParams = useSearchParams();
     const querySearchParam = searchParams.get('query');
     console.log(querySearchParam);
-    const keyword = querySearchParam
+    if(!querySearchParam){
+        const keyword = querySearchParam;
+    }
+    
   const [page, setPage] = useState(1);
   const [limit, setLimit] = useState(16);
   const [products, setProducts] = useState<Product[]>([]);
