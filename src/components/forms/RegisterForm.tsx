@@ -55,15 +55,18 @@ export const RegisterForm = ({ showRegisterButton = true, refetch }: Props) => {
 	async function onSubmit(data: z.infer<typeof RegisterSchema>) {
 		try {
 			const response = await registerUser(data).unwrap();
-			console.log(response);
-			dispatch(setUser({ user: response.user }));
+			dispatch(setUser({ user: response }));
 			setErrorMap('');
 			setSuccessfully('Usuario registrado correctamente');
 			refetch && refetch();
 
 			router.push('/');
-		} catch (error) {
-			setErrorMap('Ocurrió un error al registrar el usuario');
+		} catch (error: any) {
+			if (error.data?.message && error.data.message.includes('email')) {
+				setErrorMap('El email ya está en uso');
+			} else {
+				setErrorMap('Ocurrió un error al registrar el usuario');
+			}
 		}
 	}
 
