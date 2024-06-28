@@ -65,7 +65,7 @@ export const LoginForm = () => {
 		try {
 			event.preventDefault();
 			if (typeof window !== 'undefined') {
-				window.location.href = `http://localhost:3000/auth/google/login`;
+				window.location.href = `https://api.fitnest.online/auth/google/login`;
 			}
 		} catch (error: any) {
 			if (error?.status === 401) {
