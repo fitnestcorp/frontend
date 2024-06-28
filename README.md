@@ -36,8 +36,8 @@ npm run start
 ```
 
 ## ROADMAP
-- [ ] Algoritmo de recomendación a partir de gustos de los usuarios
-- [ ] Gestión y rastreo de ordenes
-- [ ] Chatbot para asistencia a los usuarios
-- [ ] Disponibilidad en varios idiomas
-- [ ] Lista de deseos
+- [ ] Recommendation algorithm based on user preferences
+- [ ] Order management and tracking
+- [ ] Chatbot for user support
+- [ ] Multi-language availability
+- [ ] Wish list
