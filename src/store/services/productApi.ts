@@ -316,6 +316,13 @@ export const productApi = createApi({
 				body: comment,
 			}),
 		}),
+
+		searchProducts: builder.query<ProductWithNumber, { keyword: string; page?: number; limit?: number }>({
+			query: ({ keyword, page = 1, limit = 10 }) => ({
+				url: `product/filter/search?keyword=${keyword}&page=${page}&limit=${limit}`,
+				method: 'GET',
+			}),
+		}),
 	}),
 });
 
@@ -342,4 +349,5 @@ export const {
 	useGetProductsByGroupFilterQuery,
 	useGetProductsByCategoryFilterQuery,
 	useAddCommentMutation,
+	useSearchProductsQuery
 } = productApi;
