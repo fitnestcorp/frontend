@@ -128,7 +128,7 @@ const CartSummary: React.FC<CartSummaryProps> = ({ userId, address, onClose }) =
         <PreOrder items={items} />
         <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
           <Typography variant="h6" sx={{ color: '#4C4C4C' }}>
-            <strong>Dirección de envío:</strong> {address.address}, {formatCityName(address.city.name)}
+            <strong>Dirección de envío:</strong> {address.address}
           </Typography>
           <Typography variant="h6" sx={{ color: '#4C4C4C' }}>
             <strong>Número de contacto:</strong> {address.phone_number}

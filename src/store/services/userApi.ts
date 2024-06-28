@@ -1,17 +1,8 @@
 import { User } from '@/interfaces';
 
-import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
+import { createApi } from '@reduxjs/toolkit/query/react';
 
-const baseQuery = fetchBaseQuery({
-	baseUrl: process.env.BACKEND_URL || 'http://localhost:3000',
-	prepareHeaders: (headers) => {
-		const token = localStorage.getItem('token'); 
-    if (token) {
-      headers.set('Authorization', `Bearer ${token}`);
-    }
-    return headers;
-	},
-});
+import { baseQuery } from '@/store/consts/api';
 
 export const userApi = createApi({
 	reducerPath: 'userApi',
@@ -103,6 +94,14 @@ export const userApi = createApi({
 				},
 			}),
 		}),
+
+		sendPQR: builder.mutation({
+			query: (data) => ({
+				url: 'user/send-PQR',
+				method: 'POST',
+				body: data,
+			}),
+		}),
 	}),
 });
 
@@ -114,5 +113,6 @@ export const {
 	useGetUserByEmailQuery,
 	useVerifyTokenQuery,
 	useHasBoughtProductQuery,
-	useGetUserStatusQuery
+	useGetUserStatusQuery,
+	useSendPQRMutation,
 } = userApi;

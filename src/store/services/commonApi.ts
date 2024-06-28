@@ -2,21 +2,11 @@ import { Address } from '@/interfaces/Address';
 import { City } from '@/interfaces/City';
 import { Department } from '@/interfaces/Department';
 
-import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
+import { createApi } from '@reduxjs/toolkit/query/react';
 
 
-type AddressWithNumber = [Address[], number]; // TODO: unused
+type AddressWithNumber = [Address[], number]; 
 
-const baseQuery = fetchBaseQuery({
-  baseUrl: process.env.BACKEND_URL || 'http://localhost:3000',
-  prepareHeaders: (headers) => {
-		const token = localStorage.getItem('token'); 
-    if (token) {
-      headers.set('Authorization', `Bearer ${token}`);
-    }
-    return headers;
-	},
-});
 
 export const commonApi = createApi({
   reducerPath: 'commonApi',
