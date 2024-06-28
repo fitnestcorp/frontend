@@ -18,11 +18,22 @@ interface Props {
 	groupId?: string;
 }
 
+/**
+ * GroupModal component for creating or editing groups.
+ *
+ * @param {Props} props - The component properties.
+ * @param {Function} props.refetch - Function to refetch data after creating or editing a group.
+ * @param {string} [props.groupId] - The ID of the group to be edited.
+ * @returns {JSX.Element} The rendered GroupModal component.
+ */
 export const GroupModal = ({ refetch, groupId }: Props) => {
 	const [open, setOpen] = useState(false);
 
 	const { data: group } = useGetGroupByIdQuery(groupId ?? '');
 
+	/**
+	 * Opens the modal dialog.
+	 */
 	const handleClickOpen = () => {
 		setOpen(true);
 	};

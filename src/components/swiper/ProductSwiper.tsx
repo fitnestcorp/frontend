@@ -16,10 +16,22 @@ interface Props {
 	name: string;
 }
 
+/**
+ * ProductSwiper component renders a main image swiper with a thumbnail swiper for product images.
+ *
+ * @component
+ * @param {Array} images - Array of image URLs for the product.
+ * @param {string} name - Name of the product.
+ * @example
+ * const images = ['image1.jpg', 'image2.jpg'];
+ * const name = 'Product Name';
+ * return <ProductSwiper images={images} name={name} />
+ */
 export const ProductSwiper = ({ images, name }: Props) => {
 	const [thumbsSwiper, setThumbsSwiper] = useState<SwiperObject>();
 	return (
 		<>
+			{/* Main Swiper for displaying product images */}
 			<Swiper
 				style={
 					{
@@ -46,6 +58,7 @@ export const ProductSwiper = ({ images, name }: Props) => {
 				))}
 			</Swiper>
 
+			{/* Thumbnail Swiper for selecting product images */}
 			<Swiper
 				onSwiper={setThumbsSwiper}
 				spaceBetween={10}

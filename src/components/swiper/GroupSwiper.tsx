@@ -15,6 +15,15 @@ interface Props {
 	groups: Group[];
 }
 
+/**
+ * GroupSwiper component renders a Swiper carousel with training groups.
+ *
+ * @component
+ * @param {Array} groups - Array of group objects to display in the Swiper.
+ * @example
+ * const groups = [{ name: 'Cardio', image_url: '/path/to/image' }, ...];
+ * return <GroupSwiper groups={groups} />
+ */
 export const GroupSwiper = ({ groups }: Props) => {
 	return (
 		<Box sx={{ maxWidth: '100%' }}>

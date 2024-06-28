@@ -10,10 +10,24 @@ interface Props {
 	onSearch: (value: string) => void;
 }
 
+/**
+ * Search component renders a search input field.
+ *
+ * @param {boolean} border - If true, the search field will have a border.
+ * @param {function} onSearch - Function to call when the search value changes.
+ *
+ * @example
+ * <Search border={true} onSearch={(value) => console.log(value)} />
+ */
 export const Search = ({ border = false, onSearch }: Props) => {
 	const [searchValue, setSearchValue] = useState('');
 	const [error, setError] = useState('');
 
+	/**
+	 * Handles the change event for the search input field.
+	 *
+	 * @param {React.ChangeEvent<HTMLInputElement>} event - The change event of the input field.
+	 */
 	const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
 		const value = event.target.value;
 		setSearchValue(value);

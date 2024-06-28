@@ -53,6 +53,12 @@ interface Props {
 	product?: Product;
 }
 
+/**
+ * ProductForm component for creating or updating a product.
+ *
+ * @param {Props} props - The props for the component.
+ * @returns {JSX.Element} The rendered ProductForm component.
+ */
 export const ProductForm = ({ refetch, product }: Props) => {
 	const theme = useTheme();
 
@@ -116,6 +122,11 @@ export const ProductForm = ({ refetch, product }: Props) => {
 		}
 	}, [product, setValue]);
 
+	/**
+	 * Handles form submission for creating or updating a product.
+	 *
+	 * @param {z.infer<typeof AddProductSchema>} data - The form data.
+	 */
 	async function onSubmit(data: z.infer<typeof AddProductSchema>) {
 		const formData = new FormData();
 
@@ -176,6 +187,11 @@ export const ProductForm = ({ refetch, product }: Props) => {
 		}
 	}
 
+	/**
+	 * Handles image change event for product images.
+	 *
+	 * @param {React.ChangeEvent<HTMLInputElement>} event - The change event.
+	 */
 	const handleImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
 		if (event.target.files) {
 			const files = Array.from(event.target.files);
@@ -197,6 +213,11 @@ export const ProductForm = ({ refetch, product }: Props) => {
 		}
 	};
 
+	/**
+	 * Handles image deletion for a specific image.
+	 *
+	 * @param {number} index - The index of the image to delete.
+	 */
 	const handleDeleteImage = (index: number) => {
 		const updatedImages = uploadedImages.filter((_, i) => i !== index);
 		setUploadedImages(updatedImages);

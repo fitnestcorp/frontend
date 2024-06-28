@@ -1,12 +1,35 @@
 import React from 'react';
 import { Box, Typography } from '@mui/material';
-import OrderItem from './OrderItem'; // Asegúrate de importar correctamente OrderItem
+import OrderItem from './OrderItem';
+
+interface Product {
+  image_urls: string[];
+  name: string;
+  type: string;
+  price: number;
+}
+
+interface OrderItemProps {
+  id: string;
+  quantity: number;
+  product: Product;
+}
 
 interface OrderProps {
   id: string;
-  items: { id: string; quantity: number; product: { image_urls: string[]; name: string; type: string; price: number }; }[];
+  items: OrderItemProps[];
 }
 
+
+/**
+ * Order component
+ * Displays an order with its items.
+ *
+ * @param {OrderProps} props - The properties for the Order component.
+ * @param {string} props.id - The ID of the order.
+ * @param {OrderItemProps[]} props.items - The items in the order.
+ * @returns {JSX.Element} The rendered Order component.
+ */
 const Order: React.FC<OrderProps> = ({ id, items }) => {
   console.log("ayuda", items)
   return (

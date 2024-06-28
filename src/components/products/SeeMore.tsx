@@ -1,6 +1,12 @@
 import Link from 'next/link';
 import { Box, Typography, Link as MuiLink } from '@mui/material';
 
+/**
+ * SeeMore component.
+ * Displays a heading and a link to view all relevant items.
+ *
+ * @returns {JSX.Element} The SeeMore component.
+ */
 export const SeeMore = () => {
 	return (
 		<Box

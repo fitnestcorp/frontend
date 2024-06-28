@@ -15,7 +15,21 @@ interface Props {
 	categories: Category[];
 }
 
+/**
+ * CategorySwiper component renders a Swiper carousel with categories.
+ *
+ * @component
+ * @param {Array} categories - Array of category objects to display in the Swiper.
+ * @example
+ * const categories = [{ name: 'Cardio', image_url: '/path/to/image' }, ...];
+ * return <CategorySwiper categories={categories} />
+ */
 export const CategorySwiper = ({ categories }: Props) => {
+	/**
+	 * Calculates the space between slides based on the number of categories.
+	 * @param {number} numCategories - The number of categories.
+	 * @returns {number} - The space between slides.
+	 */
 	const calculateSpaceBetween = (numCategories: number) => {
 		if (numCategories <= 1) return 0;
 		if (numCategories <= 3) return 25;
@@ -23,6 +37,11 @@ export const CategorySwiper = ({ categories }: Props) => {
 		return 20;
 	};
 
+	/**
+	 * Calculates the number of slides per view based on the number of categories.
+	 * @param {number} numCategories - The number of categories.
+	 * @returns {number} - The number of slides per view.
+	 */
 	const calculateSlidesPerView = (numCategories: number) => {
 		if (numCategories === 1) return 1;
 		if (numCategories === 2) return 2;

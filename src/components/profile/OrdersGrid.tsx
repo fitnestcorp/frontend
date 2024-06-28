@@ -5,6 +5,12 @@ import { useSelector } from 'react-redux';
 import { RootState, useGetUserStatusQuery } from '@/store';
 import { skipToken } from '@reduxjs/toolkit/query';
 
+/**
+ * OrdersGrid component
+ * Displays a grid of user orders.
+ *
+ * @returns {JSX.Element} The rendered OrdersGrid component.
+ */
 const OrdersGrid: React.FC = () => {
   const userId = useSelector((state: RootState) => state.user.user?.id);
   

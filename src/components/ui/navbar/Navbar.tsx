@@ -25,6 +25,13 @@ import {
 } from '@/components';
 import { RootState } from '@/store';
 
+/**
+ * Navbar component renders the application's top navigation bar.
+ *
+ * @component
+ * @example
+ * return <Navbar />
+ */
 export const Navbar = () => {
 	const [searchTerm, setSearchTerm] = useState('');
 	const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);

@@ -70,6 +70,16 @@ const adminOptions = [
 	},
 ];
 
+
+/**
+ * Sidemenu component provides a drawer menu with navigation links and user actions.
+ * 
+ * @component
+ * @example
+ * return (
+ *   <Sidemenu />
+ * )
+ */	
 export const Sidemenu = () => {
 	const dispatch = useDispatch();
 	const [isDrawerOpen, setIsDrawerOpen] = useState<boolean>(false);
