@@ -17,10 +17,10 @@ import { isAuth } from '@/components';
  */
 const ProfilePage = () => {
   return (
-    <Container sx={{ mt: 4 }}>
+    <Container sx={{ mt: 7 }}>
       <Grid container spacing={3} sx={{ justifyContent: 'space-between' }}>
         <Grid item xs={12} md={4.5} sx={{ display: 'flex', justifyContent: 'flex-start' }}>
-          <Box sx={{ width: '100%' }}>
+          <Box sx={{ width: '100%' , mt: 7 }}>
             <Profile />
           </Box>
         </Grid>

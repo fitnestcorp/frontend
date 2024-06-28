@@ -5,6 +5,7 @@ import { useRouter } from 'next/navigation';
 import Image from 'next/image';
 import { Box, CircularProgress, Typography } from '@mui/material';
 import { useHandlePayUResponseMutation } from '@/store/services/orderApi';
+import { useDeleteShoppingCartMutation } from '@/store';
 import logo from '../../../../public/Logo/Logo.png';
 
 /**
@@ -20,6 +21,7 @@ import logo from '../../../../public/Logo/Logo.png';
 const PayUResponse = () => {
   const router = useRouter();
   const [handlePayUResponse] = useHandlePayUResponseMutation();
+  const [deleteShoppingCart] = useDeleteShoppingCartMutation();
 
   useEffect(() => {
     /**
@@ -29,9 +31,11 @@ const PayUResponse = () => {
     const processPayUResponse = async () => {
       const queryParams = new URLSearchParams(window.location.search);
       const params = Object.fromEntries(queryParams.entries());
+      const userId = params.userId; // Asegúrate de que el userId esté presente en los parámetros
 
       try {
         await handlePayUResponse(params).unwrap();
+        await deleteShoppingCart(userId).unwrap();
         router.push('/perfil');
       } catch (error) {
         console.error('Error al enviar la respuesta de PayU al backend:', error);
@@ -39,7 +43,7 @@ const PayUResponse = () => {
     };
 
     processPayUResponse();
-  }, [handlePayUResponse, router]);
+  }, [handlePayUResponse, deleteShoppingCart, router]);
 
   return (
     <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', height: '100vh' }}>

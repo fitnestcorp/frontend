@@ -88,9 +88,10 @@ export const Navbar = () => {
 							anchorEl={anchorEl}
 							handleClose={handleClose}
 						/>
+						{user ? (
 						<Button
 							component={NextLink}
-							href="/categoria/servicios"
+							href="/ordenes"
 							sx={{
 								color: 'text.secondary',
 								mx: 1,
@@ -101,8 +102,9 @@ export const Navbar = () => {
 								},
 							}}
 						>
-							Servicios
+							Ordenes
 						</Button>
+						):(<></>)}
 					</Box>
 
 					{/* Search, Cart, Login */}

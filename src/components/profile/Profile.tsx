@@ -4,7 +4,7 @@ import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
 import { Container, Paper, Typography, Box, Button, Modal, TextField, IconButton, Alert } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
-import { RootState } from '@/store'; // Ajusta la ruta según tu estructura de archivos
+import { RootState, useUpdateUserMutation } from '@/store'; // Ajusta la ruta según tu estructura de archivos
 
 interface ProfileData {
   firstName: string;
@@ -19,6 +19,12 @@ const Profile: React.FC = () => {
 
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
+  const [updateUser, { isLoading, isError, isSuccess }] = useUpdateUserMutation();
+  const [formData, setFormData] = useState({
+    password: '',
+    confirmPassword: ''
+  });
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
   if (!user) {
     return (
@@ -27,6 +33,29 @@ const Profile: React.FC = () => {
       </Container>
     );
   }
+
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    setFormData({
+      ...formData,
+      [name]: value,
+    });
+  };
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    if (formData.password !== formData.confirmPassword) {
+      setErrorMessage('Passwords do not match');
+      return;
+    }
+    try {
+      await updateUser({ id_user: user.id, updateUserDto: { password: formData.password } }).unwrap();
+      handleClose(); 
+    } catch (error) {
+      console.error('Failed to update user:', error);
+      setErrorMessage('Failed to update user');
+    }
+  };
 
   const profile: ProfileData = {
     firstName: user.first_name,
@@ -46,6 +75,7 @@ const Profile: React.FC = () => {
           borderRadius: '16px',
           boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)',
           position: 'relative',
+          mt: 4 
         }}
       >
         <Box sx={{ mb: 3, textAlign: 'left' }}>
@@ -110,13 +140,16 @@ const Profile: React.FC = () => {
           <Typography id="edit-profile-title" variant="h6" align="center" gutterBottom>
             Editar Información
           </Typography>
-          <Box component="form" noValidate autoComplete="off">
+          <Box component="form" noValidate autoComplete="off" onSubmit={handleSubmit}>
             <TextField
               fullWidth
               margin="normal"
               id="password"
               label="Contraseña"
               type="password"
+              name="password"
+              value={formData.password}
+              onChange={handleInputChange}
               InputProps={{
                 style: { color: 'black' }
               }}
@@ -130,6 +163,9 @@ const Profile: React.FC = () => {
               id="confirm-password"
               label="Repetir Contraseña"
               type="password"
+              name="confirmPassword"
+              value={formData.confirmPassword}
+              onChange={handleInputChange}
               InputProps={{
                 style: { color: 'black' }
               }}
@@ -138,10 +174,13 @@ const Profile: React.FC = () => {
               }}
             />
             <Box sx={{ display: 'flex', justifyContent: 'center', mt: 2, fontWeight: 'bold' }}>
-              <Button variant="contained" color="primary">
-                Editar contraseña
+              <Button type="submit" variant="contained" color="primary" disabled={isLoading}>
+                {isLoading ? 'Actualizando...' : 'Editar contraseña'}
               </Button>
             </Box>
+            {isError && <Alert severity="error" sx={{ mt: 2 }}>Error al actualizar la contraseña</Alert>}
+            {isSuccess && <Alert severity="success" sx={{ mt: 2 }}>Contraseña actualizada con éxito</Alert>}
+            {errorMessage && <Alert severity="error" sx={{ mt: 2 }}>{errorMessage}</Alert>}
           </Box>
         </Paper>
       </Modal>

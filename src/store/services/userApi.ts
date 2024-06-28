@@ -3,6 +3,7 @@ import { User } from '@/interfaces';
 import { createApi } from '@reduxjs/toolkit/query/react';
 
 import { baseQuery } from '@/store/consts/api';
+import { Order } from '@/interfaces/Order';
 
 export const userApi = createApi({
 	reducerPath: 'userApi',
@@ -102,8 +103,26 @@ export const userApi = createApi({
 				body: data,
 			}),
 		}),
-	}),
-});
+
+		getUserOrdersByStatus: builder.query<Order[], { status: string }>({
+			query: ({ status }) => ({
+					url: `user/orders/${status}`,
+					method: 'GET',
+					}),
+			}),
+		
+			updateUser: builder.mutation({
+				query: ({ id_user, updateUserDto }) => ({
+				  url: `user/${id_user}`,
+				  method: 'PUT',
+				  body: updateUserDto,
+	
+				}),
+			}),
+		
+		}),
+		
+})
 
 export const {
 	useLoginUserMutation,
@@ -115,4 +134,6 @@ export const {
 	useHasBoughtProductQuery,
 	useGetUserStatusQuery,
 	useSendPQRMutation,
+	useGetUserOrdersByStatusQuery,
+	useUpdateUserMutation
 } = userApi;
