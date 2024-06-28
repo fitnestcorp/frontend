@@ -1,13 +1,8 @@
-import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
-
 import { User } from '@/interfaces';
 
-const baseQuery = fetchBaseQuery({
-	baseUrl: process.env.BACKEND_URL || 'http://localhost:3000',
-	prepareHeaders: (headers, { getState }) => {
-		return headers;
-	},
-});
+import { createApi } from '@reduxjs/toolkit/query/react';
+
+import { baseQuery } from '@/store/consts/api';
 
 export const userApi = createApi({
 	reducerPath: 'userApi',

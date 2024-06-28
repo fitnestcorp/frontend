@@ -1,15 +1,11 @@
-import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 
 import { Product, Review } from '@/interfaces';
 
-type ProductWithNumber = [Product[], number];
+import { createApi } from '@reduxjs/toolkit/query/react';
 
-const baseQuery = fetchBaseQuery({
-	baseUrl: process.env.BACKEND_URL || 'http://localhost:3000',
-	prepareHeaders: (headers, { getState }) => {
-		return headers;
-	},
-});
+import { baseQuery } from '@/store/consts/api';
+
+type ProductWithNumber = [Product[], number];
 
 export const productApi = createApi({
 	reducerPath: 'productApi',
