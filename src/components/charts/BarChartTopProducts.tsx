@@ -1,4 +1,4 @@
-import { Box, Typography } from '@mui/material';
+import { Box, Container, Paper, Typography } from '@mui/material';
 import { Bar } from 'react-chartjs-2';
 import {
 	Chart as ChartJS,
@@ -66,11 +66,26 @@ export const BarChartTopProducts = ({ products }: Props) => {
 	};
 
 	return (
-		<Box>
-			<Typography variant="h5" align="center" mb={2} fontWeight={'bold'}>
-				Top 10 Productos Más Vendidos
-			</Typography>
-			<Bar data={data} options={options} />
-		</Box>
+		<Container
+			maxWidth="md"
+			sx={{
+				display: 'flex',
+				flexDirection: 'column',
+				alignItems: 'center',
+			}}
+		>
+			<Paper sx={{ p: 4, width: '100%' }}>
+				<Typography
+					variant="h5"
+					align="center"
+					mb={2}
+					fontWeight={'bold'}
+				>
+					Top 10 Productos Más Vendidos
+				</Typography>
+
+				<Bar data={data} options={options} />
+			</Paper>
+		</Container>
 	);
 };

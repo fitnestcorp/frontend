@@ -6,6 +6,7 @@ import {
 	Legend,
 	layouts,
 } from 'chart.js';
+import { Box } from '@mui/material';
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 
@@ -43,17 +44,17 @@ interface Props {
 export const PieChart = ({ data, title }: Props) => {
 	const options = {
 		responsive: true,
-		aspectRatio: 1.5,
+		maintainAspectRatio: false,
 		plugins: {
 			legend: {
 				position: 'top' as const,
 			},
-			title: {
-				display: true,
-				text: title,
-			},
 		},
 	};
 
-	return <Pie data={data} options={options} />;
+	return (
+		<Box sx={{ position: 'relative', width: '100%', height: '100%' }}>
+			<Pie data={data} options={options} />
+		</Box>
+	);
 };
