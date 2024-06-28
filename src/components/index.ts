@@ -11,6 +11,10 @@ export * from './cart/CartItem';
 
 export * from './category/CategoryModal';
 
+export * from './charts/BarChartTopProducts';
+export * from './charts/PieChart';
+export * from './charts/PieChartUsage';
+
 export * from './comment/AddComment';
 export * from './comment/Comment';
 export * from './comment/CommentsSection';
@@ -20,21 +24,19 @@ export * from './swiper/GroupSwiper';
 export * from './swiper/ProductImagesSwiper';
 export * from './swiper/ProductSwiper';
 
+export * from './forms/AddressForm';
 export * from './forms/CategoryForm';
 export * from './forms/GroupForm';
-export * from './forms/ProductForm';
 export * from './forms/LoginForm';
 export * from './forms/PasswordRecoveryForm';
+export * from './forms/PQRForm';
+export * from './forms/ProductForm';
 export * from './forms/RegisterForm';
-export * from './forms/AddressForm';
 
 export * from './group/GroupModal';
 
 export * from './options/FilterButton';
 export * from './options/SortButton';
-
-export * from './pie-chart/PieChart';
-export * from './pie-chart/PieChartUsage';
 
 export * from './product/ProductModal';
 export * from './product/ProductDetails';

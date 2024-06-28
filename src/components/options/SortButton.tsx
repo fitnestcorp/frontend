@@ -1,6 +1,6 @@
 'use client';
 import { SortOutlined } from '@mui/icons-material';
-import { IconButton, Tooltip, Menu, MenuItem } from '@mui/material';
+import { IconButton, Tooltip, Menu, MenuItem, Box } from '@mui/material';
 import { useState, MouseEvent } from 'react';
 
 interface SortButtonProps {
@@ -52,14 +52,14 @@ export const SortButton = ({ onSort, type }: SortButtonProps) => {
 			>
 				<MenuItem onClick={() => handleClose('name')}>Nombre</MenuItem>
 				{type === 'productos' && (
-					<>
+					<Box>
 						<MenuItem onClick={() => handleClose('price')}>
 							Precio
 						</MenuItem>
 						<MenuItem onClick={() => handleClose('stock')}>
 							Stock
 						</MenuItem>
-					</>
+					</Box>
 				)}
 			</Menu>
 		</>

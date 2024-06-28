@@ -1,5 +1,5 @@
 'use client';
-import { useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { Box, Grid, Typography } from '@mui/material';
 
 import {
@@ -40,7 +40,7 @@ const columns = [
 	},
 ];
 
-export const ManageCategoriesPage = () => {
+const ManageCategoriesPage = () => {
 	const {
 		data: dataCategories,
 		isLoading,
@@ -50,7 +50,10 @@ export const ManageCategoriesPage = () => {
 		limit: 100,
 	});
 
-	const categories = dataCategories?.[0] || [];
+	const categories = useMemo(
+		() => dataCategories?.[0] || [],
+		[dataCategories]
+	);
 
 	const [searchTerm, setSearchTerm] = useState('');
 	const [sortConfig, setSortConfig] = useState<SortConfig>({
@@ -58,14 +61,22 @@ export const ManageCategoriesPage = () => {
 		direction: 'asc',
 	});
 
-	const labels = categories.map((category) => category.name);
-	const soldByCategory = categories.map((category) =>
-		category.products.reduce(
-			(acc, product) => acc + (product.stock?.unities_sold ?? 0),
-			0
-		)
-	);
-	const title = 'Categorías más vendidas';
+	const [labels, setLabels] = useState<string[]>([]);
+	const [soldByCategory, setSoldByCategory] = useState<number[]>([]);
+
+	useEffect(() => {
+		const labels = categories.map((category) => category.name);
+		const soldByCategory = categories.map((category) =>
+			category.products.reduce(
+				(acc, product) => acc + (product.stock?.unities_sold ?? 0),
+				0
+			)
+		);
+		setLabels(labels);
+		setSoldByCategory(soldByCategory);
+	}, [categories]);
+
+	const title = 'Ventas por Categoría';
 
 	const categoryRows = categories.map((category) => ({
 		name: category.name,
@@ -112,7 +123,16 @@ export const ManageCategoriesPage = () => {
 			<Grid item xs={12}>
 				<Grid container spacing={2} alignItems="center">
 					<Grid item xs={12} md={6}>
-						<Box sx={{ display: 'flex', gap: 5 }}>
+						<Box
+							sx={{
+								display: 'flex',
+								gap: 5,
+								justifyContent: {
+									xs: 'center',
+									md: 'flex-start',
+								},
+							}}
+						>
 							<Typography
 								sx={{
 									color: 'text.primary',

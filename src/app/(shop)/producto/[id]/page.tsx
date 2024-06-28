@@ -18,7 +18,7 @@ interface Props {
 	};
 }
 
-export const ProductPage = ({ params }: Props) => {
+const ProductPage = ({ params }: Props) => {
 	const { id } = params;
 	const { data: product, error, isLoading } = useGetProductByIdQuery(id);
 

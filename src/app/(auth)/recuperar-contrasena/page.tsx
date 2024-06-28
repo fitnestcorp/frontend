@@ -2,7 +2,7 @@ import { Typography } from '@mui/material';
 
 import { PasswordRecoveryForm } from '@/components';
 
-export const PasswordRecoveryPage = () => {
+const PasswordRecoveryPage = () => {
 	return (
 		<>
 			<Typography

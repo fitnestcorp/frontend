@@ -1,7 +1,8 @@
-import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
-
 import { User } from '@/interfaces';
 
+import { createApi } from '@reduxjs/toolkit/query/react';
+
+import { baseQuery } from '@/store/consts/api';
 const baseQuery = fetchBaseQuery({
 	baseUrl: process.env.BACKEND_URL || 'http://localhost:3000',
 	prepareHeaders: (headers) => {
@@ -92,7 +93,7 @@ export const userApi = createApi({
 		}),
 
 		hasBoughtProduct: builder.query<
-			boolean,
+			{ hasProduct: boolean },
 			{ userId: string; productId: string }
 		>({
 			query: ({ userId, productId }) => ({

@@ -3,7 +3,7 @@ import { Link, Typography } from '@mui/material';
 
 import { LoginForm } from '@/components';
 
-export const LoginPage = () => {
+const LoginPage = () => {
 	return (
 		<>
 			<Typography

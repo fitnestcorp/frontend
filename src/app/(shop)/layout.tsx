@@ -2,7 +2,7 @@ import { Box, Container } from '@mui/material';
 
 import { Footer, Navbar } from '@/components';
 
-export const ShopLayout = ({
+const ShopLayout = ({
 	children,
 }: Readonly<{ children: React.ReactNode }>) => {
 	return (

@@ -3,7 +3,7 @@ import { Link, Typography } from '@mui/material';
 
 import { RegisterForm } from '@/components';
 
-export const RegisterPage = () => {
+const RegisterPage = () => {
 	return (
 		<>
 			<Typography

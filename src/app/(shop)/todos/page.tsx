@@ -6,7 +6,7 @@ import { Product } from '@/interfaces';
 import { Filters, LogoLoader, ProductGrid } from '@/components';
 import { useGetProductsQuery } from '@/store';
 
-export const AllProducts = () => {
+const AllProducts = () => {
 	const [page, setPage] = useState(1);
 	const [limit, setLimit] = useState(16);
 	const [products, setProducts] = useState<Product[]>([]);

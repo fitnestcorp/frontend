@@ -23,7 +23,7 @@ interface Props {
 	};
 }
 
-export const GroupPage = ({ params }: Props) => {
+const GroupPage = ({ params }: Props) => {
 	let group = params.grupo[0].toUpperCase() + params.grupo.slice(1);
 	group = group.replace(/-/g, ' ');
 
