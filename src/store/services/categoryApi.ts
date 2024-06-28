@@ -1,15 +1,10 @@
-import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
-
 import { Category } from '@/interfaces';
 
-type CategoryWithNumber = [Category[], number];
+import { createApi } from '@reduxjs/toolkit/query/react';
 
-const baseQuery = fetchBaseQuery({
-	baseUrl: process.env.BACKEND_URL || 'http://localhost:3000',
-	prepareHeaders: (headers, { getState }) => {
-		return headers;
-	},
-});
+import { baseQuery } from '@/store/consts/api';
+
+type CategoryWithNumber = [Category[], number];
 
 export const categoryApi = createApi({
 	reducerPath: 'categoryApi',

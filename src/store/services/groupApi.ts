@@ -1,14 +1,10 @@
-import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import { Group } from '@/interfaces';
 
-type GroupWithNumber = [Group[], number];
+import { createApi } from '@reduxjs/toolkit/query/react';
 
-const baseQuery = fetchBaseQuery({
-	baseUrl: process.env.BACKEND_URL || 'http://localhost:3000',
-	prepareHeaders: (headers, { getState }) => {
-		return headers;
-	},
-});
+import { baseQuery } from '@/store/consts/api';
+
+type GroupWithNumber = [Group[], number];
 
 export const groupApi = createApi({
 	reducerPath: 'groupApi',

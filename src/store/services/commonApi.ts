@@ -1,17 +1,12 @@
 import { Address } from '@/interfaces/Address';
 import { City } from '@/interfaces/City';
 import { Department } from '@/interfaces/Department';
-import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 
+import { createApi } from '@reduxjs/toolkit/query/react';
 
-type AddressWithNumber = [Address[], number];
+import { baseQuery } from '@/store/consts/api';
 
-const baseQuery = fetchBaseQuery({
-  baseUrl: process.env.BACKEND_URL || 'http://localhost:3000',
-  prepareHeaders: (headers, { getState }) => {
-    return headers;
-  },
-});
+type AddressWithNumber = [Address[], number]; // TODO: unused
 
 export const commonApi = createApi({
   reducerPath: 'commonApi',
