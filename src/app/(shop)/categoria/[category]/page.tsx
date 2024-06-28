@@ -21,7 +21,7 @@ interface Props {
 	};
 }
 
-export const CategoryPage = ({ params }: Props) => {
+const CategoryPage = ({ params }: Props) => {
 	let category = params.category[0].toUpperCase() + params.category.slice(1);
 	category = category.replace(/-/g, ' ');
 

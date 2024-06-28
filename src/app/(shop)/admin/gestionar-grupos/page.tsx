@@ -51,7 +51,7 @@ const columns = [
 	},
 ];
 
-export const ManageGroupsPage = () => {
+const ManageGroupsPage = () => {
 	const {
 		data: dataGroups,
 		isLoading: isLoadingGroups,

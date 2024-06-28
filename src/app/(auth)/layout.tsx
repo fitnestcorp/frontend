@@ -1,7 +1,7 @@
 import Image from 'next/image';
 import { Box, Container, Typography, Paper } from '@mui/material';
 
-export const AuthLayout = ({
+const AuthLayout = ({
 	children,
 }: Readonly<{ children: React.ReactNode }>) => {
 	return (

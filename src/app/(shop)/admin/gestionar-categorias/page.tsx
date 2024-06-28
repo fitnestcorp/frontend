@@ -40,7 +40,7 @@ const columns = [
 	},
 ];
 
-export const ManageCategoriesPage = () => {
+const ManageCategoriesPage = () => {
 	const {
 		data: dataCategories,
 		isLoading,

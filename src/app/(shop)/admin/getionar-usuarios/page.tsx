@@ -27,7 +27,7 @@ const columns = [
 	{ id: 'email', label: 'Email', minWidth: 170, align: 'center' as const },
 ];
 
-export const ManageUsersPage = () => {
+const ManageUsersPage = () => {
 	const {
 		data: usersData,
 		isLoading,

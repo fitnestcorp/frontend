@@ -5,7 +5,7 @@ import { Container, Box, Grid } from '@mui/material';
 import OrdersGrid from '@/components/profile/OrdersGrid';
 import { isAuth } from '@/components';
 
-export const ProfilePage = () => {
+const ProfilePage = () => {
   return (
     <Container sx={{ mt: 4 }}>
       <Grid container spacing={3} sx={{ justifyContent: 'space-between' }}>

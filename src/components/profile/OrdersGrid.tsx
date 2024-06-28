@@ -33,10 +33,17 @@ const orders: OrderType[] = [
           },
           type: 'Juego de 130 lb',
           category: {
-            id:'123',
+            id: '123',
             name: 'Mancuernas',
             description: 'Palos de metal',
             image_url: '51FKyNvkUzL._AC_SX679_.jpg',
+            group: {
+              id: '1', name: 'Grupo 1',
+              description: '',
+              image_url: '',
+              categories: []
+            },
+            products: []
           },
         },
       },
@@ -64,11 +71,18 @@ const orders: OrderType[] = [
             name: 'Mancuernas',
             description: 'Palos de metal',
             image_url: '51FKyNvkUzL._AC_SX679_.jpg',
+            group: {
+              id: '1', name: 'Grupo 1',
+              description: '',
+              image_url: '',
+              categories: []
+            },
+            products: [],
           },
         },
       },
     ],
-    user: { id: '1', email: 'user@example.com', first_name: 'John', last_name: 'Doe', birthdate: '1990-01-01', role: 'User' },
+    user: { id: '1', email: 'user@example.com', first_name: 'John', last_name: 'Doe', birth_date: '1990-01-01', role: 'User' },
     address: {
       id: '1',
       address: 'Calle 123',

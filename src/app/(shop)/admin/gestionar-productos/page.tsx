@@ -75,7 +75,7 @@ const columns = [
 	},
 ];
 
-export const ManageInventoryPage = () => {
+const ManageInventoryPage = () => {
 	const { data, isLoading, refetch } = useGetAllProductsQuery({
 		page: 1,
 		limit: 100,
