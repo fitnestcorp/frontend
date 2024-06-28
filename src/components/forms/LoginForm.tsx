@@ -23,6 +23,12 @@ import GoogleIcon from '@mui/icons-material/Google';
 import { LoginSchema } from '@/schemas';
 import { setUser, useLoginUserMutation } from '@/store';
 
+
+/**
+ * LoginForm component for user authentication.
+ *
+ * @returns {JSX.Element} The rendered LoginForm component.
+ */
 export const LoginForm = () => {
 	const {
 		handleSubmit,
@@ -45,6 +51,11 @@ export const LoginForm = () => {
 	const [loginUser] = useLoginUserMutation();
 	const dispatch = useDispatch();
 
+	/**
+	 * Handles form submission for login.
+	 *
+	 * @param {z.infer<typeof LoginSchema>} data - The form data.
+	 */
 	async function onSubmit(data: z.infer<typeof LoginSchema>) {
 		try {
 			const response = await loginUser(data).unwrap();
@@ -61,6 +72,11 @@ export const LoginForm = () => {
 		}
 	}
 
+	/**
+	 * Handles Google authentication.
+	 *
+	 * @param {React.MouseEvent<HTMLButtonElement>} event - The click event.
+	 */
 	async function onSubmitGoogleAuth(event: any) {
 		try {
 			event.preventDefault();

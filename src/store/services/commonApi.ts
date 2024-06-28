@@ -4,6 +4,7 @@ import { Department } from '@/interfaces/Department';
 
 import { createApi } from '@reduxjs/toolkit/query/react';
 
+import { baseQuery } from '@/store/consts/api';
 
 type AddressWithNumber = [Address[], number]; 
 

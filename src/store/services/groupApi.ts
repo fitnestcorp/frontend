@@ -2,6 +2,7 @@ import { Group } from '@/interfaces';
 
 import { createApi } from '@reduxjs/toolkit/query/react';
 
+import { baseQuery } from '@/store/consts/api';
 
 type GroupWithNumber = [Group[], number];
 

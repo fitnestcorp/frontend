@@ -37,11 +37,24 @@ const VisuallyHiddenInput = styled('input')({
 	width: 1,
 });
 
+/**
+ * Props for the GroupForm component.
+ *
+ * @typedef {Object} Props
+ * @property {Function} refetch - Function to refetch data.
+ * @property {Group} [group] - The group to be edited, if any.
+ */
 interface Props {
 	refetch: () => void;
 	group?: Group;
 }
 
+/**
+ * GroupForm component for creating or updating a group.
+ *
+ * @param {Props} props - Component props.
+ * @returns {JSX.Element} The rendered GroupForm component.
+ */
 export const GroupForm = ({ refetch, group }: Props) => {
 	const [uploadedImage, setUploadedImage] = useState<File | string | null>(
 		null
@@ -89,6 +102,11 @@ export const GroupForm = ({ refetch, group }: Props) => {
 		}
 	}, [group, setValue]);
 
+	/**
+	 * Handles form submission for creating or updating a group.
+	 *
+	 * @param {z.infer<typeof AddGroupSchema>} data - The form data.
+	 */
 	async function onSubmit(data: z.infer<typeof AddGroupSchema>) {
 		const formData = new FormData();
 
@@ -143,6 +161,11 @@ export const GroupForm = ({ refetch, group }: Props) => {
 		}
 	}
 
+	/**
+	 * Handles image change event.
+	 *
+	 * @param {React.ChangeEvent<HTMLInputElement>} event - The change event.
+	 */
 	const handleImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
 		if (event.target.files) {
 			const file = event.target.files[0];
@@ -152,6 +175,9 @@ export const GroupForm = ({ refetch, group }: Props) => {
 		}
 	};
 
+	/**
+	 * Handles image deletion.
+	 */
 	const handleDeleteImage = () => {
 		setUploadedImage(null);
 		setValue('url', '', { shouldValidate: true });

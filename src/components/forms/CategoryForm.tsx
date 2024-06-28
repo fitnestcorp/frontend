@@ -45,11 +45,24 @@ const VisuallyHiddenInput = styled('input')({
 	width: 1,
 });
 
+/**
+ * Props for the CategoryForm component.
+ *
+ * @typedef {Object} Props
+ * @property {Function} refetch - Function to refetch data.
+ * @property {Category} [category] - The category to be edited, if any.
+ */
 interface Props {
 	refetch: () => void;
 	category?: Category;
 }
 
+/**
+ * CategoryForm component for creating or updating a category.
+ *
+ * @param {Props} props - Component props.
+ * @returns {JSX.Element} The rendered CategoryForm component.
+ */
 export const CategoryForm = ({ refetch, category }: Props) => {
 	const [uploadedImage, setUploadedImage] = useState<File | string | null>(
 		null
@@ -104,6 +117,11 @@ export const CategoryForm = ({ refetch, category }: Props) => {
 		}
 	}, [category, setValue]);
 
+	/**
+	 * Handles form submission for creating or updating a category.
+	 *
+	 * @param {z.infer<typeof AddCategorySchema>} data - The form data.
+	 */
 	async function onSubmit(data: z.infer<typeof AddCategorySchema>) {
 		const formData = new FormData();
 		formData.append('name', data.name);
@@ -160,6 +178,11 @@ export const CategoryForm = ({ refetch, category }: Props) => {
 		}
 	}
 
+	/**
+	 * Handles image change event.
+	 *
+	 * @param {React.ChangeEvent<HTMLInputElement>} event - The change event.
+	 */
 	const handleImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
 		if (event.target.files) {
 			const file = event.target.files[0];
