@@ -5,8 +5,12 @@ type GroupWithNumber = [Group[], number];
 
 const baseQuery = fetchBaseQuery({
 	baseUrl: process.env.BACKEND_URL || 'http://localhost:3000',
-	prepareHeaders: (headers, { getState }) => {
-		return headers;
+	prepareHeaders: (headers) => {
+		const token = localStorage.getItem('token'); 
+    if (token) {
+      headers.set('Authorization', `Bearer ${token}`);
+    }
+    return headers;
 	},
 });
 

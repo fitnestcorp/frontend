@@ -1,8 +1,10 @@
 "use client";
 
 import React, { useState } from 'react';
-import { Container, Paper, Typography, Box, Button, Modal, TextField, IconButton } from '@mui/material';
+import { useSelector } from 'react-redux';
+import { Container, Paper, Typography, Box, Button, Modal, TextField, IconButton, Alert } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
+import { RootState } from '@/store'; // Ajusta la ruta según tu estructura de archivos
 
 interface ProfileData {
   firstName: string;
@@ -12,16 +14,26 @@ interface ProfileData {
 }
 
 const Profile: React.FC = () => {
+  const user = useSelector((state: RootState) => state.user.user);
   const [open, setOpen] = useState(false);
-  const profile: ProfileData = {
-    firstName: 'Pepita',
-    lastName: 'Perez',
-    birthDate: '2004-01-08',
-    email: 'Test@Test.com',
-  };
 
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
+
+  if (!user) {
+    return (
+      <Container disableGutters maxWidth={false} sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
+        <Alert severity="warning">Por favor, inicia sesión para ver tu perfil.</Alert>
+      </Container>
+    );
+  }
+
+  const profile: ProfileData = {
+    firstName: user.first_name,
+    lastName: user.last_name,
+    birthDate: user.birth_date,
+    email: user.email,
+  };
 
   return (
     <Container disableGutters maxWidth={false} sx={{ mb: 7 }}>

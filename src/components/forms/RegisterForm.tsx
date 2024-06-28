@@ -55,7 +55,7 @@ export const RegisterForm = ({ showRegisterButton = true, refetch }: Props) => {
 	async function onSubmit(data: z.infer<typeof RegisterSchema>) {
 		try {
 			const response = await registerUser(data).unwrap();
-			console.log(response);
+			
 			dispatch(setUser({ user: response.user }));
 			setErrorMap('');
 			setSuccessfully('Usuario registrado correctamente');

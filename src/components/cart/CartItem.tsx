@@ -85,7 +85,7 @@ export const CartItem = ({ cartItem }: Props) => {
                         variant="h6"
                         sx={{ fontWeight: 'bold', color: 'text.primary' }}
                     >
-                        {product.name}
+                    {product.name.length > 30 ? `${product.name.substring(0, 30)}...` : product.name}
                     </Typography>
                     <Typography variant="body2" color="text.primary">
                         {product.type}
@@ -135,7 +135,7 @@ export const CartItem = ({ cartItem }: Props) => {
                             </IconButton>
                         </Box>
                         <Typography variant="h6" sx={{ fontWeight: 'bold' }}>
-                            {price}
+                            {"$"+price.toLocaleString()}
                         </Typography>
                     </Box>
                 </Box>

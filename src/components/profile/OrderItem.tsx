@@ -11,12 +11,10 @@ interface OrderItemProps {
 }
 
 const OrderItem: React.FC<OrderItemProps> = ({ image, title, description, quantity, price }) => {
-  const [filePath, setFilePath] = useState<string>("");
-
 
   return (
     <Card sx={{ display: 'flex', alignItems: 'center', mb: 2, p: 1, width: '45%', minWidth: '300px' ,boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)', borderRadius: '16px',}}>
-      <Box component="img" sx={{ width: 70, height: 70, objectFit: 'cover', borderRadius: '10px' }} src={filePath} alt={title} />
+      <Box component="img" sx={{ width: 70, height: 70, objectFit: 'cover', borderRadius: '10px' }} src={image} alt={title} />
       <CardContent sx={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', ml: 2, p: 0 }}>
         <Typography variant="h6" component="div" sx={{color:'#282828', fontWeight: 'bold'}}>{title}</Typography>
         <Typography variant="body2" color="gray">{description}</Typography>

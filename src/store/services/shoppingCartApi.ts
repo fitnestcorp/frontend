@@ -5,8 +5,19 @@ type ShoppingCartWithNumber = [ShoppingCart[], number];
 
 const baseQuery = fetchBaseQuery({
   baseUrl: process.env.BACKEND_URL || 'http://localhost:3000',
-  prepareHeaders: (headers, { getState }) => {
+  prepareHeaders: (headers) => {
+		const token = localStorage.getItem('token'); 
+    if (token) {
+      headers.set('Authorization', `Bearer ${token}`);
+    }
     return headers;
+	},
+  responseHandler: async (response) => {
+    const contentType = response.headers.get('content-type');
+    if (contentType && contentType.includes('application/json')) {
+      return response.json();
+    }
+    return response.text(); 
   },
 });
 
@@ -58,9 +69,9 @@ export const shoppingCartApi = createApi({
       }),
     }),
 
-    buyShoppingCart: builder.mutation({
-      query: (userId) => ({
-        url: `shoppingcart/${userId}`,
+    buyShoppingCart: builder.mutation<string,{userId:string,addressId:string}>({
+      query: ({userId,addressId}) => ({
+        url: `shoppingcart/${userId}/${addressId}`,
         method: 'POST',
       }),
     }),
@@ -71,7 +82,12 @@ export const shoppingCartApi = createApi({
         method: 'DELETE',
       }),
     }),
-
+    refreshItems: builder.mutation<void, string>({
+      query: (userId) => ({
+        url: `shoppingcart/refresh/${userId}`,
+        method: 'GET',
+      }),
+    }),
   }),
 });
 
@@ -84,4 +100,5 @@ export const {
   useGetShoppingCartByUserIdQuery,
   useBuyShoppingCartMutation,
   useRemoveItemMutation, 
+  useRefreshItemsMutation
 } = shoppingCartApi;

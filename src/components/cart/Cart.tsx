@@ -36,22 +36,12 @@ export const Cart = () => {
 		skip: !user,
 	});
   const [isAddressModalOpen, setIsAddressModalOpen] = useState<boolean>(false);
-  const { data: cities } = useGetAllCitiesQuery();
   const { data: departments } = useGetAllDepartmentsQuery();
   const { data: addresses } = useGetAddressesByUserIdQuery(user?.id || '', {
     skip: !user,
   });
 	const cart = dataCart;
 
-  const handleAddressSubmit = (addressForm: {
-    phone_number: string;
-    address: string;
-    zip_code: string;
-    city_name: string;
-  }) => {
-    // Aquí debes añadir la lógica para manejar la creación de la dirección
-    console.log('Address Form Submitted:', addressForm);
-  };
 
 	const toggleDrawer = () => {
 		setIsDrawerOpen(!isDrawerOpen);
@@ -199,7 +189,7 @@ export const Cart = () => {
 								fontWeight="bold"
 								color="text.primary"
 							>
-								${calculateSubtotal()}
+								${calculateSubtotal().toLocaleString()}
 							</Typography>
 						</Box>
 						<Button
@@ -250,15 +240,15 @@ export const Cart = () => {
 					<Button onClick={handleModalClose}>Cerrar</Button>
 				</Box>
 			</Modal>
-      
+	{user && (
       <AddressForm
         isOpen={isAddressModalOpen}
         onClose={() => setIsAddressModalOpen(false)}
-        onSubmit={handleAddressSubmit}
         registeredAddresses={addresses}
-        cities={cities}
+		userId={user.id}
         departments={departments}
       />
+	)}
 		</>
 	);
 };

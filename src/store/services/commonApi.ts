@@ -8,9 +8,13 @@ type AddressWithNumber = [Address[], number];
 
 const baseQuery = fetchBaseQuery({
   baseUrl: process.env.BACKEND_URL || 'http://localhost:3000',
-  prepareHeaders: (headers, { getState }) => {
+  prepareHeaders: (headers) => {
+		const token = localStorage.getItem('token'); 
+    if (token) {
+      headers.set('Authorization', `Bearer ${token}`);
+    }
     return headers;
-  },
+	},
 });
 
 export const commonApi = createApi({
@@ -38,7 +42,8 @@ export const commonApi = createApi({
       }),
     }),
 
-    createAddress: builder.mutation<Address, { address: Address, userId: string }>({
+    createAddress: builder.mutation<Address, { address: {phone_number: string;address: string;zip_code: string;city_name: string;}, userId: string | undefined }>({
+      
       query: ({ address, userId }) => ({
         url: `address/user/${userId}`,
         method: 'POST',
