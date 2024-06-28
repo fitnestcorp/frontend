@@ -37,7 +37,7 @@ export const Footer = () => {
 						>
 							<LocationOnIcon sx={{ mr: 1, color: 'gray.300' }} />
 							<Typography variant="body1" color="gray.300">
-								P. Sherman, 42 Wallaby Way, Sydney
+							Cl. 18 #122-135, Barrio Pance, Cali, Valle del Cauca
 							</Typography>
 						</Box>
 						<Box
@@ -61,7 +61,7 @@ export const Footer = () => {
 										color: 'secondary',
 									}}
 								>
-									(+01) 234-567-89
+									(+57) 3182044848
 								</Box>
 							</Typography>
 						</Box>
@@ -86,7 +86,7 @@ export const Footer = () => {
 										color: 'secondary',
 									}}
 								>
-									support@fitnest.com
+									fitnestcorp@gmail.com
 								</Box>
 							</Typography>
 						</Box>
@@ -103,7 +103,7 @@ export const Footer = () => {
 						</Typography>
 						<Box>
 							<Link
-								href="/sobre-nosotros"
+								href="/nosotros"
 								color="gray.300"
 								underline="hover"
 								display="block"
@@ -111,15 +111,7 @@ export const Footer = () => {
 							>
 								Sobre nosotros
 							</Link>
-							<Link
-								href="/contactanos"
-								color="gray.300"
-								underline="hover"
-								display="block"
-								mt={2}
-							>
-								Contáctanos
-							</Link>
+							
 						</Box>
 					</Grid>
 					<Grid
@@ -134,7 +126,7 @@ export const Footer = () => {
 						</Typography>
 						<Box>
 							<Link
-								href="/terminos-y-condiciones"
+								href="/terminos"
 								color="gray.300"
 								underline="hover"
 								display="block"
@@ -143,7 +135,7 @@ export const Footer = () => {
 								Términos y condiciones
 							</Link>
 							<Link
-								href="/reembolsos-y-devoluciones"
+								href="/reembolsos"
 								color="gray.300"
 								underline="hover"
 								display="block"
