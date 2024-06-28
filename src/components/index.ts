@@ -11,6 +11,10 @@ export * from './cart/CartItem';
 
 export * from './category/CategoryModal';
 
+export * from './charts/BarChartTopProducts';
+export * from './charts/PieChart';
+export * from './charts/PieChartUsage';
+
 export * from './comment/AddComment';
 export * from './comment/Comment';
 export * from './comment/CommentsSection';
@@ -32,9 +36,6 @@ export * from './group/GroupModal';
 
 export * from './options/FilterButton';
 export * from './options/SortButton';
-
-export * from './pie-chart/PieChart';
-export * from './pie-chart/PieChartUsage';
 
 export * from './product/ProductModal';
 export * from './product/ProductDetails';

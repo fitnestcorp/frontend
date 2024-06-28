@@ -1,5 +1,5 @@
 'use client';
-import { useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { Box, Grid, Typography } from '@mui/material';
 
 import {
@@ -61,7 +61,7 @@ export const ManageGroupsPage = () => {
 		limit: 100,
 	});
 
-	const groups = dataGroups?.[0] || [];
+	const groups = useMemo(() => dataGroups?.[0] || [], [dataGroups]);
 
 	const [searchTerm, setSearchTerm] = useState('');
 	const [sortConfig, setSortConfig] = useState<SortConfig>({
@@ -69,19 +69,28 @@ export const ManageGroupsPage = () => {
 		direction: 'asc',
 	});
 
-	const labels = groups.map((group) => group.name);
-	const soldByGroup = groups.map((group) =>
-		group.categories.reduce(
-			(acc, category) =>
-				acc +
-				category.products.reduce(
-					(acc, product) => acc + (product.stock?.unities_sold ?? 0),
-					0
-				),
-			0
-		)
-	);
-	const title = 'Grupos más vendidos';
+	const [labels, setLabels] = useState<string[]>([]);
+	const [soldByGroup, setSoldByGroup] = useState<number[]>([]);
+
+	useEffect(() => {
+		const labels = groups.map((group) => group.name);
+		const soldByGroup = groups.map((group) =>
+			group.categories.reduce(
+				(acc, category) =>
+					acc +
+					category.products.reduce(
+						(acc, product) =>
+							acc + (product.stock?.unities_sold ?? 0),
+						0
+					),
+				0
+			)
+		);
+		setLabels(labels);
+		setSoldByGroup(soldByGroup);
+	}, [groups]);
+
+	const title = 'Ventas por Grupo';
 
 	const groupRows = groups.map((group) => ({
 		name: group.name,
@@ -131,7 +140,16 @@ export const ManageGroupsPage = () => {
 			<Grid item xs={12}>
 				<Grid container spacing={2} alignItems="center">
 					<Grid item xs={12} md={6}>
-						<Box sx={{ display: 'flex', gap: 5 }}>
+						<Box
+							sx={{
+								display: 'flex',
+								gap: 5,
+								justifyContent: {
+									xs: 'center',
+									md: 'flex-start',
+								},
+							}}
+						>
 							<Typography
 								sx={{
 									color: 'text.primary',

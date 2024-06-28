@@ -2,7 +2,14 @@
 import { useState } from 'react';
 import { Box, Grid, Typography } from '@mui/material';
 
-import { ProductModal, Search, SortButton, Table, isAdmin } from '@/components';
+import {
+	BarChartTopProducts,
+	ProductModal,
+	Search,
+	SortButton,
+	Table,
+	isAdmin,
+} from '@/components';
 import { useGetAllProductsQuery } from '@/store';
 import { Product } from '@/interfaces';
 
@@ -204,6 +211,10 @@ export const ManageInventoryPage = () => {
 					type="productos"
 					refetch={refetch}
 				/>
+			</Grid>
+
+			<Grid item xs={12} mb={10}>
+				<BarChartTopProducts products={products} />
 			</Grid>
 		</Grid>
 	);
