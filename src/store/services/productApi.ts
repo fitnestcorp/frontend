@@ -317,8 +317,8 @@ export const productApi = createApi({
 			}),
 		}),
 
-		searchProducts: builder.query<ProductWithNumber, { keyword: string; page?: number; limit?: number }>({
-			query: ({ keyword, page = 1, limit = 10 }) => ({
+		searchProducts: builder.query<ProductWithNumber, { keyword: string; page: number; limit: number }>({
+			query: ({ keyword, page, limit }) => ({
 				url: `product/filter/search?keyword=${keyword}&page=${page}&limit=${limit}`,
 				method: 'GET',
 			}),

@@ -11,7 +11,7 @@ interface SearchProductsProps {
 	};
   }
   
-  const SearchProducts: React.FC<SearchProductsProps> = ({ params }:SearchProductsProps) => {
+  const SearchProducts = ({ params }:SearchProductsProps) => {
     const keyword = params.keyword
   const [page, setPage] = useState(1);
   const [limit, setLimit] = useState(16);
@@ -53,8 +53,8 @@ interface SearchProductsProps {
           mb: 2,
         }}
       >
-        <Typography variant="h4" sx={{ fontWeight: 'bold' }}>
-          {'Todos Nuestros Productos'}
+          <Typography variant="h4" sx={{ fontWeight: 'bold' }}>
+          {`Productos de ${keyword}`}
         </Typography>
       </Box>
 
