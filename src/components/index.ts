@@ -24,13 +24,14 @@ export * from './swiper/GroupSwiper';
 export * from './swiper/ProductImagesSwiper';
 export * from './swiper/ProductSwiper';
 
+export * from './forms/AddressForm';
 export * from './forms/CategoryForm';
 export * from './forms/GroupForm';
-export * from './forms/ProductForm';
 export * from './forms/LoginForm';
 export * from './forms/PasswordRecoveryForm';
+export * from './forms/PQRForm';
+export * from './forms/ProductForm';
 export * from './forms/RegisterForm';
-export * from './forms/AddressForm';
 
 export * from './group/GroupModal';
 
