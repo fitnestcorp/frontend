@@ -1,5 +1,5 @@
 {
-    "entryPoints": ["src/app"],
+    "entryPoints": ["src/app","src/components"],
     "out": "docs",
     "excludeExternals": true,
     "excludePrivate": true,
