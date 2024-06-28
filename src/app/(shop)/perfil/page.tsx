@@ -5,6 +5,16 @@ import { Container, Box, Grid } from '@mui/material';
 import OrdersGrid from '@/components/profile/OrdersGrid';
 import { isAuth } from '@/components';
 
+/**
+ * ProfilePage page renders the user's profile and order grid.
+ * It is wrapped with the isAuth HOC to ensure that the user is authenticated.
+ *
+ * @page
+ * @example
+ * return (
+ *   <ProfilePage />
+ * )
+ */
 const ProfilePage = () => {
   return (
     <Container sx={{ mt: 4 }}>

@@ -8,6 +8,16 @@ interface Props {
 	title: string;
 }
 
+/**
+ * PieChartUsage component displays a pie chart with provided labels, values, and title.
+ *
+ * @component
+ * @param {Object} props - The component props.
+ * @param {string[]} props.labels - Array of labels for the chart.
+ * @param {number[]} props.values - Array of values for the chart.
+ * @param {string} props.title - The title of the chart.
+ * @returns {JSX.Element} The rendered PieChartUsage component.
+ */
 export const PieChartUsage = ({ labels, values, title }: Props) => {
 	const blueColors = [
 		'rgba(135, 206, 250, 0.5)',

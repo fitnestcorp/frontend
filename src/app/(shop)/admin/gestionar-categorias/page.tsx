@@ -12,11 +12,19 @@ import {
 } from '@/components';
 import { useGetAllCategoriesQuery } from '@/store';
 
+/**
+ * @typedef {Object} SortConfig
+ * @property {string} key - The key to sort by.
+ * @property {'asc' | 'desc'} direction - The direction of the sort.
+ */
 interface SortConfig {
 	key: string;
 	direction: 'asc' | 'desc';
 }
 
+/**
+ * Column configuration for the categories table.
+ */
 const columns = [
 	{ id: 'image', label: '', minWidth: 50, align: 'center' as const },
 	{
@@ -40,6 +48,11 @@ const columns = [
 	},
 ];
 
+/**
+ * The ManageCategoriesPage component allows admin users to manage categories.
+ * @page
+ * @returns {JSX.Element} The rendered ManageCategoriesPage component.
+ */
 const ManageCategoriesPage = () => {
 	const {
 		data: dataCategories,
@@ -103,6 +116,11 @@ const ManageCategoriesPage = () => {
 		return 0;
 	});
 
+	/**
+	 * Handles sorting of the table.
+	 *
+	 * @param {string} key - The key to sort by.
+	 */
 	const handleSort = (key: string) => {
 		let direction: 'asc' | 'desc' = 'asc';
 		if (sortConfig.key === key && sortConfig.direction === 'asc') {

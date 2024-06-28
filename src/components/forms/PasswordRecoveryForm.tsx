@@ -11,6 +11,11 @@ import {
 	TextField,
 } from '@mui/material';
 
+/**
+ * PasswordRecoveryForm component for password recovery.
+ *
+ * @returns {JSX.Element} The rendered PasswordRecoveryForm component.
+ */
 import { PasswordRecoverySchema } from '@/schemas';
 import { useRecoverPasswordMutation } from '@/store';
 
@@ -31,6 +36,11 @@ export const PasswordRecoveryForm = () => {
 
 	const [recoverPassword] = useRecoverPasswordMutation();
 
+	/**
+	 * Handles form submission for password recovery.
+	 *
+	 * @param {z.infer<typeof PasswordRecoverySchema>} data - The form data.
+	 */
 	async function onSubmit(data: z.infer<typeof PasswordRecoverySchema>) {
 		try {
 			await recoverPassword(data).unwrap();

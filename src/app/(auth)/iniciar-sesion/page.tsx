@@ -3,9 +3,18 @@ import { Link, Typography } from '@mui/material';
 
 import { LoginForm } from '@/components';
 
-const LoginPage = () => {
+/**
+ * LoginPage component.
+ * This page allows users to log in to their account.
+ * It displays a login form and a link to create a new account if the user doesn't have one.
+ *
+ * @page
+ * @returns {JSX.Element} The rendered login page component.
+ */
+const LoginPage : React.FC = (): JSX.Element => {
 	return (
-		<>
+		<>	
+			{/* Page title */}
 			<Typography
 				component="h1"
 				variant="h5"
@@ -15,7 +24,11 @@ const LoginPage = () => {
 			>
 				Iniciar Sesión
 			</Typography>
+
+			 {/* Login form */}
 			<LoginForm />
+
+			{/* Link to create a new account */}
 			<Typography
 				variant="body2"
 				textAlign="center"

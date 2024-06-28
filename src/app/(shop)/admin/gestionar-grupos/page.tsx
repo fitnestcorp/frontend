@@ -12,11 +12,19 @@ import {
 } from '@/components';
 import { useGetAllGroupsQuery } from '@/store';
 
+/**
+ * @typedef {Object} SortConfig
+ * @property {string} key - The key to sort by.
+ * @property {'asc' | 'desc'} direction - The direction of the sort.
+ */
 interface SortConfig {
 	key: string;
 	direction: 'asc' | 'desc';
 }
 
+/**
+ * Column configuration for the groups table.
+ */
 const columns = [
 	{
 		id: 'image',
@@ -51,6 +59,12 @@ const columns = [
 	},
 ];
 
+/**
+ * The ManageGroupsPage component allows admin users to manage groups.
+ * 
+ * @page
+ * @returns {JSX.Element} The rendered ManageGroupsPage component.
+ */
 const ManageGroupsPage = () => {
 	const {
 		data: dataGroups,
@@ -120,6 +134,11 @@ const ManageGroupsPage = () => {
 		return 0;
 	});
 
+	/**
+	 * Handles sorting of the table.
+	 *
+	 * @param {string} key - The key to sort by.
+	 */
 	const handleSort = (key: string) => {
 		let direction: 'asc' | 'desc' = 'asc';
 		if (sortConfig.key === key && sortConfig.direction === 'asc') {

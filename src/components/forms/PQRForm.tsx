@@ -25,6 +25,11 @@ import { z } from 'zod';
 import { PQRSchema } from '@/schemas';
 import { useSendPQRMutation } from '@/store';
 
+/**
+ * PQRForm component for handling Petitions, Complaints, and Claims (PQR) submission.
+ *
+ * @returns {JSX.Element} The rendered PQRForm component.
+ */
 export const PQRForm = () => {
 	const [openSnackbar, setOpenSnackbar] = useState(false);
 	const [snackbarMessage, setSnackbarMessage] = useState('');
@@ -49,10 +54,18 @@ export const PQRForm = () => {
 		},
 	});
 
+	/**
+	 * Closes the snackbar notification.
+	 */
 	const handleCloseSnackbar = () => {
 		setOpenSnackbar(false);
 	};
 
+	/**
+	 * Handles form submission for PQR.
+	 *
+	 * @param {z.infer<typeof PQRSchema>} data - The form data.
+	 */
 	const onSubmit = async (data: z.infer<typeof PQRSchema>) => {
 		try {
 			await sendPQR(data).unwrap();

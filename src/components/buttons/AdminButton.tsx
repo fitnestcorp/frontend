@@ -23,6 +23,12 @@ const options = [
 	},
 ];
 
+/**
+ * AdminButton component that displays a button with admin options in a dropdown menu.
+ *
+ * @component
+ * @returns {JSX.Element} The admin button component.
+ */
 export const AdminButton = () => {
 	const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
 	const open = Boolean(anchorEl);

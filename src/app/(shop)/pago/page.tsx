@@ -7,11 +7,25 @@ import { Box, CircularProgress, Typography } from '@mui/material';
 import { useHandlePayUResponseMutation } from '@/store/services/orderApi';
 import logo from '../../../../public/Logo/Logo.png';
 
+/**
+ * PayUResponse page handles the PayU response by sending the received parameters to the backend
+ * and then redirects the user to the profile page.
+ *
+ * @page
+ * @example
+ * return (
+ *   <PayUResponse />
+ * )
+ */
 const PayUResponse = () => {
   const router = useRouter();
   const [handlePayUResponse] = useHandlePayUResponseMutation();
 
   useEffect(() => {
+    /**
+     * Processes the PayU response by extracting query parameters,
+     * sending them to the backend, and handling the response.
+     */
     const processPayUResponse = async () => {
       const queryParams = new URLSearchParams(window.location.search);
       const params = Object.fromEntries(queryParams.entries());

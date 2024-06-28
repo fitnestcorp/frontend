@@ -15,6 +15,12 @@ import {
 } from '@/components';
 import './page.css';
 
+/**
+ * Home component serves as the main page of the application, displaying a banner, a group swiper, and a product grid.
+ * 
+ * @page
+ * @returns {JSX.Element} The main home page component.
+ */
 const Home = () => {
 	const [page1, setPage1] = useState(1);
 	const [limit1, setLimit1] = useState(10);

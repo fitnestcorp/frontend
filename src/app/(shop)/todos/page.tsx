@@ -6,6 +6,12 @@ import { Product } from '@/interfaces';
 import { Banner, Filters, LogoLoader, ProductGrid } from '@/components';
 import { useGetProductsQuery } from '@/store';
 
+/**
+ * AllProducts component renders a page that displays all the products available, with filtering and pagination functionality.
+ * 
+ * @page
+ * @returns {JSX.Element} A React component that displays a list of all products with filters and pagination.
+ */
 const AllProducts = () => {
 	const [page, setPage] = useState(1);
 	const [limit, setLimit] = useState(16);
@@ -41,6 +47,12 @@ const AllProducts = () => {
 		}
 	}, [productsData, productsError]);
 
+
+	/**
+	 * Handles the selection of a filter and updates the filter parameters.
+	 * 
+	 * @param {string} filter - The selected filter.
+	 */
 	const handleSelectFilter = (filter: string) => {
 		switch (filter) {
 			case 'Menos costosos':
@@ -102,6 +114,13 @@ const AllProducts = () => {
 		}
 		setSelectedFilter(filter);
 	};
+
+	/**
+	 * Handles the page change for pagination.
+	 * 
+	 * @param {React.ChangeEvent<unknown>} event - The change event.
+	 * @param {number} value - The new page number.
+	 */
 	const handlePageChange = (
 		event: React.ChangeEvent<unknown>,
 		value: number

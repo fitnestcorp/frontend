@@ -34,6 +34,16 @@ interface Props {
 	productId: string;
 }
 
+/**
+ * AddComment component allows users to add comments and ratings for a product.
+ * Users must be logged in and have purchased the product to leave a comment.
+ *
+ * @component
+ * @param {Object} props - The component props.
+ * @param {Function} props.refetch - Function to refetch comments after adding a new comment.
+ * @param {string} props.productId - The ID of the product for which the comment is being added.
+ * @returns {JSX.Element} The rendered AddComment component.
+ */
 export const AddComment = ({ refetch, productId }: Props) => {
 	const [open, setOpen] = useState(false);
 	const [openSnackbar, setOpenSnackbar] = useState(false);
@@ -88,6 +98,10 @@ export const AddComment = ({ refetch, productId }: Props) => {
 		},
 	});
 
+	/**
+	 * Handles the form submission to add a new comment.
+	 * @param {Object} data - The form data.
+	 */
 	async function onSubmit(data: z.infer<typeof AddCommentSchema>) {
 		try {
 			data.publication_date = new Date();

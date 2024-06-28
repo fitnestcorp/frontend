@@ -13,6 +13,15 @@ interface Props {
     cartItem: ShoppingCartItem;
 }
 
+/**
+ * CartItem component represents a single item in the shopping cart,
+ * allowing the user to adjust the quantity or remove the item.
+ *
+ * @component
+ * @param {Props} props - The properties object.
+ * @param {ShoppingCartItem} props.cartItem - The cart item to be displayed.
+ * @returns {JSX.Element} The CartItem component.
+ */
 export const CartItem = ({ cartItem }: Props) => {
     const { quantity, price, product } = cartItem;
     const user = useSelector((state: RootState) => state.user.user);
@@ -21,6 +30,9 @@ export const CartItem = ({ cartItem }: Props) => {
     const [updateShoppingCart, { isLoading: isUpdating }] = useUpdateShoppingCartMutation();
     const [quantityShopin, setQuantityShopin] = useState<number>(quantity);
 
+    /**
+     * Handles the removal of the item from the cart.
+     */
     const handleRemoveItem = async () => {
         if (user && product) {
             await removeItem({ userId: user.id, productId: product.id });
@@ -28,6 +40,11 @@ export const CartItem = ({ cartItem }: Props) => {
         }
     };
 
+    /**
+     * Handles updating the quantity of the item in the cart.
+     * 
+     * @param {'add' | 'remove'} operation - The operation to perform (add or remove).
+     */
     const handleUpdateQuantity = async (operation: 'add' | 'remove') => {
         if (user && product) {
             await updateShoppingCart({
@@ -50,10 +67,16 @@ export const CartItem = ({ cartItem }: Props) => {
         }
     };
 
+    /**
+     * Increases the quantity of the item in the cart.
+     */
     const increaseQuantity = () => {
         handleUpdateQuantity('add');
     };
 
+    /**
+     * Decreases the quantity of the item in the cart.
+     */
     const decreaseQuantity = () => {
         handleUpdateQuantity('remove');
     };

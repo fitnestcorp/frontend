@@ -14,6 +14,14 @@ import { useGetProductsByCategoryFilterQuery } from '@/store/services/productApi
 import { useGetCategoryByNameQuery } from '@/store/services/categoryApi';
 import NotFoundPage from '../not-found';
 
+/**
+ * Props for the CategoryPage component.
+ * 
+ * @typedef {Object} Props
+ * @property {Object} params - The route parameters.
+ * @property {string} params.category - The category name.
+ * @property {string} params.group - The group name.
+ */
 interface Props {
 	params: {
 		category: string;
@@ -21,7 +29,18 @@ interface Props {
 	};
 }
 
+/**
+ * CategoryPage component displays a list of products for a specific category.
+ * It includes a banner, breadcrumb navigation, filters, and a paginated product grid.
+ * 
+ * @page
+ * @example
+ * return (
+ *   <CategoryPage params={{ category: 'electronics', group: 'tech' }} />
+ * )
+ */
 const CategoryPage = ({ params }: Props) => {
+	// Format the category name to be capitalized and replace dashes with spaces
 	let category = params.category[0].toUpperCase() + params.category.slice(1);
 	category = category.replace(/-/g, ' ');
 
@@ -83,6 +102,11 @@ const CategoryPage = ({ params }: Props) => {
 		return <NotFoundPage />;
 	}
 
+	/**
+	 * Handles the filter selection to update the product list.
+	 * 
+	 * @param {string} filter - The selected filter.
+	 */
 	const handleSelectFilter = (filter: string) => {
 		switch (filter) {
 			case 'Menos costosos':
@@ -145,6 +169,12 @@ const CategoryPage = ({ params }: Props) => {
 		setSelectedFilter(filter);
 	};
 
+	/**
+	 * Handles the page change for pagination.
+	 * 
+	 * @param {React.ChangeEvent<unknown>} event - The change event.
+	 * @param {number} value - The new page number.
+	 */
 	const handlePageChange = (
 		event: React.ChangeEvent<unknown>,
 		value: number

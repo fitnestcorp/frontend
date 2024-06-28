@@ -4,9 +4,22 @@ import { useRouter } from 'next/navigation';
 import { Box, Button, Typography, Container } from '@mui/material';
 import { motion } from 'framer-motion';
 
+/**
+ * NotFoundPage page displays a custom 404 error page.
+ * It includes a background image, error messages, and a button to go back to the home page.
+ * 
+ * @page
+ * @example
+ * return (
+ *   <NotFoundPage />
+ * )
+ */
 const NotFoundPage = () => {
 	const router = useRouter();
 
+	/**
+	 * Handles the button click to navigate back to the home page.
+	 */
 	const handleGoBack = () => {
 		router.push('/');
 	};

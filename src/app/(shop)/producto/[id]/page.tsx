@@ -18,6 +18,18 @@ interface Props {
 	};
 }
 
+/**
+ * ProductPage page displays detailed information about a product, including images, details, and user comments.
+ * 
+ * @page
+ * @param {Props} props - The props for the ProductPage page.
+ * @param {Object} props.params - The URL parameters.
+ * @param {string} props.params.id - The ID of the product.
+ * @returns {JSX.Element} A React component that displays the product page.
+ * 
+ * @example
+ * <ProductPage params={{ id: '350b39ae-417c-4eee-a0d9-c951eec67a54' }} />
+ */
 const ProductPage = ({ params }: Props) => {
 	const { id } = params;
 	const { data: product, error, isLoading } = useGetProductByIdQuery(id);

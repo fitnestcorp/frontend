@@ -14,6 +14,18 @@ interface CartSummaryProps {
   onClose: () => void;
 }
 
+/**
+ * CartSummary component displays a summary of the user's shopping cart,
+ * including the items, shipping address, and total cost.
+ * Allows the user to refresh the cart and complete the purchase.
+ *
+ * @component
+ * @param {CartSummaryProps} props - The properties object.
+ * @param {string} props.userId - The ID of the user.
+ * @param {Address} props.address - The address for shipping.
+ * @param {() => void} props.onClose - Function to handle closing the summary.
+ * @returns {JSX.Element} The CartSummary component.
+ */
 const CartSummary: React.FC<CartSummaryProps> = ({ userId, address, onClose }) => {
   const dispatch = useDispatch();
   const [refreshItems, { error: refreshError }] = useRefreshItemsMutation();
@@ -46,6 +58,10 @@ const CartSummary: React.FC<CartSummaryProps> = ({ userId, address, onClose }) =
     }
   }, [shoppingCart, dispatch]);
 
+  /**
+   * Handles the purchase process by calling the buyShoppingCart mutation and
+   * opening a new window with the payment redirection HTML.
+   */
   const handlePurchase = async () => {
     try {
       const htmlResponse = await buyShoppingCart({ userId, addressId: address.id }).unwrap();
@@ -63,6 +79,11 @@ const CartSummary: React.FC<CartSummaryProps> = ({ userId, address, onClose }) =
     }
   };
 
+  /**
+   * Extracts an error message from the provided error object.
+   * @param {any} error - The error object.
+   * @returns {string} The error message.
+   */
   const getErrorMessage = (error: any): string => {
     if (error?.status) {
       return `Error ${error.status}: ${error.data || 'Unknown error'}`;
@@ -85,6 +106,11 @@ const CartSummary: React.FC<CartSummaryProps> = ({ userId, address, onClose }) =
     return <Typography variant="h6">Your cart is empty.</Typography>;
   }
 
+  /**
+   * Formats a city name to have the first letter capitalized and the rest in lowercase.
+   * @param {string} name - The name of the city.
+   * @returns {string} The formatted city name.
+   */
   const formatCityName = (name: string) => {
     if (!name) return '';
     return name.charAt(0).toUpperCase() + name.slice(1).toLowerCase();

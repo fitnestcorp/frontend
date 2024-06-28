@@ -8,7 +8,15 @@ import { useDispatch } from 'react-redux';
 import { setUser } from '@/store';
 import { LoginForm } from '@/components';
 
-const OauthPage = () => {
+/**
+ * OauthPage component.
+ * This page handles OAuth authentication and redirects the user upon successful login.
+ * It fetches user status and sets the user in the Redux store.
+ *
+ * @page
+ * @returns {JSX.Element} The rendered OAuth login page component.
+ */
+const OauthPage : React.FC = (): JSX.Element => {
 	const router = useRouter();
 	const dispatch = useDispatch();
 

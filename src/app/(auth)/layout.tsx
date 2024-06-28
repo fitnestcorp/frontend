@@ -1,6 +1,15 @@
 import Image from 'next/image';
 import { Box, Container, Typography, Paper } from '@mui/material';
 
+/**
+ * AuthLayout is a layout component that provides a background image and a centered paper container for authentication pages.
+ * It renders the `children` prop within a styled container and background image.
+ * 
+ * @page
+ * @param {Object} props - The component props.
+ * @param {React.ReactNode} props.children - The child components to be rendered within the layout.
+ * @returns {JSX.Element} The rendered layout component.
+ */
 const AuthLayout = ({
 	children,
 }: Readonly<{ children: React.ReactNode }>) => {

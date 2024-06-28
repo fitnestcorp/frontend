@@ -4,6 +4,12 @@ import { usePathname } from 'next/navigation';
 import { Breadcrumbs, Typography } from '@mui/material';
 import NavigateNextIcon from '@mui/icons-material/NavigateNext';
 
+/**
+ * Breadcrumb component that dynamically generates breadcrumbs based on the current path.
+ *
+ * @component
+ * @returns {JSX.Element} The breadcrumb navigation component.
+ */
 export const Breadcrumb = () => {
 	const pathname = usePathname();
 	const pathSegments = pathname.split('/').filter((segment) => segment);

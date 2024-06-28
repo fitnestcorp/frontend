@@ -22,6 +22,16 @@ import { useCreateAddressMutation } from '@/store';
 import { Address } from '@/interfaces/Address';
 import CartSummary from '../cart/CartSummany';
 
+/**
+ * Props for the AddressForm component.
+ * 
+ * @typedef {Object} AddressFormProps
+ * @property {boolean} isOpen - Indicates if the modal is open.
+ * @property {() => void} onClose - Function to close the modal.
+ * @property {Address[]} [registeredAddresses] - List of registered addresses.
+ * @property {Department[]} [departments] - List of departments.
+ * @property {string} userId - ID of the user.
+ */
 interface AddressFormProps {
   isOpen: boolean;
   onClose: () => void;
@@ -30,6 +40,13 @@ interface AddressFormProps {
   userId: string;
 }
 
+
+/**
+ * AddressForm component for creating and selecting addresses.
+ * 
+ * @param {AddressFormProps} props - Component props.
+ * @returns {JSX.Element} The rendered AddressForm component.
+ */
 export const AddressForm = ({
   isOpen,
   onClose,
@@ -71,6 +88,11 @@ export const AddressForm = ({
     );
   }, [addressForm]);
 
+  /**
+   * Handles changes in the address form inputs.
+   * 
+   * @param {React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | { name?: string; value: unknown }>} e - The change event.
+   */
   const handleAddressChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | { name?: string; value: unknown }>
   ) => {
@@ -78,10 +100,18 @@ export const AddressForm = ({
    
   };
 
+  /**
+   * Handles closing the cart summary modal.
+   */
   const handleClose = () => {
     setIsCartSummaryOpen(false);
   };
 
+  /**
+   * Handles submitting the address creation form.
+   * 
+   * @param {React.FormEvent} e - The form submit event.
+   */
   const handleAddressCreationSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
@@ -96,6 +126,11 @@ export const AddressForm = ({
     }
   };
 
+  /**
+   * Handles submitting the selected address form.
+   * 
+   * @param {React.FormEvent} e - The form submit event.
+   */
   const handleAddressSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     const selectedAddr = registeredAddresses.find((add) => add.id === selectedAddress);

@@ -7,6 +7,12 @@ import { useDispatch } from 'react-redux';
 
 import { clearUser } from '@/store';
 
+/**
+ * LogoutButton component for logging out the user with a confirmation snackbar.
+ *
+ * @component
+ * @returns {JSX.Element} The LogoutButton component.
+ */
 export const LogoutButton = () => {
 	const dispatch = useDispatch();
 
