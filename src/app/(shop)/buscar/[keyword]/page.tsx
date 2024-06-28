@@ -6,10 +6,13 @@ import { LogoLoader, ProductGrid } from '@/components';
 import { useSearchProductsQuery } from '@/store';
 
 interface SearchProductsProps {
-    keyword: string;
+    params: {
+		keyword: string;
+	};
   }
   
-  const SearchProducts: React.FC<SearchProductsProps> = ({ keyword }) => {
+  const SearchProducts: React.FC<SearchProductsProps> = ({ params }:SearchProductsProps) => {
+    const keyword = params.keyword
   const [page, setPage] = useState(1);
   const [limit, setLimit] = useState(16);
   const [products, setProducts] = useState<Product[]>([]);
