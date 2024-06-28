@@ -174,15 +174,12 @@ export const LoginForm = () => {
 					<Divider sx={{ mb: 3 }}>O</Divider>
 
 					<Button
-						// type="submit"
 						fullWidth
 						variant="contained"
 						sx={{
 							marginBottom: '1rem',
 						}}
 						onClick={onSubmitGoogleAuth}
-						//disabled={!isDirty || isSubmitting}
-						//endIcon={isSubmitting && <CircularProgress size={20} />}
 					>
 						Conectarse con Google{' '}
 						<GoogleIcon sx={{ marginLeft: '0.5rem' }} />
