@@ -2,6 +2,7 @@
 import { useState } from 'react';
 import { TextField, InputAdornment } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
+import { useRouter } from 'next/navigation';
 
 import { SearchSchema } from '@/schemas';
 
@@ -11,6 +12,8 @@ interface Props {
 }
 
 export const Search = ({ border = false, onSearch }: Props) => {
+	const router = useRouter();
+
 	const [searchValue, setSearchValue] = useState('');
 	const [error, setError] = useState('');
 
@@ -27,8 +30,14 @@ export const Search = ({ border = false, onSearch }: Props) => {
 		}
 	};
 
+	const handleSubmit = (e) => {
+		e.preventDefault(); // Evita que el formulario se envíe de forma predeterminada
+		console.log('El formulario ha sido enviado, pero preventDefault ha sido llamado');
+		router.push(`/buscar?query=${searchValue}`);
+	};
+
 	return (
-		<form onSubmit={(e) => e.preventDefault()}>
+		<form onSubmit={handleSubmit}>
 			<TextField
 				value={searchValue}
 				onChange={handleSearchChange}
