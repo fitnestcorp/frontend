@@ -2,10 +2,10 @@
 
 import { useEffect } from 'react';
 import { useRouter } from 'next/navigation';
-import logo from '@/public/logo.png'
 import Image from 'next/image';
 import { Box, CircularProgress, Typography } from '@mui/material';
 import { useHandlePayUResponseMutation } from '@/store/services/orderApi';
+import logo from '../../../../public/Logo/Logo.png';
 
 const PayUResponse = () => {
   const router = useRouter();

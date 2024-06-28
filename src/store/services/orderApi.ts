@@ -47,7 +47,7 @@ export const ordersApi = createApi({
       }),
     }),
 
-    handlePayUResponse: builder.mutation<void, ResponseDto>({
+    handlePayUResponse: builder.mutation({
       query: (data) => ({
         url: `orders/payu-response`,
         method: 'GET',
@@ -55,7 +55,7 @@ export const ordersApi = createApi({
       }),
     }),
 
-    handlePayUConfirmation: builder.mutation<void, ResponseDto>({
+    handlePayUConfirmation: builder.mutation({
       query: (data) => ({
         url: `orders/payu-confirmation`,
         method: 'GET',
