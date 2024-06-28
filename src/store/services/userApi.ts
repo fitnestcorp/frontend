@@ -2,7 +2,6 @@ import { User } from '@/interfaces';
 
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 
-import { baseQuery } from '@/store/consts/api';
 const baseQuery = fetchBaseQuery({
 	baseUrl: process.env.BACKEND_URL || 'http://localhost:3000',
 	prepareHeaders: (headers) => {

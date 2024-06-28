@@ -5,6 +5,14 @@ interface Props {
 	comment: Review;
 }
 
+/**
+ * Comment component displays a single user review.
+ *
+ * @component
+ * @param {Object} props - The component props.
+ * @param {Review} props.comment - The review comment to be displayed.
+ * @returns {JSX.Element} The rendered Comment component.
+ */
 export const Comment = ({ comment }: Props) => {
 	const { user, publication_date, score, title, comment: content } = comment;
 

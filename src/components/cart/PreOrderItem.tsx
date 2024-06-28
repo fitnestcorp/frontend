@@ -12,6 +12,19 @@ interface ShoppingCartItemProps {
   productId: string;
 }
 
+/**
+ * PreOrderItem component displays individual items in the pre-order summary.
+ *
+ * @component
+ * @param {ShoppingCartItemProps} props - The properties object.
+ * @param {string} props.image - The image URL of the product.
+ * @param {string} props.title - The title of the product.
+ * @param {string} props.description - The description of the product.
+ * @param {number} props.quantity - The quantity of the product.
+ * @param {number} props.price - The price of the product.
+ * @param {string} props.productId - The unique identifier of the product.
+ * @returns {JSX.Element} The PreOrderItem component.
+ */
 const PreOrderItem: React.FC<ShoppingCartItemProps> = ({ image, title, description, quantity, price, productId }) => {
   return (
     <Card sx={{ display: 'flex', alignItems: 'center', mb: 2, p: 1, width: '45%', minWidth: '300px', boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)', borderRadius: '16px' }}>

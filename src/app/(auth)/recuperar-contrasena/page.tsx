@@ -2,7 +2,15 @@ import { Typography } from '@mui/material';
 
 import { PasswordRecoveryForm } from '@/components';
 
-const PasswordRecoveryPage = () => {
+/**
+ * The PasswordRecoveryPage component renders a form for users to recover their passwords.
+ * It displays a heading and a brief instruction, followed by the password recovery form.
+ *
+ * @page
+ * @returns {JSX.Element} The rendered password recovery page.
+ */
+
+const PasswordRecoveryPage: React.FC = (): JSX.Element => {
 	return (
 		<>
 			<Typography

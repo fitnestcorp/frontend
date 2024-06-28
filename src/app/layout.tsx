@@ -5,6 +5,15 @@ import ThemeProviderWrapper from './ThemeProviderWrapper';
 import ReduxProvider from './provider';
 import './globals.css';
 
+/**
+ * RootLayout component sets up the global layout for the application, including
+ * the theme provider, Redux provider, and service worker registration.
+ * 
+ * @page
+ * @param {Object} props - The properties object.
+ * @param {React.ReactNode} props.children - The child components to be rendered within this layout.
+ * @returns {JSX.Element} The root layout component.
+ */
 export default function RootLayout({
 	children,
 }: Readonly<{

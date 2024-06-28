@@ -3,7 +3,6 @@ import { Product, Review } from '@/interfaces';
 
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 
-import { baseQuery } from '@/store/consts/api';
 
 type ProductWithNumber = [Product[], number];
 

@@ -5,9 +5,20 @@ import { Box, Button, Typography, Container } from '@mui/material';
 import { motion } from 'framer-motion';
 import { Footer, Navbar } from '@/components';
 
+
+/**
+ * NotFoundPage component displays a 404 error page with a "Go Back" button.
+ * It includes a navigation bar at the top and a footer at the bottom.
+ * 
+ * @component
+ * @returns {JSX.Element} The 404 error page component.
+ */
 const NotFoundPage = () => {
 	const router = useRouter();
 
+	/**
+	 * Redirects the user to the home page.
+	 */
 	const handleGoBack = () => {
 		router.push('/');
 	};

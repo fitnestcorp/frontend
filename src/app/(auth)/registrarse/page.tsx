@@ -3,6 +3,13 @@ import { Link, Typography } from '@mui/material';
 
 import { RegisterForm } from '@/components';
 
+/**
+ * The RegisterPage component renders a registration form for new users.
+ * It displays a heading and a prompt to log in if the user already has an account.
+ *
+ * @page
+ * @returns {JSX.Element} The rendered registration page.
+ */
 const RegisterPage = () => {
 	return (
 		<>

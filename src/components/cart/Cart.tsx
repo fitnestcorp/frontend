@@ -24,6 +24,13 @@ import { RootState, useGetAddressesByUserIdQuery, useGetAllCitiesQuery, useGetAl
 import { clearUser } from '@/store/slices/userSlice';
 import { AddressForm, CartItem } from '@/components';
 
+/**
+ * Cart component handles the shopping cart functionality, including
+ * displaying cart items, subtotal calculation, and user validation.
+ *
+ * @component
+ * @returns {JSX.Element} The Cart component.
+ */
 export const Cart = () => {
 	const [isDrawerOpen, setIsDrawerOpen] = useState<boolean>(false);
 	const [isInvalidUserModalOpen, setIsInvalidUserModalOpen] = useState<boolean>(false);

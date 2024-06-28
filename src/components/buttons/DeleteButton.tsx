@@ -20,6 +20,17 @@ interface Props {
 	deleteMutation: any;
 }
 
+/**
+ * DeleteButton component for deleting an item with a confirmation dialog and snackbar notifications.
+ *
+ * @component
+ * @param {Object} props - The component props.
+ * @param {string} props.id - The ID of the item to be deleted.
+ * @param {string} props.item - The name of the item to be deleted.
+ * @param {function} props.refetch - The function to refetch data after deletion.
+ * @param {function} props.deleteMutation - The mutation function to delete the item.
+ * @returns {JSX.Element} The DeleteButton component.
+ */
 export const DeleteButton = ({ id, item, refetch, deleteMutation }: Props) => {
 	const [open, setOpen] = useState(false);
 	const [openSnackbar, setOpenSnackbar] = useState(false);

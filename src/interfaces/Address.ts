@@ -5,5 +5,5 @@ export interface Address {
     address: string;
     phone_number: string;
     zip_code: string;
-    city_name: City;
+    city: City;
   }

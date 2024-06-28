@@ -25,6 +25,14 @@ interface Props {
 	products: Product[];
 }
 
+/**
+ * BarChartTopProducts component renders a bar chart displaying the top 10 best-selling products.
+ *
+ * @component
+ * @param {Object} props - The component props.
+ * @param {Product[]} props.products - The array of products to be displayed in the bar chart.
+ * @returns {JSX.Element} The rendered BarChartTopProducts component.
+ */
 export const BarChartTopProducts = ({ products }: Props) => {
 	const sortedProducts = [...products]
 		.sort(

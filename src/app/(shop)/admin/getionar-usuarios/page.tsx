@@ -5,11 +5,20 @@ import { Box, Grid, Typography } from '@mui/material';
 import { AddUserModal, Search, SortButton, Table, isAdmin } from '@/components';
 import { useGetAllUsersQuery } from '@/store';
 
+/**
+ * Configuration for sorting.
+ * @typedef {Object} SortConfig
+ * @property {string} key - The key to sort by.
+ * @property {'asc' | 'desc'} direction - The direction of the sort.
+ */
 interface SortConfig {
 	key: string;
 	direction: 'asc' | 'desc';
 }
 
+/**
+ * Column configuration for the users table.
+ */
 const columns = [
 	{ id: 'id', label: 'ID', minWidth: 50, align: 'center' as const },
 	{
@@ -27,6 +36,12 @@ const columns = [
 	{ id: 'email', label: 'Email', minWidth: 170, align: 'center' as const },
 ];
 
+/**
+ * The ManageUsersPage component allows admin users to manage user accounts.
+ *
+ * @page
+ * @returns {JSX.Element} The rendered ManageUsersPage component.
+ */
 const ManageUsersPage = () => {
 	const {
 		data: usersData,
@@ -45,6 +60,12 @@ const ManageUsersPage = () => {
 		direction: 'asc',
 	});
 
+	/**
+	 * Formats a date string to the local date format.
+	 *
+	 * @param {string} dateString - The date string to format.
+	 * @returns {string} The formatted date.
+	 */
 	const formatDate = (dateString: string) => {
 		const date = new Date(dateString);
 		return date.toLocaleDateString('es-CO', {
@@ -79,6 +100,11 @@ const ManageUsersPage = () => {
 		return 0;
 	});
 
+	/**
+	 * Handles sorting of the table.
+	 *
+	 * @param {string} key - The key to sort by.
+	 */
 	const handleSort = (key: string) => {
 		let direction: 'asc' | 'desc' = 'asc';
 		if (sortConfig.key === key && sortConfig.direction === 'asc') {

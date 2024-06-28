@@ -9,6 +9,14 @@ interface PreOrderProps {
   items: ShoppingCartItem[];
 }
 
+/**
+ * PreOrder component displays a list of shopping cart items in a pre-order summary.
+ *
+ * @component
+ * @param {PreOrderProps} props - The properties object.
+ * @param {ShoppingCartItem[]} props.items - The list of shopping cart items.
+ * @returns {JSX.Element} The PreOrder component.
+ */
 const PreOrder: React.FC<PreOrderProps> = ({ items }) => {
   return (
     <Box sx={{ mb: 4, display: 'flex', flexDirection: 'column', gap: 2 }}>

@@ -13,10 +13,21 @@ import {
 import { useGetAllProductsQuery } from '@/store';
 import { Product } from '@/interfaces';
 
+
+/**
+ * Configuration for sorting.
+ * @typedef {Object} SortConfig
+ * @property {string} key - The key to sort by.
+ * @property {'asc' | 'desc'} direction - The direction of the sort.
+ */
 interface SortConfig {
 	key: string;
 	direction: 'asc' | 'desc';
 }
+
+/**
+ * Column configuration for the products table.
+ */
 
 const columns = [
 	{ id: 'image', label: '', minWidth: 50, align: 'center' as const },
@@ -75,6 +86,12 @@ const columns = [
 	},
 ];
 
+/**
+ * The ManageInventoryPage component allows admin users to manage products.
+ *
+ * @page
+ * @returns {JSX.Element} The rendered ManageInventoryPage component.
+ */
 const ManageInventoryPage = () => {
 	const { data, isLoading, refetch } = useGetAllProductsQuery({
 		page: 1,
@@ -89,6 +106,12 @@ const ManageInventoryPage = () => {
 		direction: 'asc',
 	});
 
+	/**
+	 * Formats a number to the local currency format.
+	 *
+	 * @param {number} value - The number to format.
+	 * @returns {string} The formatted currency value.
+	 */
 	const formatCurrency = (value: number) => {
 		const formattedValue = new Intl.NumberFormat('es-CO', {
 			style: 'currency',
@@ -100,6 +123,12 @@ const ManageInventoryPage = () => {
 		return formattedValue.replace('COP', '').trim();
 	};
 
+	/**
+	 * Formats a date string to the local date format.
+	 *
+	 * @param {string} dateString - The date string to format.
+	 * @returns {string} The formatted date.
+	 */
 	const formatDate = (dateString: string) => {
 		const date = new Date(dateString);
 		return date.toLocaleDateString('es-CO', {
@@ -140,6 +169,11 @@ const ManageInventoryPage = () => {
 		return 0;
 	});
 
+	/**
+	 * Handles sorting of the table.
+	 *
+	 * @param {string} key - The key to sort by.
+	 */
 	const handleSort = (key: string) => {
 		let direction: 'asc' | 'desc' = 'asc';
 		if (sortConfig.key === key && sortConfig.direction === 'asc') {

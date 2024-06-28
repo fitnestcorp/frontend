@@ -6,6 +6,16 @@ interface Prop {
 	title: string;
 }
 
+
+/**
+ * Banner component that displays a full-width image with an overlaid title.
+ *
+ * @component
+ * @param {Object} props - The component props.
+ * @param {string} props.image - The URL of the image to display in the banner.
+ * @param {string} props.title - The title text to display over the image.
+ * @returns {JSX.Element} The banner component.
+ */
 export const Banner = ({ image, title }: Prop) => {
 	return (
 		<Box
