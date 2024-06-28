@@ -11,6 +11,15 @@ interface OrderProps {
   items: { id: string; quantity: number; product: { image_urls: string[]; name: string; type: string; price: number, id: string }; }[];
 }
 
+/**
+ * Order component
+ * Displays an order with its items.
+ *
+ * @param {OrderProps} props - The properties for the Order component.
+ * @param {string} props.id - The ID of the order.
+ * @param {OrderItemProps[]} props.items - The items in the order.
+ * @returns {JSX.Element} The rendered Order component.
+ */
 const Order: React.FC<OrderProps> = ({ id, creation_date, address, total_price, items }) => {
   const formatDate = (date: Date) => {
     const options: Intl.DateTimeFormatOptions = { year: 'numeric', month: 'long', day: 'numeric' };

@@ -24,7 +24,6 @@ interface OrderItemProps {
  * @param {number} props.price - The price of the product.
  * @returns {JSX.Element} The rendered OrderItem component.
  */
-const OrderItem: React.FC<OrderItemProps> = ({ image, title, description, quantity, price }) => {
 const OrderItem: React.FC<OrderItemProps> = ({ image, title, description, quantity, price, productId }) => {
 
   return (
