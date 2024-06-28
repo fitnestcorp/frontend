@@ -8,6 +8,27 @@ interface Props {
 	handleClose: () => void;
 }
 
+/**
+ * MenuNavbar component renders a popover menu with categories grouped by their respective groups.
+ *
+ * @component
+ * @param {HTMLElement | null} anchorEl - The element to anchor the popover to.
+ * @param {Function} handleClose - Function to close the popover.
+ * @example
+ * const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+ * const handleOpen = (event: React.MouseEvent<HTMLElement>) => {
+ *   setAnchorEl(event.currentTarget);
+ * };
+ * const handleClose = () => {
+ *   setAnchorEl(null);
+ * };
+ * return (
+ *   <div>
+ *     <Button onClick={handleOpen}>Open Menu</Button>
+ *     <MenuNavbar anchorEl={anchorEl} handleClose={handleClose} />
+ *   </div>
+ * )
+ */
 export const MenuNavbar = ({ anchorEl, handleClose }: Props) => {
 	const open = Boolean(anchorEl);
 

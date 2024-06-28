@@ -3,6 +3,12 @@ import { Box } from '@mui/material';
 
 import logo from '../../../public/Logo/Logo.png';
 
+/**
+ * LogoLoader component.
+ * Displays a full-screen loader with a centered logo.
+ *
+ * @returns {JSX.Element} The LogoLoader component.
+ */
 export const LogoLoader = () => {
 	return (
 		<Box

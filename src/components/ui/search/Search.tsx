@@ -2,6 +2,7 @@
 import { useState } from 'react';
 import { TextField, InputAdornment } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
+import { useRouter } from 'next/navigation';
 
 import { SearchSchema } from '@/schemas';
 
@@ -10,10 +11,26 @@ interface Props {
 	onSearch: (value: string) => void;
 }
 
+/**
+ * Search component renders a search input field.
+ *
+ * @param {boolean} border - If true, the search field will have a border.
+ * @param {function} onSearch - Function to call when the search value changes.
+ *
+ * @example
+ * <Search border={true} onSearch={(value) => console.log(value)} />
+ */
 export const Search = ({ border = false, onSearch }: Props) => {
+	const router = useRouter();
+
 	const [searchValue, setSearchValue] = useState('');
 	const [error, setError] = useState('');
 
+	/**
+	 * Handles the change event for the search input field.
+	 *
+	 * @param {React.ChangeEvent<HTMLInputElement>} event - The change event of the input field.
+	 */
 	const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
 		const value = event.target.value;
 		setSearchValue(value);
@@ -27,8 +44,14 @@ export const Search = ({ border = false, onSearch }: Props) => {
 		}
 	};
 
+	const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+		e.preventDefault(); // Evita que el formulario se envíe de forma predeterminada
+		console.log('El formulario ha sido enviado, pero preventDefault ha sido llamado');
+		router.push(`/buscar?query=${searchValue}`);
+	};
+
 	return (
-		<form onSubmit={(e) => e.preventDefault()}>
+		<form onSubmit={handleSubmit}>
 			<TextField
 				value={searchValue}
 				onChange={handleSearchChange}

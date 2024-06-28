@@ -22,10 +22,23 @@ import { Product } from '@/interfaces';
 import { useState, useEffect } from 'react';
 
 interface Props {
+  /**
+   * The product details to be displayed.
+   */
   product: Product;
+  /**
+   * Boolean indicating whether the product details are still loading.
+   */
   isLoading?: boolean;
 }
 
+/**
+ * ProductDetails component.
+ * Displays the details of a product and allows adding it to the shopping cart.
+ *
+ * @param {Props} props - The properties for the component.
+ * @returns {JSX.Element} The ProductDetails component.
+ */
 export const ProductDetails = ({ product, isLoading }: Props) => {
   const dispatch = useDispatch<AppDispatch>();
   const user = useSelector((state: RootState) => state.user.user);
@@ -61,6 +74,12 @@ export const ProductDetails = ({ product, isLoading }: Props) => {
 
   const { name, description, price, status, reviews, type } = product;
 
+  /**
+   * Formats a given value as a currency string in Colombian pesos.
+   *
+   * @param {number} value - The value to format.
+   * @returns {string} The formatted currency string.
+   */
   const formatCurrency = (value: number) => {
     const formattedValue = new Intl.NumberFormat('es-CO', {
       style: 'currency',
@@ -72,6 +91,9 @@ export const ProductDetails = ({ product, isLoading }: Props) => {
     return formattedValue.replace('COP', '').trim();
   };
 
+  /**
+   * Handles adding the product to the shopping cart.
+   */
   const handleAddToCart = async () => {
     if (!user) {
       setIsLoginModalOpen(true); // Show login required modal

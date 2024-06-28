@@ -6,6 +6,9 @@ import { Container, Paper, Typography, Box, Button, Modal, TextField, IconButton
 import CloseIcon from '@mui/icons-material/Close';
 import { RootState, useUpdateUserMutation } from '@/store'; // Ajusta la ruta según tu estructura de archivos
 
+/**
+ * Interface representing the user's profile data.
+ */
 interface ProfileData {
   firstName: string;
   lastName: string;
@@ -13,6 +16,11 @@ interface ProfileData {
   email: string;
 }
 
+/**
+ * Profile component to display and edit user's profile information.
+ *
+ * @returns {JSX.Element} The rendered Profile component.
+ */
 const Profile: React.FC = () => {
   const user = useSelector((state: RootState) => state.user.user);
   const [open, setOpen] = useState(false);

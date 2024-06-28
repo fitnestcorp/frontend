@@ -25,6 +25,13 @@ import {
 } from '@/components';
 import { RootState } from '@/store';
 
+/**
+ * Navbar component renders the application's top navigation bar.
+ *
+ * @component
+ * @example
+ * return <Navbar />
+ */
 export const Navbar = () => {
 	const [searchTerm, setSearchTerm] = useState('');
 	const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
@@ -111,7 +118,9 @@ export const Navbar = () => {
 					<Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
 						<Box sx={{ display: { xs: 'none', md: 'block' } }}>
 							<Search
-								onSearch={(value) => setSearchTerm(value)}
+								onSearch={(value) => () => {
+									console.log("AAAAA" + value)
+								}}
 							/>
 						</Box>
 

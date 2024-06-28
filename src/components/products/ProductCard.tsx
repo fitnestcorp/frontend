@@ -7,9 +7,19 @@ import { useSelector } from 'react-redux';
 import { RootState } from '@/store';
 
 interface ProductCardProps {
+	/**
+	 * The product object to be displayed.
+	 */
 	product: Product;
 }
 
+/**
+ * ProductCard component.
+ * Displays product information in a card format.
+ *
+ * @param {ProductCardProps} props - The properties for the component.
+ * @returns {JSX.Element} The ProductCard component.
+ */
 export const ProductCard = ({ product }: ProductCardProps) => {
 	const isAdmin = useSelector(
 		(state: RootState) => state.user.user?.role === 'ADMIN'
@@ -23,6 +33,12 @@ export const ProductCard = ({ product }: ProductCardProps) => {
 		averageRating = 0;
 	}
 
+	/**
+	 * Formats a number as currency in Colombian Pesos (COP).
+	 *
+	 * @param {number} value - The value to format.
+	 * @returns {string} The formatted currency string.
+	 */
 	const formatCurrency = (value: number) => {
 		const formattedValue = new Intl.NumberFormat('es-CO', {
 			style: 'currency',

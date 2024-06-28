@@ -24,6 +24,14 @@ interface Props {
 	refetch?: () => void;
 }
 
+/**
+ * Registration form component for new users.
+ *
+ * @param {Props} props - Component properties.
+ * @param {boolean} [props.showRegisterButton=true] - Determines if the register button is shown.
+ * @param {Function} [props.refetch] - Function to refetch data after registration.
+ * @returns {JSX.Element} The registration form component.
+ */
 export const RegisterForm = ({ showRegisterButton = true, refetch }: Props) => {
 	const {
 		handleSubmit,
@@ -52,6 +60,12 @@ export const RegisterForm = ({ showRegisterButton = true, refetch }: Props) => {
 	const [registerUser] = useRegisterUserMutation();
 	const dispatch = useDispatch();
 
+
+	/**
+	 * Handles form submission for user registration.
+	 *
+	 * @param {z.infer<typeof RegisterSchema>} data - Form data.
+	 */
 	async function onSubmit(data: z.infer<typeof RegisterSchema>) {
 		try {
 			const response = await registerUser(data).unwrap();

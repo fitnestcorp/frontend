@@ -42,6 +42,20 @@ interface Props {
 	refetch: () => void;
 }
 
+/**
+ * Table component renders a table with pagination, skeleton loaders, and action buttons.
+ *
+ * @component
+ * @param {Array} columns - Array of column definitions for the table.
+ * @param {Array} rows - Array of rows to display in the table.
+ * @param {boolean} isLoading - Flag indicating if the table data is loading.
+ * @param {string} type - Type of data displayed (e.g., 'products', 'categories', 'groups').
+ * @param {Function} refetch - Function to refetch the data.
+ * @example
+ * const columns = [{ id: 'name', label: 'Name', minWidth: 170 }, ...];
+ * const rows = [{ name: 'Product 1', ... }, ...];
+ * return <Table columns={columns} rows={rows} isLoading={false} type="products" refetch={() => {}} />
+ */
 export const Table = ({ columns, rows, isLoading, type, refetch }: Props) => {
 	const [page, setPage] = useState(0);
 	const [rowsPerPage, setRowsPerPage] = useState(20);

@@ -12,6 +12,19 @@ interface OrderItemProps {
   productId: string;
 }
 
+/**
+ * OrderItem component
+ * Displays the details of an item in an order.
+ *
+ * @param {OrderItemProps} props - The properties for the OrderItem component.
+ * @param {string} props.image - The image URL of the product.
+ * @param {string} props.title - The title of the product.
+ * @param {string} props.description - The description of the product.
+ * @param {number} props.quantity - The quantity of the product ordered.
+ * @param {number} props.price - The price of the product.
+ * @returns {JSX.Element} The rendered OrderItem component.
+ */
+const OrderItem: React.FC<OrderItemProps> = ({ image, title, description, quantity, price }) => {
 const OrderItem: React.FC<OrderItemProps> = ({ image, title, description, quantity, price, productId }) => {
 
   return (

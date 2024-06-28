@@ -9,6 +9,17 @@ interface Props {
 	name: string;
 }
 
+/**
+ * ProductImagesSwiper component renders a gallery of product images with a main display and a thumbnail selection.
+ *
+ * @component
+ * @param {Array} images - Array of image URLs for the product.
+ * @param {string} name - Name of the product.
+ * @example
+ * const images = ['/path/to/image1.jpg', '/path/to/image2.jpg'];
+ * const name = 'Product Name';
+ * return <ProductImagesSwiper images={images} name={name} />
+ */
 export const ProductImagesSwiper = ({ images, name }: Props) => {
 	const [selectedImage, setSelectedImage] = useState(images[0] || '');
 

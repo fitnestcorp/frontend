@@ -3,6 +3,16 @@ import EmailIcon from '@mui/icons-material/Email';
 import PhoneIcon from '@mui/icons-material/Phone';
 import LocationOnIcon from '@mui/icons-material/LocationOn';
 
+
+/**
+ * Footer component renders the footer section of the application.
+ *
+ * @component
+ * @example
+ * return (
+ *   <Footer />
+ * )
+ */
 export const Footer = () => {
 	return (
 		<Box
