@@ -20,7 +20,7 @@ const OauthPage = () => {
 				localStorage.setItem('token', params.token);
 				console.log(params);
 				const response = await fetch(
-					(process.env.BACKEND_URL || 'http://localhost:3000') +
+					(process.env.BACKEND_URL || 'https://api.fitnest.online') +
 						'/user/status',
 					{
 						method: 'GET',
