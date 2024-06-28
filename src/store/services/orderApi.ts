@@ -1,25 +1,10 @@
 import { Order } from '@/interfaces/Order';
+import { ResponseDto } from '@/interfaces/ResponseDto';
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
+import { baseQuery } from '@/store/consts/api';
 
 type OrdersWithNumber = [Order[], number];
 
-const baseQuery = fetchBaseQuery({
-  baseUrl: process.env.BACKEND_URL || 'http://localhost:3000',
-  prepareHeaders: (headers) => {
-		const token = localStorage.getItem('token'); 
-    if (token) {
-      headers.set('Authorization', `Bearer ${token}`);
-    }
-    return headers;
-	},
-  responseHandler: async (response) => {
-    const contentType = response.headers.get('content-type');
-    if (contentType && contentType.includes('application/json')) {
-      return response.json();
-    }
-    return response.text();
-  },
-});
 
 export const ordersApi = createApi({
   reducerPath: 'ordersApi',
@@ -62,7 +47,7 @@ export const ordersApi = createApi({
       }),
     }),
 
-    handlePayUResponse: builder.mutation<void, CreateResponseDto>({
+    handlePayUResponse: builder.mutation<void, ResponseDto>({
       query: (data) => ({
         url: `orders/payu-response`,
         method: 'GET',
@@ -70,7 +55,7 @@ export const ordersApi = createApi({
       }),
     }),
 
-    handlePayUConfirmation: builder.mutation<void, CreateResponseDto>({
+    handlePayUConfirmation: builder.mutation<void, ResponseDto>({
       query: (data) => ({
         url: `orders/payu-confirmation`,
         method: 'GET',

@@ -6,23 +6,7 @@ import { baseQuery } from '@/store/consts/api';
 
 type ShoppingCartWithNumber = [ShoppingCart[], number];
 
-const baseQuery = fetchBaseQuery({
-  baseUrl: process.env.BACKEND_URL || 'http://localhost:3000',
-  prepareHeaders: (headers) => {
-		const token = localStorage.getItem('token'); 
-    if (token) {
-      headers.set('Authorization', `Bearer ${token}`);
-    }
-    return headers;
-	},
-  responseHandler: async (response) => {
-    const contentType = response.headers.get('content-type');
-    if (contentType && contentType.includes('application/json')) {
-      return response.json();
-    }
-    return response.text(); 
-  },
-});
+
 
 export const shoppingCartApi = createApi({
   reducerPath: 'shoppingCartApi',
