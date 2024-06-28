@@ -4,7 +4,6 @@ import { createApi } from '@reduxjs/toolkit/query/react';
 
 import { baseQuery } from '@/store/consts/api';
 
-
 export const userApi = createApi({
 	reducerPath: 'userApi',
 	baseQuery: baseQuery,
@@ -95,6 +94,14 @@ export const userApi = createApi({
 				},
 			}),
 		}),
+
+		sendPQR: builder.mutation({
+			query: (data) => ({
+				url: 'user/send-PQR',
+				method: 'POST',
+				body: data,
+			}),
+		}),
 	}),
 });
 
@@ -106,5 +113,6 @@ export const {
 	useGetUserByEmailQuery,
 	useVerifyTokenQuery,
 	useHasBoughtProductQuery,
-	useGetUserStatusQuery
+	useGetUserStatusQuery,
+	useSendPQRMutation,
 } = userApi;

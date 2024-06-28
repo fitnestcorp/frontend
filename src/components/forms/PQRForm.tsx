@@ -23,8 +23,16 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
 
 import { PQRSchema } from '@/schemas';
+import { useSendPQRMutation } from '@/store';
 
 export const PQRForm = () => {
+	const [openSnackbar, setOpenSnackbar] = useState(false);
+	const [snackbarMessage, setSnackbarMessage] = useState('');
+	const [snackbarSeverity, setSnackbarSeverity] = useState<
+		'error' | 'success'
+	>('success');
+	const [sendPQR] = useSendPQRMutation();
+
 	const {
 		handleSubmit,
 		control,
@@ -41,20 +49,13 @@ export const PQRForm = () => {
 		},
 	});
 
-	const [openSnackbar, setOpenSnackbar] = useState(false);
-	const [snackbarMessage, setSnackbarMessage] = useState('');
-	const [snackbarSeverity, setSnackbarSeverity] = useState<
-		'error' | 'success'
-	>('success');
-
 	const handleCloseSnackbar = () => {
 		setOpenSnackbar(false);
 	};
 
 	const onSubmit = async (data: z.infer<typeof PQRSchema>) => {
 		try {
-			// Aquí puedes hacer la llamada a la API para enviar los datos del PQR
-			console.log('PQR enviado:', data);
+			await sendPQR(data).unwrap();
 
 			setSnackbarMessage('PQR enviado exitosamente');
 			setSnackbarSeverity('success');
