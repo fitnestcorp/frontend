@@ -1,4 +1,4 @@
-import { Box, Typography } from '@mui/material';
+import { Box, Container, Paper, Typography } from '@mui/material';
 
 import { PieChart } from '@/components';
 
@@ -47,11 +47,27 @@ export const PieChartUsage = ({ labels, values, title }: Props) => {
 	};
 
 	return (
-		<Box>
-			<Typography variant="h5" align="center" mb={2} fontWeight={'bold'}>
-				{title}
-			</Typography>
-			<PieChart data={data} title={title} />
-		</Box>
+		<Container
+			maxWidth="md"
+			sx={{
+				display: 'flex',
+				flexDirection: 'column',
+				alignItems: 'center',
+			}}
+		>
+			<Paper sx={{ p: 4, width: '100%' }}>
+				<Typography
+					variant="h5"
+					align="center"
+					mb={2}
+					fontWeight={'bold'}
+				>
+					{title}
+				</Typography>
+				<Box sx={{ width: '100%', height: '500px' }}>
+					<PieChart data={data} title={title} />
+				</Box>
+			</Paper>
+		</Container>
 	);
 };
