@@ -30,7 +30,7 @@ export const Search = ({ border = false, onSearch }: Props) => {
 		}
 	};
 
-	const handleSubmit = (e) => {
+	const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
 		e.preventDefault(); // Evita que el formulario se envíe de forma predeterminada
 		console.log('El formulario ha sido enviado, pero preventDefault ha sido llamado');
 		router.push(`/buscar?query=${searchValue}`);

@@ -17,9 +17,9 @@ interface SearchProductsProps {
     const searchParams = useSearchParams();
     const querySearchParam = searchParams.get('query');
     console.log(querySearchParam);
-    if(!querySearchParam){
-        const keyword = querySearchParam;
-    }
+
+    // Proveer un valor por defecto cuando querySearchParam es null
+    const keyword = querySearchParam || "";
     
   const [page, setPage] = useState(1);
   const [limit, setLimit] = useState(16);
@@ -59,7 +59,7 @@ interface SearchProductsProps {
                 <p className="text-lg pl-2">{querySearchParam}</p> 
             </div>
             
-            {productsData[0].length === 0 ? (
+            {productsData && productsData[0].length === 0 ? (
                 <p className= "pt-10 pb-40 font-light">No se encontraron productos con tal descripción :( </p>
             ) : (
                 <>
